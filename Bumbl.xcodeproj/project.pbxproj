@@ -13,6 +13,7 @@
 		25D08B271C41EAC900319C11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25D08B261C41EAC900319C11 /* Assets.xcassets */; };
 		25D08B2A1C41EAC900319C11 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25D08B281C41EAC900319C11 /* LaunchScreen.storyboard */; };
 		25D08B351C41EAC900319C11 /* BumblTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D08B341C41EAC900319C11 /* BumblTests.swift */; };
+		727F385512EE3E865BC89483 /* Pods_Bumbl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CFBF85138A5896BF8A5BBC7 /* Pods_Bumbl.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2592264BB6C1997D49E7DB78 /* Pods-Bumbl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bumbl.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bumbl/Pods-Bumbl.debug.xcconfig"; sourceTree = "<group>"; };
 		25D08B1C1C41EAC900319C11 /* Bumbl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bumbl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D08B1F1C41EAC900319C11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25D08B211C41EAC900319C11 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -36,6 +38,8 @@
 		25D08B301C41EAC900319C11 /* BumblTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BumblTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D08B341C41EAC900319C11 /* BumblTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BumblTests.swift; sourceTree = "<group>"; };
 		25D08B361C41EAC900319C11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4CFBF85138A5896BF8A5BBC7 /* Pods_Bumbl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bumbl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4FD8070715456C8228E9513 /* Pods-Bumbl.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bumbl.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bumbl/Pods-Bumbl.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				727F385512EE3E865BC89483 /* Pods_Bumbl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,12 +61,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0E89F6D36059E4195C59D4FC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4CFBF85138A5896BF8A5BBC7 /* Pods_Bumbl.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		25D08B131C41EAC900319C11 = {
 			isa = PBXGroup;
 			children = (
 				25D08B1E1C41EAC900319C11 /* Bumbl */,
 				25D08B331C41EAC900319C11 /* BumblTests */,
 				25D08B1D1C41EAC900319C11 /* Products */,
+				2D938AD1DF2507A65D8A7366 /* Pods */,
+				0E89F6D36059E4195C59D4FC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -96,6 +111,15 @@
 			path = BumblTests;
 			sourceTree = "<group>";
 		};
+		2D938AD1DF2507A65D8A7366 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2592264BB6C1997D49E7DB78 /* Pods-Bumbl.debug.xcconfig */,
+				D4FD8070715456C8228E9513 /* Pods-Bumbl.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -103,9 +127,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 25D08B391C41EAC900319C11 /* Build configuration list for PBXNativeTarget "Bumbl" */;
 			buildPhases = (
+				C8900F63D75ABA61967F5A3F /* Check Pods Manifest.lock */,
 				25D08B181C41EAC900319C11 /* Sources */,
 				25D08B191C41EAC900319C11 /* Frameworks */,
 				25D08B1A1C41EAC900319C11 /* Resources */,
+				3A4B358627C1522074A64304 /* Embed Pods Frameworks */,
+				3097623FB70CBDD1FD845AA1 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -192,6 +219,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3097623FB70CBDD1FD845AA1 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bumbl/Pods-Bumbl-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3A4B358627C1522074A64304 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Bumbl/Pods-Bumbl-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C8900F63D75ABA61967F5A3F /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		25D08B181C41EAC900319C11 /* Sources */ = {
@@ -324,6 +399,7 @@
 		};
 		25D08B3A1C41EAC900319C11 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2592264BB6C1997D49E7DB78 /* Pods-Bumbl.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -336,6 +412,7 @@
 		};
 		25D08B3B1C41EAC900319C11 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D4FD8070715456C8228E9513 /* Pods-Bumbl.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -389,6 +466,7 @@
 				25D08B3B1C41EAC900319C11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		25D08B3C1C41EAC900319C11 /* Build configuration list for PBXNativeTarget "BumblTests" */ = {
 			isa = XCConfigurationList;
@@ -397,6 +475,7 @@
 				25D08B3E1C41EAC900319C11 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
