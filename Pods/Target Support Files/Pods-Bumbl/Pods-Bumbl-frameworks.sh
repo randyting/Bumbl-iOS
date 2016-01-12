@@ -82,10 +82,3 @@ strip_invalid_archs() {
   fi
 }
 
-
-if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "Pods-Bumbl/Bean_iOS_OSX_SDK.framework"
-fi
-if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "Pods-Bumbl/Bean_iOS_OSX_SDK.framework"
-fi
