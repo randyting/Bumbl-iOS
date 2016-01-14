@@ -178,6 +178,7 @@
 				25D08B1A1C41EAC900319C11 /* Resources */,
 				3A4B358627C1522074A64304 /* Embed Pods Frameworks */,
 				3097623FB70CBDD1FD845AA1 /* Copy Pods Resources */,
+				25F7F8671C4790F000C227FD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -266,6 +267,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		25F7F8671C4790F000C227FD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 599c5ecb4714ad6e5a3541f7e2fea5b4060f7dd0 1b9697470749d08e0e967b94ec11efe400daa0cfefd8792b703aa3e1991eaafd";
+		};
 		3097623FB70CBDD1FD845AA1 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -431,6 +445,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = "$(SRCROOT)/Bumbl/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.randyting.Bumbl;

@@ -1,5 +1,6 @@
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Crashlytics/iOS" "${PODS_ROOT}/Digits/iOS" "${PODS_ROOT}/Fabric/iOS" "${PODS_ROOT}/TwitterCore/iOS"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(SRCROOT)/../bean-apple-sdk/source/Public $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Bean-iOS-OSX-SDK"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Bean-iOS-OSX-SDK"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"Bean-iOS-OSX-SDK" -framework "CoreBluetooth"
+HEADER_SEARCH_PATHS = $(SRCROOT)/../bean-apple-sdk/source/Public $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Bean-iOS-OSX-SDK" "${PODS_ROOT}/Headers/Public/Crashlytics" "${PODS_ROOT}/Headers/Public/Digits" "${PODS_ROOT}/Headers/Public/Fabric" "${PODS_ROOT}/Headers/Public/TwitterCore"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Bean-iOS-OSX-SDK" -isystem "${PODS_ROOT}/Headers/Public/Crashlytics" -isystem "${PODS_ROOT}/Headers/Public/Digits" -isystem "${PODS_ROOT}/Headers/Public/Fabric" -isystem "${PODS_ROOT}/Headers/Public/TwitterCore"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"Bean-iOS-OSX-SDK" -l"c++" -l"z" -framework "Accounts" -framework "AddressBook" -framework "CoreBluetooth" -framework "CoreData" -framework "CoreGraphics" -framework "Crashlytics" -framework "DigitsKit" -framework "Fabric" -framework "Foundation" -framework "SafariServices" -framework "Security" -framework "Social" -framework "SystemConfiguration" -framework "TwitterCore" -framework "UIKit"
 PODS_ROOT = ${SRCROOT}/Pods

@@ -1,10 +1,25 @@
 PODS:
   - Bean-iOS-OSX-SDK (0.10.1)
+  - Crashlytics (3.6.0):
+    - Fabric (~> 1.6.3)
+  - Digits (1.15.1):
+    - TwitterCore (= 1.15.1)
+  - Fabric (1.6.3)
+  - TwitterCore (1.15.1):
+    - Fabric
 
 DEPENDENCIES:
   - Bean-iOS-OSX-SDK
+  - Crashlytics
+  - Digits
+  - Fabric
+  - TwitterCore
 
 SPEC CHECKSUMS:
   Bean-iOS-OSX-SDK: 0a79eab21e5bbb276e4f42a19d894ba947accf02
+  Crashlytics: e4e8d02914f2608fbc7bf42b1a7af838b0db67a2
+  Digits: 369c517143ab4f9f35d77628540493a2042f8cc2
+  Fabric: cbe0ca6c9531bba17910052f6f105fcbc5fa7f67
+  TwitterCore: 12983a7464e34afbbf18881347898a9db526ac71
 
 COCOAPODS: 0.39.0
