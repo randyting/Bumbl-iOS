@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		259A39FF1C4B963B00706E6A /* BBLSensorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */; };
 		25B973541C44F6EB00C5E099 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25B973531C44F6EB00C5E099 /* Assets.xcassets */; };
 		25B973561C44F7A000C5E099 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */; };
 		25B973581C44F7A800C5E099 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25B973571C44F7A800C5E099 /* Main.storyboard */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		2592264BB6C1997D49E7DB78 /* Pods-Bumbl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bumbl.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bumbl/Pods-Bumbl.debug.xcconfig"; sourceTree = "<group>"; };
+		259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensorManager.swift; path = Managers/BBLSensorManager.swift; sourceTree = "<group>"; };
 		25B973531C44F6EB00C5E099 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SupportingFiles/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		25B973571C44F7A800C5E099 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ViewControllers/Main.storyboard; sourceTree = "<group>"; };
@@ -70,6 +72,14 @@
 				E321764C20B9583306C1F4CD /* libPods-Bumbl.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		259A39FD1C4B960C00706E6A /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */,
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 		25B9734E1C44F5CF00C5E099 /* Models */ = {
@@ -143,6 +153,7 @@
 				25B973501C44F5E900C5E099 /* Clients */,
 				25B9734F1C44F5DD00C5E099 /* ViewControllers */,
 				25B9734E1C44F5CF00C5E099 /* Models */,
+				259A39FD1C4B960C00706E6A /* Managers */,
 			);
 			path = Bumbl;
 			sourceTree = "<group>";
@@ -334,6 +345,7 @@
 			files = (
 				25D08B221C41EAC900319C11 /* ViewController.swift in Sources */,
 				25D08B201C41EAC900319C11 /* AppDelegate.swift in Sources */,
+				259A39FF1C4B963B00706E6A /* BBLSensorManager.swift in Sources */,
 				25B9735A1C44F94D00C5E099 /* BBLSensor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

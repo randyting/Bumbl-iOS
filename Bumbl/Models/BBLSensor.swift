@@ -10,11 +10,18 @@ import UIKit
 
 class BBLSensor: NSObject {
   
-// MARK: Public variables
+// MARK: Constants
+  private let kCapSenseValueCharacteristicUUID = ""
+  static private let kDefaultCapSenseThreshold = 50
+  
+// MARK: Public Variables
+  internal var RSSI: NSNumber?
+  
+// MARK: Private Variables
   private(set) var hasBaby:Bool? {
     get {
-      if let _ = strainGaugeValue {
-        return strainGaugeValue > strainGaugeThreshold
+      if let _ = capSenseValue {
+        return capSenseValue > capSenseThreshold
       } else {
         return false // If no strain gauge value read
       }
@@ -24,42 +31,57 @@ class BBLSensor: NSObject {
     }
   }
   
-  private let bean:PTDBean?
-  private var strainGaugeValue:UInt16?
-  private var strainGaugeThreshold:UInt16!
-  
+  private let peripheral:CBPeripheral?
+  private var capSenseValue:Int?
+  private var capSenseThreshold:Int!
   
 // MARK: Initialization
   
-  // Initializer for instantating an existing bean loaded from the server or persistent storage.
-  init(withBean bean: PTDBean?, fromJSONDictionary dictionary: NSDictionary) {
-    self.bean = bean
-    super.init()
-  }
-  
   // Initializer for instantiating a new bean that is not registered to a parent, but detected by bluetooth radio.
-  init(withBean bean: PTDBean!, withStrainGaugeThreshold threshold: UInt16) {
-    self.bean = bean
-    self.strainGaugeThreshold = threshold
+  internal init(withPeripheral peripheral: CBPeripheral!, withCapSenseThreshold capSenseThreshold: Int) {
+    self.peripheral = peripheral
+    self.capSenseThreshold = capSenseThreshold
     super.init()
     
-    bean.delegate = self
+    peripheral.delegate = self
+    
+    // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
+  }
+  
+// MARK: Class Methods 
+  
+  // Class initializer for instantating an existing peripheral loaded from the server or persistent storage.
+  class func sensorWith(peripheral: CBPeripheral?, fromJSONDictionary dictionary: NSDictionary) -> BBLSensor {
+    //TODO: Parse JSON and initialize values
+    let capSenseThreshFromJSON = 30
+    return BBLSensor.init(withPeripheral: peripheral, withCapSenseThreshold: capSenseThreshFromJSON)
+  }
+  
+  // Class initializer for instantating a sensor from connection.
+  class func sensorWith(peripheral: CBPeripheral!) -> BBLSensor {
+    return BBLSensor.init(withPeripheral: peripheral, withCapSenseThreshold: kDefaultCapSenseThreshold)
   }
   
 }
 
-// MARK: PTDBean Delegate
+// MARK: CBPeripheralDelegate
 
-extension BBLSensor:PTDBeanDelegate {
+extension BBLSensor: CBPeripheralDelegate {
   
-  internal func beanDidUpdateRSSI(bean: PTDBean!, error: NSError!) {
-    // TODO: (RT) Display to user how close bean is to phone.
+  internal func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+    let uuid = characteristic.UUID
+    
+    if uuid == kCapSenseValueCharacteristicUUID {
+      var value = 0
+      characteristic.value?.getBytes(&value, length: sizeof(Int))
+      capSenseValue = value
+    }
   }
   
-  internal func bean(bean: PTDBean!, didUpdateScratchBank bank: Int, data: NSData!) {
-    var adcValue:UInt16 = 0;
-    data.getBytes(&adcValue, length: sizeof(UInt16))
-    strainGaugeValue = max(600 - adcValue, 0)
+  internal func peripheralDidUpdateRSSI(peripheral: CBPeripheral, error: NSError?) {
+    // TODO: Check to see if this still works
+    RSSI = peripheral.RSSI
   }
+  
 }
 
