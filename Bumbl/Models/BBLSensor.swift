@@ -11,7 +11,7 @@ import UIKit
 class BBLSensor: NSObject {
   
 // MARK: Constants
-  private let kCapSenseValueCharacteristicUUID = ""
+  private let kCapSenseValueCharacteristicUUID = CBUUID.init(string: "")
   static private let kDefaultCapSenseThreshold = 50
   
 // MARK: Public Variables
