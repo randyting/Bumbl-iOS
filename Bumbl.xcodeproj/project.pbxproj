@@ -7,13 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		259A39FF1C4B963B00706E6A /* BBLSensorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */; };
+		259A3A011C4CBC3C00706E6A /* BBLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A3A001C4CBC3C00706E6A /* BBLConstants.swift */; };
 		25B973541C44F6EB00C5E099 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25B973531C44F6EB00C5E099 /* Assets.xcassets */; };
 		25B973561C44F7A000C5E099 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */; };
 		25B973581C44F7A800C5E099 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25B973571C44F7A800C5E099 /* Main.storyboard */; };
+		25B9735A1C44F94D00C5E099 /* BBLSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B973591C44F94D00C5E099 /* BBLSensor.swift */; };
 		25D08B201C41EAC900319C11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D08B1F1C41EAC900319C11 /* AppDelegate.swift */; };
 		25D08B221C41EAC900319C11 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D08B211C41EAC900319C11 /* ViewController.swift */; };
 		25D08B351C41EAC900319C11 /* BumblTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D08B341C41EAC900319C11 /* BumblTests.swift */; };
-		727F385512EE3E865BC89483 /* Pods_Bumbl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CFBF85138A5896BF8A5BBC7 /* Pods_Bumbl.framework */; };
+		E83705905EDF82EA44FBFCB0 /* libPods-Bumbl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E321764C20B9583306C1F4CD /* libPods-Bumbl.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,9 +31,13 @@
 
 /* Begin PBXFileReference section */
 		2592264BB6C1997D49E7DB78 /* Pods-Bumbl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bumbl.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bumbl/Pods-Bumbl.debug.xcconfig"; sourceTree = "<group>"; };
+		259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensorManager.swift; path = Managers/BBLSensorManager.swift; sourceTree = "<group>"; };
+		259A3A001C4CBC3C00706E6A /* BBLConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLConstants.swift; path = SupportingFiles/BBLConstants.swift; sourceTree = "<group>"; };
 		25B973531C44F6EB00C5E099 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SupportingFiles/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		25B973571C44F7A800C5E099 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ViewControllers/Main.storyboard; sourceTree = "<group>"; };
+		25B973591C44F94D00C5E099 /* BBLSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensor.swift; path = Models/BBLSensor.swift; sourceTree = "<group>"; };
+		25B9735B1C44F9FA00C5E099 /* Bumbl-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Bumbl-Bridging-Header.h"; path = "SupportingFiles/Bumbl-Bridging-Header.h"; sourceTree = "<group>"; };
 		25D08B1C1C41EAC900319C11 /* Bumbl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bumbl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D08B1F1C41EAC900319C11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = SupportingFiles/AppDelegate.swift; sourceTree = "<group>"; };
 		25D08B211C41EAC900319C11 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ViewControllers/ViewController.swift; sourceTree = "<group>"; };
@@ -38,8 +45,8 @@
 		25D08B301C41EAC900319C11 /* BumblTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BumblTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D08B341C41EAC900319C11 /* BumblTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BumblTests.swift; sourceTree = "<group>"; };
 		25D08B361C41EAC900319C11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4CFBF85138A5896BF8A5BBC7 /* Pods_Bumbl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bumbl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4FD8070715456C8228E9513 /* Pods-Bumbl.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bumbl.release.xcconfig"; path = "Pods/Target Support Files/Pods-Bumbl/Pods-Bumbl.release.xcconfig"; sourceTree = "<group>"; };
+		E321764C20B9583306C1F4CD /* libPods-Bumbl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bumbl.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,7 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				727F385512EE3E865BC89483 /* Pods_Bumbl.framework in Frameworks */,
+				E83705905EDF82EA44FBFCB0 /* libPods-Bumbl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,14 +71,23 @@
 		0E89F6D36059E4195C59D4FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4CFBF85138A5896BF8A5BBC7 /* Pods_Bumbl.framework */,
+				E321764C20B9583306C1F4CD /* libPods-Bumbl.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		259A39FD1C4B960C00706E6A /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */,
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 		25B9734E1C44F5CF00C5E099 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				25B973591C44F94D00C5E099 /* BBLSensor.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -95,9 +111,11 @@
 		25B973511C44F5F500C5E099 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				25B9735B1C44F9FA00C5E099 /* Bumbl-Bridging-Header.h */,
 				25D08B2B1C41EAC900319C11 /* Info.plist */,
 				25D08B1F1C41EAC900319C11 /* AppDelegate.swift */,
 				25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */,
+				259A3A001C4CBC3C00706E6A /* BBLConstants.swift */,
 			);
 			name = SupportingFiles;
 			sourceTree = "<group>";
@@ -138,6 +156,7 @@
 				25B973501C44F5E900C5E099 /* Clients */,
 				25B9734F1C44F5DD00C5E099 /* ViewControllers */,
 				25B9734E1C44F5CF00C5E099 /* Models */,
+				259A39FD1C4B960C00706E6A /* Managers */,
 			);
 			path = Bumbl;
 			sourceTree = "<group>";
@@ -173,6 +192,7 @@
 				25D08B1A1C41EAC900319C11 /* Resources */,
 				3A4B358627C1522074A64304 /* Embed Pods Frameworks */,
 				3097623FB70CBDD1FD845AA1 /* Copy Pods Resources */,
+				25F7F8671C4790F000C227FD /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -214,6 +234,11 @@
 					25D08B1B1C41EAC900319C11 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = FGTTBWXGA6;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					25D08B2F1C41EAC900319C11 = {
 						CreatedOnToolsVersion = 7.2;
@@ -261,6 +286,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		25F7F8671C4790F000C227FD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 599c5ecb4714ad6e5a3541f7e2fea5b4060f7dd0 1b9697470749d08e0e967b94ec11efe400daa0cfefd8792b703aa3e1991eaafd";
+		};
 		3097623FB70CBDD1FD845AA1 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -313,8 +351,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				259A3A011C4CBC3C00706E6A /* BBLConstants.swift in Sources */,
 				25D08B221C41EAC900319C11 /* ViewController.swift in Sources */,
 				25D08B201C41EAC900319C11 /* AppDelegate.swift in Sources */,
+				259A39FF1C4B963B00706E6A /* BBLSensorManager.swift in Sources */,
+				25B9735A1C44F94D00C5E099 /* BBLSensor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,11 +464,15 @@
 			baseConfigurationReference = 2592264BB6C1997D49E7DB78 /* Pods-Bumbl.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = "$(SRCROOT)/Bumbl/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.randyting.Bumbl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bumbl/SupportingFiles/Bumbl-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -436,11 +481,13 @@
 			baseConfigurationReference = D4FD8070715456C8228E9513 /* Pods-Bumbl.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "$(SRCROOT)/Bumbl/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.randyting.Bumbl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Bumbl/SupportingFiles/Bumbl-Bridging-Header.h";
 			};
 			name = Release;
 		};
