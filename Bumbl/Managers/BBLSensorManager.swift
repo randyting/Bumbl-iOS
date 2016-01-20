@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreBluetooth
 
 
 @objc protocol BBLSensorManagerDelegate {
@@ -20,6 +21,7 @@ import UIKit
 class BBLSensorManager: NSObject {
   
   // MARK: Public Variables
+  
   internal weak var delegate:BBLSensorManagerDelegate?
   internal var connectedSensors = Set<BBLSensor>()
   internal var discoveredSensors = Set<BBLSensor>()
@@ -31,9 +33,11 @@ class BBLSensorManager: NSObject {
   }
   
   // MARK: Private Variables
+  
   private let centralManager:CBCentralManager!
   
   // MARK: Initialization
+  
   internal init(withCentralManager centralManager: CBCentralManager!,
                             withDelegate delegate:BBLSensorManagerDelegate?,
                 withProfileSensors profileSensors:NSMutableSet?) {
@@ -51,6 +55,7 @@ class BBLSensorManager: NSObject {
   }
   
   // MARK: Access
+  
   internal func scanForSensors(){
     guard state == .PoweredOn else {
       delegate?.sensorManager?(self, didAttemptToScanWhileBluetoothRadioIsOff: true)
@@ -70,6 +75,7 @@ class BBLSensorManager: NSObject {
   }
   
 // MARK: Connection
+  
   internal func connectToSensor(sensor: BBLSensor!) {
     centralManager.connectPeripheral(sensor.peripheral!, options: nil)
   }
@@ -81,6 +87,7 @@ class BBLSensorManager: NSObject {
 }
 
 // MARK: CBCentralManagerDelegate
+
 extension BBLSensorManager: CBCentralManagerDelegate {
   
   internal func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {

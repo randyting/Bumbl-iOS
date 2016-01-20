@@ -10,6 +10,7 @@ import UIKit
 import Fabric
 import Crashlytics
 import DigitsKit
+import CoreBluetooth
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,15 +25,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: notificationTypes, categories: nil))
     
     Fabric.with([Crashlytics.self, Digits.self])
+    
+    BBLSensor.registerSubclass()
+    Parse.setApplicationId("HHgxoEaLenjAwxhAqOGziC9SkHaIi4oeTibRFczc", clientKey: "fK00wH0VssppmFZywgP6pRQQUhvsqLpGG6HYFu5u")
 
     sensorManager = BBLSensorManager(withCentralManager: CBCentralManager(),
                             withDelegate: self,
                       withProfileSensors: nil)
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  Int64(0.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
       // Must wait for sensorManager to be in powered on state before scanning
       self.sensorManager?.scanForSensors()
     }
-
+    
+//    let sensor = BBLSensor()
+    
+    let sensor = BBLSensor.init(withPeripheral: nil, withSensorManager: sensorManager, withUUID: "testuuid", withCapSenseThreshold: 60, withDelegate: nil)
     
     return true
   }

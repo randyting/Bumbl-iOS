@@ -58,14 +58,18 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "Bean-iOS-OSX-SDK/firmware/201504270003_BEAN_imgA.bin"
-  install_resource "Bean-iOS-OSX-SDK/firmware/201504270003_BEAN_imgB.bin"
   install_resource "Digits/iOS/DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle"
+  install_resource "Parse/Parse/Resources/en.lproj"
+  install_resource "ParseUI/ParseUI/Resources/Localization/en.lproj"
+  install_resource "ParseUI/ParseUI/Resources/Localization/fr.lproj"
+  install_resource "ParseUI/ParseUI/Resources/Localization/pt-BR.lproj"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "Bean-iOS-OSX-SDK/firmware/201504270003_BEAN_imgA.bin"
-  install_resource "Bean-iOS-OSX-SDK/firmware/201504270003_BEAN_imgB.bin"
   install_resource "Digits/iOS/DigitsKit.framework/Versions/A/Resources/DigitsKitResources.bundle"
+  install_resource "Parse/Parse/Resources/en.lproj"
+  install_resource "ParseUI/ParseUI/Resources/Localization/en.lproj"
+  install_resource "ParseUI/ParseUI/Resources/Localization/fr.lproj"
+  install_resource "ParseUI/ParseUI/Resources/Localization/pt-BR.lproj"
 fi
 
 mkdir -p "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

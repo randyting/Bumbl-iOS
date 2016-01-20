@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreBluetooth
 
 /// BLE service UUID that all sensors advertise.  The characteristics we use must be under this service.
 let kSensorServiceUUID = CBUUID.init(string: "DCD68980-AADC-11E1-A22A-0002A5D5C51B")

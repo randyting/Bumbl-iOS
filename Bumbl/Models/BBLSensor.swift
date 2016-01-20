@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreBluetooth
 
 @objc protocol BBLSensorDelegate {
   optional func sensor(sensor: BBLSensor, didUpdateRSSI rssi: NSNumber)
@@ -14,13 +15,28 @@ import UIKit
   optional func sensor(sensor: BBLSensor, didDisconnect disconnnected: Bool)
 }
 
-class BBLSensor: NSObject {
+class BBLSensor: PFObject, PFSubclassing {
+  
+// MARK: PFObject Subclassing
+  
+  override class func initialize() {
+    struct Static {
+      static var onceToken : dispatch_once_t = 0;
+    }
+    dispatch_once(&Static.onceToken) {
+      self.registerSubclass()
+    }
+  }
+  
+  static func parseClassName() -> String {
+    return "BabySensor"
+  }
   
 // MARK: Public Variables
   internal weak var delegate: BBLSensorDelegate?
   internal var rssi: NSNumber?
   internal var peripheral:CBPeripheral?
-  private(set) var uuid: String?
+  @NSManaged private(set) var uuid: String?
   private(set) var hasBaby:Bool? {
     get {
       if let _ = capSenseValue {
@@ -37,24 +53,40 @@ class BBLSensor: NSObject {
 // MARK: Private Variables
   private weak var sensorManager: BBLSensorManager!
   private var capSenseValue:Int?
-  private var capSenseThreshold:Int!
+  @NSManaged private var capSenseThreshold:Int
   
 // MARK: Initialization
   
   // Designated initializer
-  internal init(withPeripheral peripheral: CBPeripheral?,
+  internal convenience init(withPeripheral peripheral: CBPeripheral?,
           withSensorManager sensorManager: BBLSensorManager!,
                             withUUID uuid: String!,
   withCapSenseThreshold capSenseThreshold: Int,
                     withDelegate delegate: BBLSensorDelegate?) {
-    
+    self.init()
     self.peripheral = peripheral
     self.sensorManager = sensorManager
     self.uuid = uuid
     self.capSenseThreshold = capSenseThreshold
     self.delegate = delegate
-    
-    super.init()
+                      
+    let query = PFQuery(className: "BabySensor")
+    query.whereKey("uuid", equalTo: uuid)
+    query.findObjectsInBackgroundWithBlock { (sensors:[PFObject]?, error:NSError?) -> Void in
+      
+      if let error = error {
+        print(error.localizedDescription)
+        return
+      }
+      
+      if let storedSensor = sensors?.first as? BBLSensor {
+        self.objectId = storedSensor.objectId
+        self.uuid = storedSensor.uuid
+        self.capSenseThreshold = storedSensor.capSenseThreshold
+      } else {
+        self.saveInBackground()
+      }
+    }
     
     peripheral?.delegate = self
   }
