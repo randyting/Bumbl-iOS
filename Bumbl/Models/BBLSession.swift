@@ -18,7 +18,7 @@ class BBLSession: NSObject {
       self.sensorManager = sensorManager
       super.init()
       
-      startScanWithSensorManager(sensorManager)
+      self.startScanWithSensorManager(sensorManager)
   }
   
   private func startScanWithSensorManager(sensorManager: BBLSensorManager) {
@@ -29,7 +29,7 @@ class BBLSession: NSObject {
       dispatch_get_main_queue()) {
         () -> Void in
         // Must wait for sensorManager to be in powered on state before scanning
-       sensorManager.scanForSensors()
+        sensorManager.scanForSensors()
     }
   }
   

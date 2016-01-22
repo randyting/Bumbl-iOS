@@ -45,11 +45,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   internal func parentDidLogout() {
-    BBLParent.logOut()
-    currentSession = nil
+    updateConnectionStatusForParent((currentSession?.parent)!)
     let loginViewController = BBLLoginViewController()
     loginViewController.delegate = self
     window?.rootViewController = loginViewController
+  }
+  
+  private func updateConnectionStatusForParent(parent: BBLParent) {
+        let query = PFQuery(className: "BabySensor")
+        query.whereKey("connectedParent", equalTo: parent)
+        query.findObjectsInBackgroundWithBlock {(sensors:[PFObject]?, error:NSError?) -> Void in
+    
+          if let error = error {
+            print(error.localizedDescription)
+            return
+          }
+          
+          if let sensors = sensors as? [BBLSensor]{
+            for sensor in sensors {
+              sensor.updateToDisconnectedState()
+            }
+            BBLSensor.saveAllInBackground(sensors, block: { (success: Bool, error: NSError?) -> Void in
+              BBLParent.logOut()
+              self.currentSession = nil
+            })
+          } else {
+            BBLParent.logOut()
+            self.currentSession = nil
+          }
+    }
   }
   
   private func setupParse() {
@@ -94,14 +118,18 @@ extension AppDelegate: PFLogInViewControllerDelegate {
   
   internal func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
     let loggedInParent = BBLParent.loggedInParent()
-    loggedInParent.syncSensors()
     
-    currentSession = BBLSession(withParent: loggedInParent,
-                          withSensorManager: BBLSensorManager(withCentralManager: CBCentralManager(),
-                                                                    withDelegate: nil,
-                                                              withProfileSensors: loggedInParent.profileSensors))
+    BBLSensor.fetchAllInBackground(loggedInParent.sensors) { (result: [AnyObject]?, error: NSError?) -> Void in
+      loggedInParent.syncSensors()
+      
+      self.currentSession = BBLSession(withParent: loggedInParent,
+                                withSensorManager: BBLSensorManager(withCentralManager: CBCentralManager(),
+                                                                          withDelegate: nil,
+                                                                    withProfileSensors: loggedInParent.profileSensors))
+      self.setupViewsAfterLoginWithSession(self.currentSession!)
+    }
     
-    setupViewsAfterLoginWithSession(currentSession!)
+    
   }
   
   internal func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {

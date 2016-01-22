@@ -37,6 +37,7 @@ class BBLSensor: PFObject, PFSubclassing {
   internal weak var delegate: BBLSensorDelegate?
   internal var rssi: NSNumber?
   internal var peripheral:CBPeripheral?
+  internal weak var sensorManager: BBLSensorManager!
   
   private(set) var hasBaby:Bool? {
     get {
@@ -54,7 +55,6 @@ class BBLSensor: PFObject, PFSubclassing {
 // MARK: Private Variables
   @NSManaged private var capSenseThreshold:Int
   @NSManaged private var connectedParent:BBLParent?
-  private weak var sensorManager: BBLSensorManager!
   private var capSenseValue:Int?
   
   
@@ -73,23 +73,23 @@ class BBLSensor: PFObject, PFSubclassing {
     self.capSenseThreshold = capSenseThreshold
     self.delegate = delegate
                       
-    let query = PFQuery(className: "BabySensor")
-    query.whereKey("uuid", equalTo: uuid)
-    query.findObjectsInBackgroundWithBlock { (sensors:[PFObject]?, error:NSError?) -> Void in
-      
-      if let error = error {
-        print(error.localizedDescription)
-        return
-      }
-      
-      if let storedSensor = sensors?.first as? BBLSensor {
-        self.objectId = storedSensor.objectId
-        self.uuid = storedSensor.uuid
-        self.capSenseThreshold = storedSensor.capSenseThreshold
-      } else {
-        self.saveInBackground()
-      }
-    }
+//    let query = PFQuery(className: "BabySensor")
+//    query.whereKey("uuid", equalTo: uuid)
+//    query.findObjectsInBackgroundWithBlock {(sensors:[PFObject]?, error:NSError?) -> Void in
+//      
+//      if let error = error {
+//        print(error.localizedDescription)
+//        return
+//      }
+//      
+//      if let storedSensor = sensors?.first as? BBLSensor {
+//        self.objectId = storedSensor.objectId
+//        self.uuid = storedSensor.uuid
+//        self.capSenseThreshold = storedSensor.capSenseThreshold
+//      } else {
+//        self.saveInBackground()
+//      }
+//    }
     
     peripheral?.delegate = self
   }
@@ -122,15 +122,6 @@ class BBLSensor: PFObject, PFSubclassing {
         withCapSenseThreshold: kDefaultCapSenseThreshold,
         withDelegate: nil)
       
-  }
-  
-// MARK: Access
-  internal func addToProfile() {
-    // TODO: Add sensor to current logged in parent's profile.
-  }
-  
-  internal func removeFromProfile() {
-    // TODO: Remove sensor from current logged in parent's profile.
   }
 
 // MARK: Connection
@@ -177,6 +168,10 @@ class BBLSensor: PFObject, PFSubclassing {
     notification.repeatInterval = NSCalendarUnit.Second
     notification.soundName = "default" //required for vibration?
     UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+  }
+  
+  internal func updateToDisconnectedState() {
+    connectedParent = nil
   }
   
 }

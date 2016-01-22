@@ -140,6 +140,7 @@ extension BBLSensorManager: CBCentralManagerDelegate {
         let thisSensor = sensor as! BBLSensor
         if thisSensor.uuid == uuid {
           delegate?.sensorManager?(self, didDiscoverSensor: thisSensor)
+          thisSensor.sensorManager = self
           thisSensor.peripheral = peripheral
           thisSensor.connect()
           return

@@ -10,7 +10,7 @@ import UIKit
 
 class BBLParent: PFUser {
   
-  @NSManaged private var sensors:[BBLSensor]?
+  @NSManaged internal var sensors:[BBLSensor]?
   private(set) var profileSensors:NSMutableSet!
 
 // MARK: Synchronization
