@@ -7,14 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2533A5181C51E71B000F9562 /* BBLLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533A5171C51E71B000F9562 /* BBLLoginViewController.swift */; };
+		2533A51B1C51EC7B000F9562 /* BBLMySensorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533A5191C51EC7B000F9562 /* BBLMySensorsViewController.swift */; };
+		2533A51C1C51EC7B000F9562 /* BBLMySensorsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2533A51A1C51EC7B000F9562 /* BBLMySensorsViewController.xib */; };
+		2533A51E1C520897000F9562 /* BBLSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533A51D1C520897000F9562 /* BBLSession.swift */; };
+		2533A5211C5211F5000F9562 /* BBLConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533A51F1C5211F5000F9562 /* BBLConnectionViewController.swift */; };
+		2533A5221C5211F5000F9562 /* BBLConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2533A5201C5211F5000F9562 /* BBLConnectionViewController.xib */; };
 		259A39FF1C4B963B00706E6A /* BBLSensorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */; };
 		259A3A011C4CBC3C00706E6A /* BBLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A3A001C4CBC3C00706E6A /* BBLConstants.swift */; };
 		25B973541C44F6EB00C5E099 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25B973531C44F6EB00C5E099 /* Assets.xcassets */; };
 		25B973561C44F7A000C5E099 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */; };
-		25B973581C44F7A800C5E099 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25B973571C44F7A800C5E099 /* Main.storyboard */; };
 		25B9735A1C44F94D00C5E099 /* BBLSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B973591C44F94D00C5E099 /* BBLSensor.swift */; };
 		25D08B201C41EAC900319C11 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D08B1F1C41EAC900319C11 /* AppDelegate.swift */; };
-		25D08B221C41EAC900319C11 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D08B211C41EAC900319C11 /* ViewController.swift */; };
 		25D08B351C41EAC900319C11 /* BumblTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D08B341C41EAC900319C11 /* BumblTests.swift */; };
 		25F3E2881C4F735800E2F852 /* BBLParent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3E2871C4F735800E2F852 /* BBLParent.swift */; };
 		E83705905EDF82EA44FBFCB0 /* libPods-Bumbl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E321764C20B9583306C1F4CD /* libPods-Bumbl.a */; };
@@ -31,17 +35,21 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2533A5171C51E71B000F9562 /* BBLLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLLoginViewController.swift; path = ViewControllers/BBLLoginViewController.swift; sourceTree = "<group>"; };
+		2533A5191C51EC7B000F9562 /* BBLMySensorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLMySensorsViewController.swift; path = ViewControllers/BBLMySensorsViewController.swift; sourceTree = "<group>"; };
+		2533A51A1C51EC7B000F9562 /* BBLMySensorsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLMySensorsViewController.xib; path = ViewControllers/BBLMySensorsViewController.xib; sourceTree = "<group>"; };
+		2533A51D1C520897000F9562 /* BBLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSession.swift; path = Models/BBLSession.swift; sourceTree = "<group>"; };
+		2533A51F1C5211F5000F9562 /* BBLConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLConnectionViewController.swift; path = ViewControllers/BBLConnectionViewController.swift; sourceTree = "<group>"; };
+		2533A5201C5211F5000F9562 /* BBLConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLConnectionViewController.xib; path = ViewControllers/BBLConnectionViewController.xib; sourceTree = "<group>"; };
 		2592264BB6C1997D49E7DB78 /* Pods-Bumbl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bumbl.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bumbl/Pods-Bumbl.debug.xcconfig"; sourceTree = "<group>"; };
 		259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensorManager.swift; path = Managers/BBLSensorManager.swift; sourceTree = "<group>"; };
 		259A3A001C4CBC3C00706E6A /* BBLConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLConstants.swift; path = SupportingFiles/BBLConstants.swift; sourceTree = "<group>"; };
 		25B973531C44F6EB00C5E099 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SupportingFiles/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		25B973571C44F7A800C5E099 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = ViewControllers/Main.storyboard; sourceTree = "<group>"; };
 		25B973591C44F94D00C5E099 /* BBLSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensor.swift; path = Models/BBLSensor.swift; sourceTree = "<group>"; };
 		25B9735B1C44F9FA00C5E099 /* Bumbl-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Bumbl-Bridging-Header.h"; path = "SupportingFiles/Bumbl-Bridging-Header.h"; sourceTree = "<group>"; };
 		25D08B1C1C41EAC900319C11 /* Bumbl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bumbl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D08B1F1C41EAC900319C11 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = SupportingFiles/AppDelegate.swift; sourceTree = "<group>"; };
-		25D08B211C41EAC900319C11 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = ViewControllers/ViewController.swift; sourceTree = "<group>"; };
 		25D08B2B1C41EAC900319C11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = SupportingFiles/Info.plist; sourceTree = "<group>"; };
 		25D08B301C41EAC900319C11 /* BumblTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BumblTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D08B341C41EAC900319C11 /* BumblTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BumblTests.swift; sourceTree = "<group>"; };
@@ -91,6 +99,7 @@
 			children = (
 				25B973591C44F94D00C5E099 /* BBLSensor.swift */,
 				25F3E2871C4F735800E2F852 /* BBLParent.swift */,
+				2533A51D1C520897000F9562 /* BBLSession.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -98,8 +107,11 @@
 		25B9734F1C44F5DD00C5E099 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				25D08B211C41EAC900319C11 /* ViewController.swift */,
-				25B973571C44F7A800C5E099 /* Main.storyboard */,
+				2533A5171C51E71B000F9562 /* BBLLoginViewController.swift */,
+				2533A5191C51EC7B000F9562 /* BBLMySensorsViewController.swift */,
+				2533A51A1C51EC7B000F9562 /* BBLMySensorsViewController.xib */,
+				2533A51F1C5211F5000F9562 /* BBLConnectionViewController.swift */,
+				2533A5201C5211F5000F9562 /* BBLConnectionViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -273,9 +285,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25B973581C44F7A800C5E099 /* Main.storyboard in Resources */,
 				25B973541C44F6EB00C5E099 /* Assets.xcassets in Resources */,
 				25B973561C44F7A000C5E099 /* LaunchScreen.storyboard in Resources */,
+				2533A51C1C51EC7B000F9562 /* BBLMySensorsViewController.xib in Resources */,
+				2533A5221C5211F5000F9562 /* BBLConnectionViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,12 +367,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2533A5181C51E71B000F9562 /* BBLLoginViewController.swift in Sources */,
 				25F3E2881C4F735800E2F852 /* BBLParent.swift in Sources */,
 				259A3A011C4CBC3C00706E6A /* BBLConstants.swift in Sources */,
-				25D08B221C41EAC900319C11 /* ViewController.swift in Sources */,
 				25D08B201C41EAC900319C11 /* AppDelegate.swift in Sources */,
 				259A39FF1C4B963B00706E6A /* BBLSensorManager.swift in Sources */,
+				2533A51B1C51EC7B000F9562 /* BBLMySensorsViewController.swift in Sources */,
+				2533A5211C5211F5000F9562 /* BBLConnectionViewController.swift in Sources */,
 				25B9735A1C44F94D00C5E099 /* BBLSensor.swift in Sources */,
+				2533A51E1C520897000F9562 /* BBLSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

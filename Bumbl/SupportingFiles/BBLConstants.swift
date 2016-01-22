@@ -17,3 +17,6 @@ let kCapSenseValueCharacteristicUUID = CBUUID.init(string: "2A5A")
 
 /// Cap sense threshold for determining if baby is on sensor or not.
 let kDefaultCapSenseThreshold = 50
+
+// MARK: - Notifications
+let kParentDidLogoutNotification = "com.randy.ParentDidLogoutNotification"

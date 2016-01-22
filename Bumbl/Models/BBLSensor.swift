@@ -33,10 +33,11 @@ class BBLSensor: PFObject, PFSubclassing {
   }
   
 // MARK: Public Variables
+  @NSManaged private(set) var uuid: String?
   internal weak var delegate: BBLSensorDelegate?
   internal var rssi: NSNumber?
   internal var peripheral:CBPeripheral?
-  @NSManaged private(set) var uuid: String?
+  
   private(set) var hasBaby:Bool? {
     get {
       if let _ = capSenseValue {
@@ -51,9 +52,11 @@ class BBLSensor: PFObject, PFSubclassing {
   }
   
 // MARK: Private Variables
+  @NSManaged private var capSenseThreshold:Int
+  @NSManaged private var connectedParent:BBLParent?
   private weak var sensorManager: BBLSensorManager!
   private var capSenseValue:Int?
-  @NSManaged private var capSenseThreshold:Int
+  
   
 // MARK: Initialization
   
@@ -144,6 +147,10 @@ class BBLSensor: PFObject, PFSubclassing {
   }
   
   internal func onDidConnect() {
+    
+    connectedParent = BBLParent.loggedInParent()
+    saveInBackground()
+    
     peripheral!.discoverServices([kSensorServiceUUID])
     // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
     peripheral?.readRSSI()
@@ -151,6 +158,9 @@ class BBLSensor: PFObject, PFSubclassing {
   }
   
   internal func onDidDisconnect() {
+    connectedParent = nil
+    saveInBackground()
+    
     //TODO: Check backend and alert user.
     //TODO: Update UI
     alertUserWithMessage("This is a message that you disconnected.")

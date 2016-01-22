@@ -16,33 +16,46 @@ import CoreBluetooth
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
-  
-  internal var sensorManager: BBLSensorManager?
+  var currentSession: BBLSession?
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     
-    let notificationTypes: UIUserNotificationType = [.Badge, .Sound, .Alert]
-    application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: notificationTypes, categories: nil))
-    
+    setupLocalNotificationsForApplication(application)
+    setupNotificationsForObject(self)
     Fabric.with([Crashlytics.self, Digits.self])
+    setupParse()
     
-    BBLSensor.registerSubclass()
-    Parse.setApplicationId("HHgxoEaLenjAwxhAqOGziC9SkHaIi4oeTibRFczc", clientKey: "fK00wH0VssppmFZywgP6pRQQUhvsqLpGG6HYFu5u")
-
-    sensorManager = BBLSensorManager(withCentralManager: CBCentralManager(),
-                            withDelegate: self,
-                      withProfileSensors: nil)
+    let loginViewController = BBLLoginViewController()
+    loginViewController.delegate = self
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,  Int64(0.5 * Double(NSEC_PER_SEC))), dispatch_get_main_queue()) { () -> Void in
-      // Must wait for sensorManager to be in powered on state before scanning
-      self.sensorManager?.scanForSensors()
-    }
-    
-//    let sensor = BBLSensor()
-    
-    let sensor = BBLSensor.init(withPeripheral: nil, withSensorManager: sensorManager, withUUID: "testuuid", withCapSenseThreshold: 60, withDelegate: nil)
+    window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    window!.rootViewController = loginViewController
+    window!.makeKeyAndVisible()
     
     return true
+  }
+  
+  private func setupLocalNotificationsForApplication(application: UIApplication) {
+    let notificationTypes: UIUserNotificationType = [.Badge, .Sound, .Alert]
+    application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: notificationTypes, categories: nil))
+  }
+  
+  private func setupNotificationsForObject(object: NSObject) {
+    NSNotificationCenter.defaultCenter().addObserver(object, selector: "parentDidLogout", name: kParentDidLogoutNotification, object: nil)
+  }
+  
+  internal func parentDidLogout() {
+    BBLParent.logOut()
+    currentSession = nil
+    let loginViewController = BBLLoginViewController()
+    loginViewController.delegate = self
+    window?.rootViewController = loginViewController
+  }
+  
+  private func setupParse() {
+    BBLParent.registerSubclass()
+    BBLSensor.registerSubclass()
+    Parse.setApplicationId("HHgxoEaLenjAwxhAqOGziC9SkHaIi4oeTibRFczc", clientKey: "fK00wH0VssppmFZywgP6pRQQUhvsqLpGG6HYFu5u")
   }
   
   func applicationWillResignActive(application: UIApplication) {
@@ -67,25 +80,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
   }
   
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
   
 }
 
-extension AppDelegate: BBLSensorManagerDelegate {
+extension AppDelegate: PFLogInViewControllerDelegate {
   
-  func sensorManager(sensorManager: BBLSensorManager, didConnectSensor sensor: BBLSensor) {
-    print("Did connect to sensor " + sensor.description)
+  internal func logInViewController(logInController: PFLogInViewController, didFailToLogInWithError error: NSError?) {
+    //
   }
   
-  func sensorManager(sensorManager: BBLSensorManager, didAttemptToScanWhileBluetoothRadioIsOff isBluetoothRadioOff: Bool) {
-    print("Did attempt to scan while BT radio is off.")
+  internal func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
+    let loggedInParent = BBLParent.loggedInParent()
+    loggedInParent.syncSensors()
+    
+    currentSession = BBLSession(withParent: loggedInParent,
+                          withSensorManager: BBLSensorManager(withCentralManager: CBCentralManager(),
+                                                                    withDelegate: nil,
+                                                              withProfileSensors: loggedInParent.profileSensors))
+    
+    setupViewsAfterLoginWithSession(currentSession!)
   }
   
-  func sensorManager(sensorManager: BBLSensorManager, didDisconnectSensor sensor: BBLSensor) {
-    print("Did disconnect sensor " + sensor.description)
+  internal func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
+    return true
   }
   
-  func sensorManager(sensorManager: BBLSensorManager, didDiscoverSensor sensor: BBLSensor) {
-    print("Did discover sensor " + sensor.description)
-    sensor.connect()  
+  internal func logInViewControllerDidCancelLogIn(logInController: PFLogInViewController) {
+    //
   }
+  
+  private func setupViewsAfterLoginWithSession(session: BBLSession) {
+    let mainTabBarController = UITabBarController()
+    let sensorsViewController = BBLMySensorsViewController()
+    sensorsViewController.loggedInParent = session.parent
+    let connectionViewController = BBLConnectionViewController()
+    connectionViewController.sensorManager = session.sensorManager
+    
+    let tabBarViewControllers = [sensorsViewController,
+                                connectionViewController]
+    var navigationControllers = [UINavigationController]()
+    
+    for vc in tabBarViewControllers {
+      navigationControllers.append(UINavigationController(rootViewController: vc))
+    }
+    
+    mainTabBarController.viewControllers = navigationControllers
+    window?.rootViewController = mainTabBarController
+  }
+  
 }
