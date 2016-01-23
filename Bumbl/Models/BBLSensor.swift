@@ -191,15 +191,15 @@ extension BBLSensor: CBPeripheralDelegate {
     }
   }
   
-  func peripheral(peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: NSError?) {
+  internal func peripheral(peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: NSError?) {
     rssi = RSSI
   }
   
-  func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
+  internal func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
     peripheral.discoverCharacteristics([BBLSensorInfo.kCapSenseValueCharacteristicUUID], forService: (peripheral.services?.first)!)
   }
   
-  func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
+  internal func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
     peripheral.setNotifyValue(true, forCharacteristic: (service.characteristics?.first)!)
   }
   
