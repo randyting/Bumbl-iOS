@@ -22,7 +22,7 @@ class BBLMySensorsViewController: UIViewController {
   }
   
   internal func didTapLogout() {
-    NSNotificationCenter.defaultCenter().postNotificationName(kParentDidLogoutNotification, object: self)
+    NSNotificationCenter.defaultCenter().postNotificationName(BBLNotifications.kParentDidLogoutNotification, object: self)
   }
   
 }

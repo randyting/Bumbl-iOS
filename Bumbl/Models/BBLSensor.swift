@@ -15,7 +15,7 @@ import CoreBluetooth
   optional func sensor(sensor: BBLSensor, didDisconnect disconnnected: Bool)
 }
 
-class BBLSensor: PFObject, PFSubclassing {
+internal final class BBLSensor: PFObject, PFSubclassing {
   
 // MARK: PFObject Subclassing
   
@@ -119,7 +119,7 @@ class BBLSensor: PFObject, PFSubclassing {
       return BBLSensor.init(withPeripheral: peripheral,
         withSensorManager: sensorManager,
         withUUID: peripheral.identifier.UUIDString,
-        withCapSenseThreshold: kDefaultCapSenseThreshold,
+        withCapSenseThreshold: BBLSensorInfo.kDefaultCapSenseThreshold,
         withDelegate: nil)
       
   }
@@ -142,7 +142,7 @@ class BBLSensor: PFObject, PFSubclassing {
     connectedParent = BBLParent.loggedInParent()
     saveInBackground()
     
-    peripheral!.discoverServices([kSensorServiceUUID])
+    peripheral!.discoverServices([BBLSensorInfo.kSensorServiceUUID])
     // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
     peripheral?.readRSSI()
     delegate?.sensor?(self, didConnect: true)
@@ -184,7 +184,7 @@ extension BBLSensor: CBPeripheralDelegate {
 
     let uuid = characteristic.UUID
     
-    if uuid == kCapSenseValueCharacteristicUUID {
+    if uuid == BBLSensorInfo.kCapSenseValueCharacteristicUUID {
       var value = 0
       characteristic.value?.getBytes(&value, length: sizeof(Int))
       capSenseValue = value
@@ -196,7 +196,7 @@ extension BBLSensor: CBPeripheralDelegate {
   }
   
   func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
-    peripheral.discoverCharacteristics([kCapSenseValueCharacteristicUUID], forService: (peripheral.services?.first)!)
+    peripheral.discoverCharacteristics([BBLSensorInfo.kCapSenseValueCharacteristicUUID], forService: (peripheral.services?.first)!)
   }
   
   func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {

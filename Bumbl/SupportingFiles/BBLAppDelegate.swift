@@ -13,7 +13,7 @@ import DigitsKit
 import CoreBluetooth
 
 @UIApplicationMain
-class BBLAppDelegate: UIResponder, UIApplicationDelegate {
+internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   
   var window: UIWindow?
   var currentSession: BBLSession?
@@ -61,7 +61,7 @@ class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   private func setupNotificationsForObject(object: NSObject) {
-    NSNotificationCenter.defaultCenter().addObserver(object, selector: "parentDidLogout", name: kParentDidLogoutNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(object, selector: "parentDidLogout", name: BBLNotifications.kParentDidLogoutNotification, object: nil)
   }
   
   private func setupParse() {
@@ -126,6 +126,7 @@ class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     
     internal func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
       loginWithParent(BBLParent.loggedInParent())
+      setCrashlyticsParent(BBLParent.loggedInParent()!)
     }
     
     internal func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
@@ -134,6 +135,12 @@ class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     
     internal func logInViewControllerDidCancelLogIn(logInController: PFLogInViewController) {
       //
+    }
+    
+    private func setCrashlyticsParent(parent: BBLParent) {
+      Crashlytics.sharedInstance().setUserIdentifier(parent.objectId)
+      Crashlytics.sharedInstance().setUserName(parent.username)
+      Crashlytics.sharedInstance().setUserEmail(parent.email)
     }
     
     private func loginWithParent(parent: BBLParent!) {

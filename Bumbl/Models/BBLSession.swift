@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BBLSession: NSObject {
+internal final class BBLSession: NSObject {
   internal var parent: BBLParent!
   internal var sensorManager: BBLSensorManager!
   

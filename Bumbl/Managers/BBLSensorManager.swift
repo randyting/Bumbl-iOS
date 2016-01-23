@@ -61,12 +61,12 @@ class BBLSensorManager: NSObject {
       delegate?.sensorManager?(self, didAttemptToScanWhileBluetoothRadioIsOff: true)
       return
     }
-    scanForPeripherals(withCentralManager:centralManager, withServiceUUID: kSensorServiceUUID)
+    scanForPeripherals(withCentralManager:centralManager, withServiceUUID: BBLSensorInfo.kSensorServiceUUID)
   }
   
   private func scanForPeripherals(withCentralManager centralManager:CBCentralManager, withServiceUUID serviceUUID: CBUUID){
     if centralManager.state == .PoweredOn {
-      centralManager.scanForPeripheralsWithServices([kSensorServiceUUID], options: nil)
+      centralManager.scanForPeripheralsWithServices([BBLSensorInfo.kSensorServiceUUID], options: nil)
     }
   }
   

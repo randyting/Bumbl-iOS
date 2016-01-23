@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BBLParent: PFUser {
+internal final class BBLParent: PFUser {
   
   @NSManaged internal var sensors:[BBLSensor]?
   private(set) var profileSensors:NSMutableSet!

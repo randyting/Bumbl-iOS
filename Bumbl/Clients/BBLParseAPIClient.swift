@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BBLParseAPIClient: NSObject {
+internal final class BBLParseAPIClient: NSObject {
   
   class func queryForBabySensorsConnectedToParent(parent: BBLParent, withCompletion completion: ([BBLSensor]?) -> Void) {
     let query = PFQuery(className: "BabySensor")
