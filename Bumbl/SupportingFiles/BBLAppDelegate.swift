@@ -149,7 +149,6 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
         
         self.currentSession = BBLSession(withParent: parent,
           withSensorManager: BBLSensorManager(withCentralManager: CBCentralManager(),
-            withDelegate: nil,
             withProfileSensors: parent.profileSensors))
         self.window?.rootViewController = self.rootViewControllerFromSession(self.currentSession!)
       }

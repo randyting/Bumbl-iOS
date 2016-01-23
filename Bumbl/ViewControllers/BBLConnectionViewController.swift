@@ -9,11 +9,87 @@
 import UIKit
 
 class BBLConnectionViewController: UIViewController {
+
+// MARK: Constants
+  private struct BBLConnectionViewControllerConstants {
+    private static let kConnectionViewTVCReuseIdentifier = "com.randy.connectionViewTVCReuseIdentifier"
+  }
   
+// MARK: Interface Builder
+  @IBOutlet private weak var connectionTableView: UITableView!
+  
+// MARK: Instance Variables
   internal var sensorManager: BBLSensorManager!
   
+// MARK: Private Variables
+  private var discoveredSensors: [BBLSensor]!
+  
+// MARK: Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    setupTableView(connectionTableView)
+    setupSensorManager(sensorManager)
+  }
+  
+// MARK: Tableview
+  private func setupTableView(tableView: UITableView) {
+    tableView.delegate = self
+    tableView.dataSource = self
+    tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier)
+    updateTableView()
+  }
+  
+  private func setupSensorManager(sensorManger: BBLSensorManager) {
+    sensorManager.registerDelegate(self)
+  }
+  
+  private func updateTableView() {
+    discoveredSensors = Array(sensorManager.discoveredSensors)
+    connectionTableView.reloadData()
+  }
+}
+
+// MARK: UITableViewDelegate
+extension BBLConnectionViewController: UITableViewDelegate {
+  func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
+    //
+  }
+  
+  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    discoveredSensors[indexPath.row].connect()
+  }
+}
+
+// MARK: UITableViewDatasource
+extension BBLConnectionViewController: UITableViewDataSource {
+  
+  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return discoveredSensors.count
+  }
+  
+  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier(BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier, forIndexPath: indexPath)
+    
+    cell.textLabel!.text = discoveredSensors[indexPath.row].peripheral?.identifier.UUIDString
+    
+    return cell
+  }
+  
+}
+
+// MARK: BBLSensorManagerDelegate
+extension BBLConnectionViewController:BBLSensorManagerDelegate {
+  internal func sensorManager(sensorManager: BBLSensorManager, didConnectSensor sensor: BBLSensor) {
+    updateTableView()
+  }
+  
+  internal func sensorManager(sensorManager: BBLSensorManager, didDisconnectSensor sensor: BBLSensor) {
+    updateTableView()
+  }
+  
+  internal func sensorManager(sensorManager: BBLSensorManager, didDiscoverSensor sensor: BBLSensor) {
+    updateTableView()
   }
   
 }

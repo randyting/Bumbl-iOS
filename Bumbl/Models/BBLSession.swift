@@ -22,7 +22,7 @@ internal final class BBLSession: NSObject {
   }
   
   private func startScanWithSensorManager(sensorManager: BBLSensorManager) {
-    sensorManager.delegate = self
+    sensorManager.registerDelegate(self)
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
       Int64(0.5 * Double(NSEC_PER_SEC))),
@@ -52,6 +52,6 @@ extension BBLSession: BBLSensorManagerDelegate {
   
   func sensorManager(sensorManager: BBLSensorManager, didDiscoverSensor sensor: BBLSensor) {
     print("Did discover sensor " + sensor.description)
-    sensor.connect()
+//    sensor.connect()
   }
 }
