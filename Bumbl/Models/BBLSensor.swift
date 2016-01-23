@@ -72,25 +72,6 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     self.uuid = uuid
     self.capSenseThreshold = capSenseThreshold
     self.delegate = delegate
-                      
-//    let query = PFQuery(className: "BabySensor")
-//    query.whereKey("uuid", equalTo: uuid)
-//    query.findObjectsInBackgroundWithBlock {(sensors:[PFObject]?, error:NSError?) -> Void in
-//      
-//      if let error = error {
-//        print(error.localizedDescription)
-//        return
-//      }
-//      
-//      if let storedSensor = sensors?.first as? BBLSensor {
-//        self.objectId = storedSensor.objectId
-//        self.uuid = storedSensor.uuid
-//        self.capSenseThreshold = storedSensor.capSenseThreshold
-//      } else {
-//        self.saveInBackground()
-//      }
-//    }
-    
     peripheral?.delegate = self
   }
   

@@ -129,11 +129,11 @@
 		25B973511C44F5F500C5E099 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				25D08B1F1C41EAC900319C11 /* BBLAppDelegate.swift */,
+				259A3A001C4CBC3C00706E6A /* BBLConstants.swift */,
 				25B9735B1C44F9FA00C5E099 /* Bumbl-Bridging-Header.h */,
 				25D08B2B1C41EAC900319C11 /* Info.plist */,
-				25D08B1F1C41EAC900319C11 /* BBLAppDelegate.swift */,
 				25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */,
-				259A3A001C4CBC3C00706E6A /* BBLConstants.swift */,
 			);
 			name = SupportingFiles;
 			sourceTree = "<group>";

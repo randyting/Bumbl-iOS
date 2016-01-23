@@ -147,7 +147,7 @@ extension BBLSensorManager: CBCentralManagerDelegate {
         }
       }
     }
-
+    
     for sensor in discoveredSensors {
       if sensor.peripheral == peripheral {return}
     }
