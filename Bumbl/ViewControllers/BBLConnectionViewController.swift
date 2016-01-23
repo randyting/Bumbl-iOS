@@ -14,10 +14,6 @@ class BBLConnectionViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    title = "Advertising Sensors"
-    navigationController?.tabBarItem.title = "Connect"
-    tabBarItem.title = "Connect"
   }
   
 }

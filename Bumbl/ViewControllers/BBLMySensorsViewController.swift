@@ -14,11 +14,8 @@ class BBLMySensorsViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    title = "My Sensors"
     navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "didTapLogout")
-    navigationController?.tabBarItem.title = "Connected Sensors"
-    tabBarItem.title = "Connected Sensors"
+
   }
   
   internal func didTapLogout() {
