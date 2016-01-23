@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreBluetooth
 
 @objc protocol BBLSensorDelegate {
   optional func sensor(sensor: BBLSensor, didUpdateRSSI rssi: NSNumber)
@@ -14,13 +15,30 @@ import UIKit
   optional func sensor(sensor: BBLSensor, didDisconnect disconnnected: Bool)
 }
 
-class BBLSensor: NSObject {
+internal final class BBLSensor: PFObject, PFSubclassing {
+  
+// MARK: PFObject Subclassing
+  
+  override class func initialize() {
+    struct Static {
+      static var onceToken : dispatch_once_t = 0;
+    }
+    dispatch_once(&Static.onceToken) {
+      self.registerSubclass()
+    }
+  }
+  
+  static func parseClassName() -> String {
+    return "BabySensor"
+  }
   
 // MARK: Public Variables
+  @NSManaged private(set) var uuid: String?
   internal weak var delegate: BBLSensorDelegate?
   internal var rssi: NSNumber?
   internal var peripheral:CBPeripheral?
-  private(set) var uuid: String?
+  internal weak var sensorManager: BBLSensorManager!
+  
   private(set) var hasBaby:Bool? {
     get {
       if let _ = capSenseValue {
@@ -35,27 +53,25 @@ class BBLSensor: NSObject {
   }
   
 // MARK: Private Variables
-  private weak var sensorManager: BBLSensorManager!
+  @NSManaged private var capSenseThreshold:Int
+  @NSManaged private var connectedParent:BBLParent?
   private var capSenseValue:Int?
-  private var capSenseThreshold:Int!
+  
   
 // MARK: Initialization
   
   // Designated initializer
-  internal init(withPeripheral peripheral: CBPeripheral?,
+  internal convenience init(withPeripheral peripheral: CBPeripheral?,
           withSensorManager sensorManager: BBLSensorManager!,
                             withUUID uuid: String!,
   withCapSenseThreshold capSenseThreshold: Int,
                     withDelegate delegate: BBLSensorDelegate?) {
-    
+    self.init()
     self.peripheral = peripheral
     self.sensorManager = sensorManager
     self.uuid = uuid
     self.capSenseThreshold = capSenseThreshold
     self.delegate = delegate
-    
-    super.init()
-    
     peripheral?.delegate = self
   }
   
@@ -84,18 +100,9 @@ class BBLSensor: NSObject {
       return BBLSensor.init(withPeripheral: peripheral,
         withSensorManager: sensorManager,
         withUUID: peripheral.identifier.UUIDString,
-        withCapSenseThreshold: kDefaultCapSenseThreshold,
+        withCapSenseThreshold: BBLSensorInfo.kDefaultCapSenseThreshold,
         withDelegate: nil)
       
-  }
-  
-// MARK: Access
-  internal func addToProfile() {
-    // TODO: Add sensor to current logged in parent's profile.
-  }
-  
-  internal func removeFromProfile() {
-    // TODO: Remove sensor from current logged in parent's profile.
   }
 
 // MARK: Connection
@@ -112,13 +119,20 @@ class BBLSensor: NSObject {
   }
   
   internal func onDidConnect() {
-    peripheral!.discoverServices([kSensorServiceUUID])
+    
+    connectedParent = BBLParent.loggedInParent()
+    saveInBackground()
+    
+    peripheral!.discoverServices([BBLSensorInfo.kSensorServiceUUID])
     // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
     peripheral?.readRSSI()
     delegate?.sensor?(self, didConnect: true)
   }
   
   internal func onDidDisconnect() {
+    connectedParent = nil
+    saveInBackground()
+    
     //TODO: Check backend and alert user.
     //TODO: Update UI
     alertUserWithMessage("This is a message that you disconnected.")
@@ -137,6 +151,10 @@ class BBLSensor: NSObject {
     UIApplication.sharedApplication().presentLocalNotificationNow(notification)
   }
   
+  internal func updateToDisconnectedState() {
+    connectedParent = nil
+  }
+  
 }
 
 // MARK: CBPeripheralDelegate
@@ -147,22 +165,22 @@ extension BBLSensor: CBPeripheralDelegate {
 
     let uuid = characteristic.UUID
     
-    if uuid == kCapSenseValueCharacteristicUUID {
+    if uuid == BBLSensorInfo.kCapSenseValueCharacteristicUUID {
       var value = 0
       characteristic.value?.getBytes(&value, length: sizeof(Int))
       capSenseValue = value
     }
   }
   
-  func peripheral(peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: NSError?) {
+  internal func peripheral(peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: NSError?) {
     rssi = RSSI
   }
   
-  func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
-    peripheral.discoverCharacteristics([kCapSenseValueCharacteristicUUID], forService: (peripheral.services?.first)!)
+  internal func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
+    peripheral.discoverCharacteristics([BBLSensorInfo.kCapSenseValueCharacteristicUUID], forService: (peripheral.services?.first)!)
   }
   
-  func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
+  internal func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
     peripheral.setNotifyValue(true, forCharacteristic: (service.characteristics?.first)!)
   }
   

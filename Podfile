@@ -7,11 +7,12 @@ platform :ios, '8.0'
 inhibit_all_warnings!
 
 target 'Bumbl' do
-pod 'Bean-iOS-OSX-SDK'
 pod 'Fabric'
 pod 'Crashlytics'
 pod 'Digits'
 pod 'TwitterCore'
+pod 'Parse'
+pod 'ParseUI'
 end
 
 target 'BumblTests' do

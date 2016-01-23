@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreBluetooth
 
 
 @objc protocol BBLSensorManagerDelegate {
@@ -20,6 +21,7 @@ import UIKit
 class BBLSensorManager: NSObject {
   
   // MARK: Public Variables
+  
   internal weak var delegate:BBLSensorManagerDelegate?
   internal var connectedSensors = Set<BBLSensor>()
   internal var discoveredSensors = Set<BBLSensor>()
@@ -31,9 +33,11 @@ class BBLSensorManager: NSObject {
   }
   
   // MARK: Private Variables
+  
   private let centralManager:CBCentralManager!
   
   // MARK: Initialization
+  
   internal init(withCentralManager centralManager: CBCentralManager!,
                             withDelegate delegate:BBLSensorManagerDelegate?,
                 withProfileSensors profileSensors:NSMutableSet?) {
@@ -51,17 +55,18 @@ class BBLSensorManager: NSObject {
   }
   
   // MARK: Access
+  
   internal func scanForSensors(){
     guard state == .PoweredOn else {
       delegate?.sensorManager?(self, didAttemptToScanWhileBluetoothRadioIsOff: true)
       return
     }
-    scanForPeripherals(withCentralManager:centralManager, withServiceUUID: kSensorServiceUUID)
+    scanForPeripherals(withCentralManager:centralManager, withServiceUUID: BBLSensorInfo.kSensorServiceUUID)
   }
   
   private func scanForPeripherals(withCentralManager centralManager:CBCentralManager, withServiceUUID serviceUUID: CBUUID){
     if centralManager.state == .PoweredOn {
-      centralManager.scanForPeripheralsWithServices([kSensorServiceUUID], options: nil)
+      centralManager.scanForPeripheralsWithServices([BBLSensorInfo.kSensorServiceUUID], options: nil)
     }
   }
   
@@ -70,6 +75,7 @@ class BBLSensorManager: NSObject {
   }
   
 // MARK: Connection
+  
   internal func connectToSensor(sensor: BBLSensor!) {
     centralManager.connectPeripheral(sensor.peripheral!, options: nil)
   }
@@ -81,6 +87,7 @@ class BBLSensorManager: NSObject {
 }
 
 // MARK: CBCentralManagerDelegate
+
 extension BBLSensorManager: CBCentralManagerDelegate {
   
   internal func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
@@ -133,13 +140,14 @@ extension BBLSensorManager: CBCentralManagerDelegate {
         let thisSensor = sensor as! BBLSensor
         if thisSensor.uuid == uuid {
           delegate?.sensorManager?(self, didDiscoverSensor: thisSensor)
+          thisSensor.sensorManager = self
           thisSensor.peripheral = peripheral
           thisSensor.connect()
           return
         }
       }
     }
-
+    
     for sensor in discoveredSensors {
       if sensor.peripheral == peripheral {return}
     }
