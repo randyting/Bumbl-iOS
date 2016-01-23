@@ -41,8 +41,8 @@ class BBLParent: PFUser {
   }
   
 // MARK: Class Methods
-  class func loggedInParent() -> BBLParent {
-    return PFUser.currentUser() as! BBLParent
+  class func loggedInParent() -> BBLParent? {
+    return PFUser.currentUser() as? BBLParent
   }
   
 }
