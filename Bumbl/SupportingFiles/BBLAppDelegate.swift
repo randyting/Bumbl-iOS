@@ -171,8 +171,8 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
         navigationControllers.append(UINavigationController(rootViewController: vc))
       }
       
-      sensorsViewController.BBLsetupIcon(nil, andTitle: BBLViewControllerInfo.BBLMySensorsViewController.title)
-      connectionViewController.BBLsetupIcon(nil, andTitle: BBLViewControllerInfo.BBLConnectionViewController.title)
+      sensorsViewController.BBLsetupIcon(BBLViewControllerInfo.BBLMySensorsViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLMySensorsViewController.title)
+      connectionViewController.BBLsetupIcon(BBLViewControllerInfo.BBLConnectionViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLConnectionViewController.title)
       
       mainTabBarController.viewControllers = navigationControllers
       return mainTabBarController
