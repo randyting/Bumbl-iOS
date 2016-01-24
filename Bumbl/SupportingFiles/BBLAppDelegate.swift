@@ -159,6 +159,8 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
       
       let sensorsViewController = BBLMySensorsViewController()
       sensorsViewController.loggedInParent = session.parent
+      sensorsViewController.sensorManager = session.sensorManager
+      
       let connectionViewController = BBLConnectionViewController()
       connectionViewController.sensorManager = session.sensorManager
       

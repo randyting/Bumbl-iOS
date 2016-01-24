@@ -75,7 +75,7 @@ class BBLConnectionViewController: UIViewController {
 // MARK: UITableViewDelegate
 extension BBLConnectionViewController: UITableViewDelegate {
 
-  func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+  internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
     discoveredSensors[indexPath.row].connect()
   }
@@ -84,14 +84,14 @@ extension BBLConnectionViewController: UITableViewDelegate {
 // MARK: UITableViewDatasource
 extension BBLConnectionViewController: UITableViewDataSource {
   
-  func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     guard let discoveredSensors = discoveredSensors else {
       return 0
     }
     return discoveredSensors.count
   }
   
-  func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+  internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier(BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier, forIndexPath: indexPath)
     
     cell.textLabel!.text = discoveredSensors[indexPath.row].peripheral?.identifier.UUIDString

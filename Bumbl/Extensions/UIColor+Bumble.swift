@@ -18,6 +18,10 @@ extension UIColor {
     return UIColor.BBLColorfromHexString("#f1c40f")
   }
   
+  internal class func BBLWetAsphaltColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#34495e")
+  }
+  
   private class func BBLColorfromHexString(hexString: String) -> UIColor {
     var rgbValue: UInt32 = 0
     let scanner = NSScanner(string: hexString)
