@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BBLConnectionViewController" customModule="Bumbl" customModuleProvider="target">
             <connections>
+                <outlet property="connectionTableView" destination="YaE-LH-miX" id="NYP-lO-KkP"/>
+                <outlet property="noDiscoveredSensorsLabel" destination="1DS-7p-hDV" id="65b-9s-FlT"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -14,7 +16,30 @@
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="YaE-LH-miX">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is a message that the table is empty." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1DS-7p-hDV">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <color key="backgroundColor" red="1" green="0.31801541716307447" blue="0.41633616744975033" alpha="1" colorSpace="calibratedRGB"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="1DS-7p-hDV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="1zl-xg-ohv"/>
+                <constraint firstAttribute="bottom" secondItem="YaE-LH-miX" secondAttribute="bottom" id="NY7-Uf-vAn"/>
+                <constraint firstAttribute="bottom" secondItem="1DS-7p-hDV" secondAttribute="bottom" id="PMK-JY-6uf"/>
+                <constraint firstItem="YaE-LH-miX" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="VNs-OP-mgA"/>
+                <constraint firstAttribute="trailing" secondItem="1DS-7p-hDV" secondAttribute="trailing" id="hNd-He-8AI"/>
+                <constraint firstItem="YaE-LH-miX" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="kBV-wM-ccE"/>
+                <constraint firstItem="1DS-7p-hDV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="pUy-RO-JCn"/>
+                <constraint firstAttribute="trailing" secondItem="YaE-LH-miX" secondAttribute="trailing" id="qwr-e6-eHx"/>
+            </constraints>
         </view>
     </objects>
 </document>

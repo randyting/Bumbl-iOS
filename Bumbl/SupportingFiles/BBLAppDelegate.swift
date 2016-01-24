@@ -149,7 +149,6 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
         
         self.currentSession = BBLSession(withParent: parent,
           withSensorManager: BBLSensorManager(withCentralManager: CBCentralManager(),
-            withDelegate: nil,
             withProfileSensors: parent.profileSensors))
         self.window?.rootViewController = self.rootViewControllerFromSession(self.currentSession!)
       }
@@ -157,8 +156,11 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     
     private func rootViewControllerFromSession(session: BBLSession!) -> UITabBarController {
       let mainTabBarController = UITabBarController()
+      
       let sensorsViewController = BBLMySensorsViewController()
       sensorsViewController.loggedInParent = session.parent
+      sensorsViewController.sensorManager = session.sensorManager
+      
       let connectionViewController = BBLConnectionViewController()
       connectionViewController.sensorManager = session.sensorManager
       
@@ -169,6 +171,9 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
       for vc in tabBarViewControllers {
         navigationControllers.append(UINavigationController(rootViewController: vc))
       }
+      
+      sensorsViewController.BBLsetupIcon(BBLViewControllerInfo.BBLMySensorsViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLMySensorsViewController.title)
+      connectionViewController.BBLsetupIcon(BBLViewControllerInfo.BBLConnectionViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLConnectionViewController.title)
       
       mainTabBarController.viewControllers = navigationControllers
       return mainTabBarController

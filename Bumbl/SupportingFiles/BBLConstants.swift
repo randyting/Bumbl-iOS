@@ -10,6 +10,19 @@ import Foundation
 import CoreBluetooth
 
 
+// MARK: View Controllers
+internal struct BBLViewControllerInfo {
+  struct BBLMySensorsViewController {
+    static let title = "My Sensors"
+    static let tabBarIcon:UIImage? = nil
+  }
+  
+  struct BBLConnectionViewController {
+    static let title = "Connect"
+    static let tabBarIcon:UIImage? = nil
+  }
+}
+
 // MARK: Sensor Info
 internal struct BBLSensorInfo {
   /// BLE service UUID that all sensors advertise.  The characteristics we use must be under this service.
@@ -21,8 +34,6 @@ internal struct BBLSensorInfo {
   /// Cap sense threshold for determining if baby is on sensor or not.
   static let kDefaultCapSenseThreshold = 50
 }
-
-
 
 // MARK:  Notifications
 internal struct BBLNotifications {  
