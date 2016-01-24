@@ -18,10 +18,13 @@ class BBLConnectionViewController: UIViewController {
       private static let title = "Connection Failed"
       private static let message = "Connection to this sensor failed.  Please check to make sure it is still advertising and in range."
     }
+    
+    private static let noDiscoveredSensorsMessage = "No sensors discovered.  Please make sure you are near a sensor that is turned on and not connected to a phone."
   }
   
   // MARK: Interface Builder
   @IBOutlet private weak var connectionTableView: UITableView!
+  @IBOutlet private weak var noDiscoveredSensorsLabel: UILabel!
   
   // MARK: Instance Variables
   internal var sensorManager: BBLSensorManager!
@@ -32,8 +35,9 @@ class BBLConnectionViewController: UIViewController {
   // MARK: Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    setupTableView(connectionTableView)
     setupSensorManager(sensorManager)
+    setupEmptyTableViewCover(noDiscoveredSensorsLabel)
+    setupTableView(connectionTableView)
   }
   
   // MARK: Tableview
@@ -41,6 +45,7 @@ class BBLConnectionViewController: UIViewController {
     tableView.delegate = self
     tableView.dataSource = self
     tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier)
+    tableView.tableFooterView = UIView.init(frame: CGRect.zero)
     updateTableView()
   }
   
@@ -50,16 +55,26 @@ class BBLConnectionViewController: UIViewController {
   
   private func updateTableView() {
     discoveredSensors = Array(sensorManager.discoveredSensors)
+    if discoveredSensors.count == 0 ||
+    discoveredSensors == nil{
+      noDiscoveredSensorsLabel.hidden = false
+    } else {
+      noDiscoveredSensorsLabel.hidden = true
+    }
     connectionTableView.reloadData()
+  }
+  
+  private func setupEmptyTableViewCover(view: UILabel) {
+    view.backgroundColor = UIColor.BBLGrayColor()
+    view.textColor = UIColor.BBLYellowColor()
+    view.numberOfLines = 0
+    view.text = BBLConnectionViewControllerConstants.noDiscoveredSensorsMessage
   }
 }
 
 // MARK: UITableViewDelegate
 extension BBLConnectionViewController: UITableViewDelegate {
-  func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
-    //
-  }
-  
+
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
     discoveredSensors[indexPath.row].connect()
@@ -70,6 +85,9 @@ extension BBLConnectionViewController: UITableViewDelegate {
 extension BBLConnectionViewController: UITableViewDataSource {
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    guard let discoveredSensors = discoveredSensors else {
+      return 0
+    }
     return discoveredSensors.count
   }
   

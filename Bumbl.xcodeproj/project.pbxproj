@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		251EE2DF1C540AA200D295C3 /* UIViewController+Bumble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251EE2DE1C540AA200D295C3 /* UIViewController+Bumble.swift */; };
+		251EE2E11C54565C00D295C3 /* UIColor+Bumble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251EE2E01C54565C00D295C3 /* UIColor+Bumble.swift */; };
 		2533A5181C51E71B000F9562 /* BBLLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533A5171C51E71B000F9562 /* BBLLoginViewController.swift */; };
 		2533A51B1C51EC7B000F9562 /* BBLMySensorsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533A5191C51EC7B000F9562 /* BBLMySensorsViewController.swift */; };
 		2533A51C1C51EC7B000F9562 /* BBLMySensorsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2533A51A1C51EC7B000F9562 /* BBLMySensorsViewController.xib */; };
@@ -38,6 +39,7 @@
 
 /* Begin PBXFileReference section */
 		251EE2DE1C540AA200D295C3 /* UIViewController+Bumble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Bumble.swift"; path = "Extensions/UIViewController+Bumble.swift"; sourceTree = "<group>"; };
+		251EE2E01C54565C00D295C3 /* UIColor+Bumble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Bumble.swift"; path = "Extensions/UIColor+Bumble.swift"; sourceTree = "<group>"; };
 		2533A5171C51E71B000F9562 /* BBLLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLLoginViewController.swift; path = ViewControllers/BBLLoginViewController.swift; sourceTree = "<group>"; };
 		2533A5191C51EC7B000F9562 /* BBLMySensorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLMySensorsViewController.swift; path = ViewControllers/BBLMySensorsViewController.swift; sourceTree = "<group>"; };
 		2533A51A1C51EC7B000F9562 /* BBLMySensorsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLMySensorsViewController.xib; path = ViewControllers/BBLMySensorsViewController.xib; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 			isa = PBXGroup;
 			children = (
 				251EE2DE1C540AA200D295C3 /* UIViewController+Bumble.swift */,
+				251EE2E01C54565C00D295C3 /* UIColor+Bumble.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -391,6 +394,7 @@
 				2533A5211C5211F5000F9562 /* BBLConnectionViewController.swift in Sources */,
 				251EE2DF1C540AA200D295C3 /* UIViewController+Bumble.swift in Sources */,
 				25B9735A1C44F94D00C5E099 /* BBLSensor.swift in Sources */,
+				251EE2E11C54565C00D295C3 /* UIColor+Bumble.swift in Sources */,
 				2533A51E1C520897000F9562 /* BBLSession.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
