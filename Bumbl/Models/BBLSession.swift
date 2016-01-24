@@ -52,6 +52,5 @@ extension BBLSession: BBLSensorManagerDelegate {
   
   func sensorManager(sensorManager: BBLSensorManager, didDiscoverSensor sensor: BBLSensor) {
     print("Did discover sensor " + sensor.description)
-//    sensor.connect()
   }
 }

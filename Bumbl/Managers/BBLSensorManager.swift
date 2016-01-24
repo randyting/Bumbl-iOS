@@ -16,6 +16,7 @@ import CoreBluetooth
   optional func sensorManager(sensorManager: BBLSensorManager, didDisconnectSensor sensor: BBLSensor)
   optional func sensorManager(sensorManager: BBLSensorManager, didDiscoverSensor sensor: BBLSensor)
   optional func sensorManager(sensorManager: BBLSensorManager, didAttemptToScanWhileBluetoothRadioIsOff isBluetoothRadioOff: Bool)
+  optional func sensorManager(sensorManager: BBLSensorManager, didFailToConnectToSensor sensor: BBLSensor)
 }
 
 class BBLSensorManager: NSObject {
@@ -38,8 +39,8 @@ class BBLSensorManager: NSObject {
   // MARK: Initialization
   
   internal init(withCentralManager centralManager: CBCentralManager!,
-                withProfileSensors profileSensors:NSMutableSet?) {
-                  
+    withProfileSensors profileSensors:NSMutableSet?) {
+      
       self.centralManager = centralManager
       if let profileSensors = profileSensors {
         self.profileSensors = profileSensors
@@ -90,7 +91,7 @@ class BBLSensorManager: NSObject {
     centralManager.stopScan()
   }
   
-// MARK: Connection
+  // MARK: Connection
   
   internal func connectToSensor(sensor: BBLSensor!) {
     centralManager.connectPeripheral(sensor.peripheral!, options: nil)
@@ -143,7 +144,7 @@ extension BBLSensorManager: CBCentralManagerDelegate {
         sensor.onDidDisconnect()
       }
     }
-
+    
   }
   
   internal func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
@@ -173,7 +174,7 @@ extension BBLSensorManager: CBCentralManagerDelegate {
     }
     
     discoveredSensorWithPeripheral(peripheral)
-
+    
   }
   
   private func discoveredSensorWithPeripheral(peripheral: CBPeripheral) -> BBLSensor {
@@ -196,7 +197,12 @@ extension BBLSensorManager: CBCentralManagerDelegate {
   }
   
   internal func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-    //TODO
+    
+    for sensor in discoveredSensors {
+      if sensor.peripheral == peripheral {discoveredSensors.remove(sensor)}
+      callDelegates{$0.sensorManager!(self, didFailToConnectToSensor: sensor)
+      }
+    }
   }
   
 }

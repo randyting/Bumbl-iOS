@@ -9,29 +9,34 @@
 import UIKit
 
 class BBLConnectionViewController: UIViewController {
-
-// MARK: Constants
+  
+  // MARK: Constants
   private struct BBLConnectionViewControllerConstants {
     private static let kConnectionViewTVCReuseIdentifier = "com.randy.connectionViewTVCReuseIdentifier"
+    
+    private struct FailedConnectionAlert{
+      private static let title = "Connection Failed"
+      private static let message = "Connection to this sensor failed.  Please check to make sure it is still advertising and in range."
+    }
   }
   
-// MARK: Interface Builder
+  // MARK: Interface Builder
   @IBOutlet private weak var connectionTableView: UITableView!
   
-// MARK: Instance Variables
+  // MARK: Instance Variables
   internal var sensorManager: BBLSensorManager!
   
-// MARK: Private Variables
+  // MARK: Private Variables
   private var discoveredSensors: [BBLSensor]!
   
-// MARK: Lifecycle
+  // MARK: Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     setupTableView(connectionTableView)
     setupSensorManager(sensorManager)
   }
   
-// MARK: Tableview
+  // MARK: Tableview
   private func setupTableView(tableView: UITableView) {
     tableView.delegate = self
     tableView.dataSource = self
@@ -92,4 +97,18 @@ extension BBLConnectionViewController:BBLSensorManagerDelegate {
     updateTableView()
   }
   
+  internal func sensorManager(sensorManager: BBLSensorManager, didFailToConnectToSensor sensor: BBLSensor) {
+    updateTableView()
+    showConnectionFailedAlert()
+  }
+  
+  private func showConnectionFailedAlert() {
+    
+    let alertController = UIAlertController(title: BBLConnectionViewControllerConstants.FailedConnectionAlert.title, message: BBLConnectionViewControllerConstants.FailedConnectionAlert.message, preferredStyle: .Alert)
+    
+    let dismissAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+    alertController.addAction(dismissAction)
+    
+    presentViewController(alertController, animated: true, completion: nil)
+  }
 }
