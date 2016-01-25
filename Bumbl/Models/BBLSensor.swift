@@ -119,10 +119,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   }
   
   internal func onDidConnect() {
-    
     connectedParent = BBLParent.loggedInParent()
-    saveInBackground()
-    
     peripheral!.discoverServices([BBLSensorInfo.kSensorServiceUUID])
     // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
     peripheral?.readRSSI()
@@ -131,7 +128,11 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   internal func onDidDisconnect() {
     connectedParent = nil
-    saveInBackground()
+    saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+      if let error = error {
+        print(error.localizedDescription)
+      }
+    }
     
     //TODO: Check backend and alert user.
     //TODO: Update UI
