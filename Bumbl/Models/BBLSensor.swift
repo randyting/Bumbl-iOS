@@ -9,10 +9,11 @@
 import UIKit
 import CoreBluetooth
 
-@objc protocol BBLSensorDelegate {
+@objc protocol BBLSensorDelegate: class {
   optional func sensor(sensor: BBLSensor, didUpdateRSSI rssi: NSNumber)
   optional func sensor(sensor: BBLSensor, didConnect connected: Bool)
   optional func sensor(sensor: BBLSensor, didDisconnect disconnnected: Bool)
+  optional func sensor(sensor: BBLSensor, didUpdateSensorValue value: Int)
 }
 
 internal final class BBLSensor: PFObject, PFSubclassing {
@@ -38,8 +39,8 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   internal var rssi: NSNumber?
   internal var peripheral:CBPeripheral?
   internal weak var sensorManager: BBLSensorManager!
-  
-  private(set) var hasBaby:Bool? {
+  @NSManaged internal var capSenseThreshold:Int
+  private(set) var hasBaby:Bool {
     get {
       if let _ = capSenseValue {
         return capSenseValue > capSenseThreshold
@@ -51,12 +52,18 @@ internal final class BBLSensor: PFObject, PFSubclassing {
       self.hasBaby = newValue
     }
   }
+  internal var capSenseValuePercentage:Double {
+    if let capSenseValue = capSenseValue {
+      return Double(capSenseValue)/Double(BBLSensorInfo.kMaxCapSenseValue)
+    } else {
+      return 0
+    }
+    
+  }
   
 // MARK: Private Variables
-  @NSManaged private var capSenseThreshold:Int
   @NSManaged private var connectedParent:BBLParent?
-  private var capSenseValue:Int?
-  
+  private(set) var capSenseValue:Int?
   
 // MARK: Initialization
   
@@ -170,6 +177,7 @@ extension BBLSensor: CBPeripheralDelegate {
       var value = 0
       characteristic.value?.getBytes(&value, length: sizeof(Int))
       capSenseValue = value
+      delegate?.sensor?(self, didUpdateSensorValue: capSenseValue!)
     }
   }
   

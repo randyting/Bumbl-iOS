@@ -33,6 +33,9 @@ internal struct BBLSensorInfo {
   
   /// Cap sense threshold for determining if baby is on sensor or not.
   static let kDefaultCapSenseThreshold = 50
+  
+  /// Max expected capsense value
+  static let kMaxCapSenseValue = 500
 }
 
 // MARK:  Notifications

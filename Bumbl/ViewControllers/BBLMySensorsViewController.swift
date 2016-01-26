@@ -13,6 +13,7 @@ class BBLMySensorsViewController: UIViewController {
 // MARK: Constants
   private struct BBLMySensorsViewControllerConstants {
     private static let kMySensorsTVCReuseIdentifier = "com.randy.mySensorsTVCReuseIdentifier"
+    private static let kMySensorsTVCNibName = "BBLMySensorsTableViewCell"
     
     private static let noProfileSensorsMessage = "No sensors were found in your profile.  Please add a sensor to your profile by connecting to one."
     
@@ -58,7 +59,10 @@ class BBLMySensorsViewController: UIViewController {
   private func setupTableView(tableView: UITableView) {
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier)
+    tableView.estimatedRowHeight = 100
+    tableView.rowHeight = UITableViewAutomaticDimension
+    let cellNib = UINib(nibName: BBLMySensorsViewControllerConstants.kMySensorsTVCNibName, bundle: NSBundle.mainBundle())
+    tableView.registerNib(cellNib, forCellReuseIdentifier:BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier)
     tableView.tableFooterView = UIView.init(frame: CGRect.zero)
     updateTableView()
   }
@@ -104,9 +108,7 @@ class BBLMySensorsViewController: UIViewController {
 // MARK: UITableViewDelegate
 extension BBLMySensorsViewController:UITableViewDelegate {
   internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    loggedInParent.removeSensor(mySensors[indexPath.row])
-    mySensors[indexPath.row].disconnect()
+    tableView.deselectRowAtIndexPath(indexPath, animated: false)
   }
 }
 
@@ -120,11 +122,25 @@ extension BBLMySensorsViewController:UITableViewDataSource {
   }
   
   internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier(BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier, forIndexPath: indexPath)
+    let cell = tableView.dequeueReusableCellWithIdentifier(BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier, forIndexPath: indexPath) as! BBLMySensorsTableViewCell
     
-    cell.textLabel!.text = mySensors[indexPath.row].uuid
+    cell.delegate = self
+    cell.sensor = mySensors[indexPath.row]
+    cell.sensor.delegate = self
     
     return cell
+  }
+}
+
+// MARK: BBLMySensorsTableViewCellDelegate
+extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Float, andName name: String?) {
+    // TODO:
+  }
+  
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool) {
+    loggedInParent.removeSensor(tableViewCell.sensor)
+    tableViewCell.sensor.disconnect()
   }
 }
 
@@ -148,4 +164,18 @@ extension BBLMySensorsViewController: BBLParentDelegate {
     showDismissAlertWithTitle(BBLMySensorsViewControllerConstants.FailedRemoveSensorAlert.title, withMessage: BBLMySensorsViewControllerConstants.FailedRemoveSensorAlert.message + " " + errorMessage)
   }
   
+}
+
+extension BBLMySensorsViewController: BBLSensorDelegate {
+  internal func sensor(sensor: BBLSensor, didUpdateSensorValue value: Int) {
+    updateTableView()
+  }
+  
+  internal func sensor(sensor: BBLSensor, didConnect connected: Bool) {
+    updateTableView()
+  }
+  
+  func sensor(sensor: BBLSensor, didDisconnect disconnnected: Bool) {
+    updateTableView()
+  }
 }

@@ -4,7 +4,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -16,15 +15,21 @@
                 <rect key="frame" x="0.0" y="0.0" width="774" height="226.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="jkP-iy-QW8">
+                    <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="760" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="jkP-iy-QW8">
                         <rect key="frame" x="612" y="18" width="139" height="30"/>
                         <state key="normal" title="Remove from Profile"/>
+                        <connections>
+                            <action selector="didTapRemoveFromProfileButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="5HW-8M-gvp"/>
+                        </connections>
                     </button>
                     <slider opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="UP4-Dx-Uv5">
                         <rect key="frame" x="13" y="143" width="214" height="31"/>
+                        <connections>
+                            <action selector="didChangeThresholdSliderValue:" destination="KGk-i7-Jjw" eventType="valueChanged" id="Bi9-4Q-seQ"/>
+                        </connections>
                     </slider>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UUID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xFn-xm-QCB">
-                        <rect key="frame" x="15" y="55" width="41" height="63"/>
+                        <rect key="frame" x="15" y="55" width="41" height="63.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -40,23 +45,29 @@
                     <view contentMode="scaleToFill" verticalHuggingPriority="248" verticalCompressionResistancePriority="753" translatesAutoresizingMaskIntoConstraints="NO" id="2Rw-BY-3oi">
                         <rect key="frame" x="15" y="128" width="126" height="5"/>
                         <color key="backgroundColor" red="0.15681437928369168" green="1" blue="0.18440524346413323" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="126" id="5sI-Dp-gmR"/>
+                        </constraints>
                     </view>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" verticalCompressionResistancePriority="749" text="Baby Detected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ggf-Rq-XoE">
-                        <rect key="frame" x="15" y="188" width="114" height="21"/>
+                        <rect key="frame" x="15" y="188" width="113.5" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jKZ-XF-Cf0">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="jKZ-XF-Cf0">
                         <rect key="frame" x="230" y="143" width="50" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="XkL-BE-rdu"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                        <connections>
+                            <action selector="didEndEditingThresholdTextField:" destination="KGk-i7-Jjw" eventType="editingDidEnd" id="usP-BT-OEc"/>
+                        </connections>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9x1-yP-dtn">
-                        <rect key="frame" x="230" y="122" width="36" height="17"/>
+                        <rect key="frame" x="230" y="122" width="35.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -64,6 +75,9 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="BI7-WE-ftK">
                         <rect key="frame" x="657" y="179" width="94" height="30"/>
                         <state key="normal" title="Save Settings"/>
+                        <connections>
+                            <action selector="didTapSaveSettingsButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="gzd-T7-XQ6"/>
+                        </connections>
                     </button>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YxR-SR-hy9">
                         <rect key="frame" x="15" y="15" width="587" height="30"/>
@@ -89,7 +103,6 @@
                     <constraint firstItem="jKZ-XF-Cf0" firstAttribute="leading" secondItem="9x1-yP-dtn" secondAttribute="leading" id="XTt-Ai-kOh"/>
                     <constraint firstItem="jKZ-XF-Cf0" firstAttribute="centerY" secondItem="UP4-Dx-Uv5" secondAttribute="centerY" id="YVc-K6-9go"/>
                     <constraint firstAttribute="bottomMargin" secondItem="BI7-WE-ftK" secondAttribute="bottom" constant="10" id="bNg-Qg-coh"/>
-                    <constraint firstItem="2Rw-BY-3oi" firstAttribute="width" secondItem="n8e-8e-ofM" secondAttribute="width" multiplier="0.6" id="mre-p2-puV"/>
                     <constraint firstItem="YxR-SR-hy9" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="myK-R7-thB"/>
                     <constraint firstItem="xFn-xm-QCB" firstAttribute="top" secondItem="YxR-SR-hy9" secondAttribute="bottom" constant="10" id="pmz-vp-Dmv"/>
                     <constraint firstItem="jkP-iy-QW8" firstAttribute="leading" secondItem="YxR-SR-hy9" secondAttribute="trailing" constant="10" id="pvH-OB-EX6"/>
@@ -102,6 +115,16 @@
                     <constraint firstItem="jkP-iy-QW8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="10" id="ysJ-Li-ccj"/>
                 </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="babyDetectedLabel" destination="ggf-Rq-XoE" id="gDS-no-5le"/>
+                <outlet property="nameTextField" destination="YxR-SR-hy9" id="SDP-aS-bdw"/>
+                <outlet property="thresholdSlider" destination="UP4-Dx-Uv5" id="zCN-m4-1zN"/>
+                <outlet property="thresholdTextField" destination="jKZ-XF-Cf0" id="uHE-0u-qTd"/>
+                <outlet property="uuidLabel" destination="xFn-xm-QCB" id="SXX-k3-S07"/>
+                <outlet property="valueBackgroundView" destination="n8e-8e-ofM" id="igT-jK-Hxi"/>
+                <outlet property="valueForegroundViewWidthConstraint" destination="5sI-Dp-gmR" id="wsR-Zx-a2k"/>
+                <outlet property="valueLabel" destination="9x1-yP-dtn" id="pds-rJ-kui"/>
+            </connections>
             <point key="canvasLocation" x="641" y="628.5"/>
         </tableViewCell>
     </objects>
