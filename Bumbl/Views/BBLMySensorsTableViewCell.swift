@@ -102,7 +102,11 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   // MARK: Update
   internal func updateValuesWithSensor(sensor: BBLSensor) {
     if let _ = sensor.peripheral {
-      backgroundColor = UIColor.BBLYellowColor()
+      if sensor.peripheral?.state == .Connected {
+        backgroundColor = UIColor.BBLYellowColor()
+      } else {
+        backgroundColor = UIColor.BBLGrayColor()
+      }
     } else {
       backgroundColor = UIColor.BBLGrayColor()
     }
