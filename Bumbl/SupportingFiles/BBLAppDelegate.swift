@@ -89,23 +89,14 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: Logout
   
   internal func parentDidLogout() {
-    updateConnectionStatusForParent((currentSession?.parent)!)
+    disconnectAllSensorsAndStopScanningForSession(currentSession)
     setupBlankLoginViewController(BBLLoginViewController(), inWindow: window!)
   }
   
-  private func updateConnectionStatusForParent(parent: BBLParent) {
-    BBLParseAPIClient.queryForBabySensorsConnectedToParent(parent) { (sensors:[BBLSensor]?) -> Void in
-      if let sensors = sensors {
-        for sensor in sensors {
-          sensor.updateToDisconnectedState()
-        }
-        BBLSensor.saveAllInBackground(sensors, block: { (success: Bool, error: NSError?) -> Void in
-          BBLParent.logOut()
-          self.logoutOfSession(self.currentSession)
-        })
-      } else {
-        self.logoutOfSession(self.currentSession)
-      }
+  private func disconnectAllSensorsAndStopScanningForSession(session: BBLSession!) {
+    session.sensorManager.stopScanningForSensors()
+    session.sensorManager.disconnectAllProfileSensorsWithCompletion { () -> () in
+      self.logoutOfSession(self.currentSession)
     }
   }
   

@@ -35,6 +35,7 @@ class BBLSensorManager: NSObject {
   // MARK: Private Variables
   private let delegates = NSHashTable.weakObjectsHashTable()
   private let centralManager:CBCentralManager!
+  private var disconnectAllSensorsCompletionBlock: (()->())?
   
   // MARK: Initialization
   
@@ -101,6 +102,13 @@ class BBLSensorManager: NSObject {
     centralManager.cancelPeripheralConnection(sensor.peripheral!)
   }
   
+  internal func disconnectAllProfileSensorsWithCompletion(completion:()->() ) {
+    disconnectAllSensorsCompletionBlock = completion
+    for sensor in profileSensors {
+      disconnectSensor(sensor as! BBLSensor)
+    }
+  }
+  
 }
 
 // MARK: CBCentralManagerDelegate
@@ -135,13 +143,28 @@ extension BBLSensorManager: CBCentralManagerDelegate {
   
   internal func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
     
-    scanForSensors()
+    if let disconnectAllSensorsCompletionBlock = disconnectAllSensorsCompletionBlock
+      where connectedSensors.count == 0 {
+        disconnectAllSensorsCompletionBlock()
+        self.disconnectAllSensorsCompletionBlock = nil
+        return
+    }
     
     for sensor in connectedSensors {
       if sensor.peripheral == peripheral {
         callDelegates{$0.sensorManager?(self, didDisconnectSensor: sensor)}
         connectedSensors.remove(sensor)
         sensor.onDidDisconnect()
+      }
+    }
+    
+    if disconnectAllSensorsCompletionBlock == nil {
+      if let profileSensors = profileSensors where profileSensors.count != 0 {
+        for sensor in profileSensors {
+          if sensor.peripheral == peripheral {
+            (sensor as! BBLSensor).connect()
+          }
+        }
       }
     }
     
@@ -174,7 +197,6 @@ extension BBLSensorManager: CBCentralManagerDelegate {
     }
     
     discoveredSensorWithPeripheral(peripheral)
-    
   }
   
   private func discoveredSensorWithPeripheral(peripheral: CBPeripheral) -> BBLSensor {
