@@ -11,6 +11,7 @@ import UIKit
 class BBLMySensorsViewController: UIViewController {
 
 // MARK: Constants
+  
   private struct BBLMySensorsViewControllerConstants {
     private static let kMySensorsTVCReuseIdentifier = "com.randy.mySensorsTVCReuseIdentifier"
     private static let kMySensorsTVCNibName = "BBLMySensorsTableViewCell"
@@ -29,16 +30,20 @@ class BBLMySensorsViewController: UIViewController {
   }
   
 // MARK: Interface Builder
+  
   @IBOutlet weak var mySensorsTableView: UITableView!
   @IBOutlet weak var noProfileSensorsLabel: UILabel!
   
 // MARK: Public Variables
+  
   internal var loggedInParent:BBLParent!
 
 // MARK: Private Variables
+  
   private var mySensors: [BBLSensor]!
   
 // MARK: Lifecycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupNavigationBar()
@@ -48,6 +53,7 @@ class BBLMySensorsViewController: UIViewController {
   }
   
 // MARK: Setup
+  
   private func setupParent(parent: BBLParent) {
     parent.delegate = self
   }
@@ -88,11 +94,13 @@ class BBLMySensorsViewController: UIViewController {
   }
 
 // MARK: Navigation Bar
+  
   internal func didTapLogout() {
     NSNotificationCenter.defaultCenter().postNotificationName(BBLNotifications.kParentDidLogoutNotification, object: self)
   }
   
 // MARK: Alerts
+  
   private func showDismissAlertWithTitle(title: String, withMessage message: String) {
     
     let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
@@ -106,6 +114,7 @@ class BBLMySensorsViewController: UIViewController {
 }
 
 // MARK: UITableViewDelegate
+
 extension BBLMySensorsViewController:UITableViewDelegate {
   internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: false)
@@ -113,6 +122,7 @@ extension BBLMySensorsViewController:UITableViewDelegate {
 }
 
 // MARK: UITableViewDatasource
+
 extension BBLMySensorsViewController:UITableViewDataSource {
   internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     guard let mySensors = mySensors else {
@@ -133,6 +143,7 @@ extension BBLMySensorsViewController:UITableViewDataSource {
 }
 
 // MARK: BBLMySensorsTableViewCellDelegate
+
 extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
   internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Float, andName name: String?) {
     // TODO:
@@ -145,6 +156,7 @@ extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
 }
 
 // MARK: BBLParentDelegate
+
 extension BBLMySensorsViewController: BBLParentDelegate {
   internal func parent(parent: BBLParent, didAddSensor sensor: BBLSensor) {
     updateTableView()
@@ -165,6 +177,8 @@ extension BBLMySensorsViewController: BBLParentDelegate {
   }
   
 }
+
+// MARK: BBLSensorDelegate
 
 extension BBLMySensorsViewController: BBLSensorDelegate {
   internal func sensor(sensor: BBLSensor, didUpdateSensorValue value: Int) {

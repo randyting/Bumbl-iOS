@@ -15,18 +15,33 @@ import UIKit
 
 class BBLMySensorsTableViewCell: UITableViewCell {
   
+  // MARK: Constants
+  private struct BBLMySensorsTableViewCellConstants {
+    private static let defaultMaxSliderValue = 100
+    private static let defaultSliderValue = 50
+  }
+  
   // MARK: Public Variables
   internal weak var delegate: BBLMySensorsTableViewCellDelegate?
   internal var sensor: BBLSensor! {
-    didSet{
-        updateValuesWithSensor(sensor)
+    didSet (newSensor){
+      if let newSensor = newSensor {
+        if newSensor !== sensor
+          || maxSliderValue == nil {
+            resetValues()
+        }
+      }
+      updateValuesWithSensor(sensor)
     }
   }
+  
+  // MARK: Private Variables
+  private var maxSliderValue: Int!
   
   // MARK: Interface Builder
   @IBOutlet private weak var nameTextField: UITextField!
   @IBOutlet private weak var uuidLabel: UILabel!
-
+  
   @IBOutlet private weak var valueLabel: UILabel!
   @IBOutlet private weak var thresholdSlider: UISlider!
   @IBOutlet private weak var thresholdTextField: UITextField!
@@ -37,9 +52,11 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   @IBOutlet weak var valueForegroundViewWidthConstraint: NSLayoutConstraint!
   @IBAction private func didChangeThresholdSliderValue(sender: UISlider) {
     thresholdTextField.text = String(sender.value)
+    sensor.capSenseThreshold = Int(sender.value)
   }
   @IBAction func didEndEditingThresholdTextField(sender: UITextField) {
     thresholdSlider.value = Float((sender.text! as NSString).integerValue)
+    sensor.capSenseThreshold = Int((sender.text! as NSString).integerValue)
   }
   
   @IBAction private func didTapRemoveFromProfileButton(sender: UIButton) {
@@ -64,18 +81,22 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   }
   
   func initViews() {
-
+    selectionStyle = .None
   }
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    setupSlider(thresholdSlider)
   }
   
   // MARK: Setup
   private func setupSlider(slider: UISlider) {
-    slider.maximumValue = Float(BBLSensorInfo.kMaxCapSenseValue)
+    slider.maximumValue = Float(BBLMySensorsTableViewCellConstants.defaultMaxSliderValue)
     slider.minimumValue = 0
+    slider.value = Float(BBLMySensorsTableViewCellConstants.defaultSliderValue)
+  }
+  
+  private func resetValues() {
+    maxSliderValue = BBLMySensorsTableViewCellConstants.defaultMaxSliderValue
   }
   
   // MARK: Update
@@ -88,14 +109,19 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     
     nameTextField.text = sensor.uuid
     uuidLabel.text = sensor.uuid
-    valueForegroundViewWidthConstraint.constant = CGFloat(sensor.capSenseValuePercentage) * valueBackgroundView.frame.width
     
     if let capSenseValue = sensor.capSenseValue {
+      if capSenseValue > maxSliderValue {
+        maxSliderValue = capSenseValue
+        thresholdSlider.maximumValue = Float(maxSliderValue)
+      }
       valueLabel.text = String(format: "%i", capSenseValue)
+      valueForegroundViewWidthConstraint.constant = CGFloat(capSenseValue)/CGFloat(maxSliderValue) * valueBackgroundView.frame.width
     } else {
       valueLabel.text = ""
     }
     thresholdTextField.text = String(format: "%02d", sensor.capSenseThreshold)
+    thresholdSlider.value = Float(sensor.capSenseThreshold)
     if sensor.hasBaby {
       babyDetectedLabel.textColor = UIColor.BBLWetAsphaltColor()
     } else {

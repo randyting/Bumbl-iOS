@@ -52,14 +52,6 @@ internal final class BBLSensor: PFObject, PFSubclassing {
       self.hasBaby = newValue
     }
   }
-  internal var capSenseValuePercentage:Double {
-    if let capSenseValue = capSenseValue {
-      return Double(capSenseValue)/Double(BBLSensorInfo.kMaxCapSenseValue)
-    } else {
-      return 0
-    }
-    
-  }
   
 // MARK: Private Variables
   @NSManaged private var connectedParent:BBLParent?
@@ -127,10 +119,12 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   internal func onDidConnect() {
     connectedParent = BBLParent.loggedInParent()
+    delegate?.sensor?(self, didConnect: true)
     peripheral!.discoverServices([BBLSensorInfo.kSensorServiceUUID])
+    peripheral!.delegate = self
     // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
     peripheral?.readRSSI()
-    delegate?.sensor?(self, didConnect: true)
+    
   }
   
   internal func onDidDisconnect() {
