@@ -24,7 +24,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     
     setupLocalNotificationsForApplication(application)
     setupNotificationsForObject(self)
-    Fabric.with([Crashlytics.self, Digits.self])
+    setupFabric()
     setupParse()
     
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
@@ -54,6 +54,11 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   }
   
 // MARK: Setup
+  
+  private func setupFabric() {
+    Fabric.sharedSDK().debug = true
+    Fabric.with([Crashlytics.self, Digits.self])
+  }
   
   private func setupLocalNotificationsForApplication(application: UIApplication) {
     let notificationTypes: UIUserNotificationType = [.Badge, .Sound, .Alert]
