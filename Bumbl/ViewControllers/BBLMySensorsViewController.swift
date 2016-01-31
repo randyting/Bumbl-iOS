@@ -11,35 +11,51 @@ import UIKit
 class BBLMySensorsViewController: UIViewController {
 
 // MARK: Constants
+  
   private struct BBLMySensorsViewControllerConstants {
     private static let kMySensorsTVCReuseIdentifier = "com.randy.mySensorsTVCReuseIdentifier"
+    private static let kMySensorsTVCNibName = "BBLMySensorsTableViewCell"
     
     private static let noProfileSensorsMessage = "No sensors were found in your profile.  Please add a sensor to your profile by connecting to one."
+    
+    private struct FailedAddSensorAlert{
+      private static let title = "Add Sensor to Profile Failed"
+      private static let message = "Please make sure you have an active internet conection"
+    }
+    
+    private struct FailedRemoveSensorAlert{
+      private static let title = "Remove Sensor from Profile Failed"
+      private static let message = "Please make sure you have an active internet conection"
+    }
   }
   
 // MARK: Interface Builder
+  
   @IBOutlet weak var mySensorsTableView: UITableView!
   @IBOutlet weak var noProfileSensorsLabel: UILabel!
   
 // MARK: Public Variables
+  
   internal var loggedInParent:BBLParent!
-  internal var sensorManager: BBLSensorManager!
 
 // MARK: Private Variables
+  
   private var mySensors: [BBLSensor]!
   
 // MARK: Lifecycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupNavigationBar()
     setupTableView(mySensorsTableView)
-    setupSensorManager(sensorManager)
     setupEmptyTableViewCover(noProfileSensorsLabel)
+    setupParent(loggedInParent)
   }
   
 // MARK: Setup
-  private func setupSensorManager(sensorManger: BBLSensorManager) {
-    sensorManager.registerDelegate(self)
+  
+  private func setupParent(parent: BBLParent) {
+    parent.delegate = self
   }
   
   private func setupNavigationBar() {
@@ -49,7 +65,10 @@ class BBLMySensorsViewController: UIViewController {
   private func setupTableView(tableView: UITableView) {
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier)
+    tableView.estimatedRowHeight = 100
+    tableView.rowHeight = UITableViewAutomaticDimension
+    let cellNib = UINib(nibName: BBLMySensorsViewControllerConstants.kMySensorsTVCNibName, bundle: NSBundle.mainBundle())
+    tableView.registerNib(cellNib, forCellReuseIdentifier:BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier)
     tableView.tableFooterView = UIView.init(frame: CGRect.zero)
     updateTableView()
   }
@@ -75,22 +94,35 @@ class BBLMySensorsViewController: UIViewController {
   }
 
 // MARK: Navigation Bar
+  
   internal func didTapLogout() {
     NSNotificationCenter.defaultCenter().postNotificationName(BBLNotifications.kParentDidLogoutNotification, object: self)
+  }
+  
+// MARK: Alerts
+  
+  private func showDismissAlertWithTitle(title: String, withMessage message: String) {
+    
+    let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+    
+    let dismissAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+    alertController.addAction(dismissAction)
+    
+    presentViewController(alertController, animated: true, completion: nil)
   }
   
 }
 
 // MARK: UITableViewDelegate
+
 extension BBLMySensorsViewController:UITableViewDelegate {
   internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    loggedInParent.removeSensor(mySensors[indexPath.row])
-    mySensors[indexPath.row].disconnect()
+    tableView.deselectRowAtIndexPath(indexPath, animated: false)
   }
 }
 
 // MARK: UITableViewDatasource
+
 extension BBLMySensorsViewController:UITableViewDataSource {
   internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     guard let mySensors = mySensors else {
@@ -100,30 +132,64 @@ extension BBLMySensorsViewController:UITableViewDataSource {
   }
   
   internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier(BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier, forIndexPath: indexPath)
+    let cell = tableView.dequeueReusableCellWithIdentifier(BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier, forIndexPath: indexPath) as! BBLMySensorsTableViewCell
     
-    cell.textLabel!.text = mySensors[indexPath.row].peripheral?.identifier.UUIDString
+    cell.delegate = self
+    cell.sensor = mySensors[indexPath.row]
+    cell.sensor.delegate = self
     
     return cell
   }
 }
 
-// MARK: BBLSensorManagerDelegate
-extension BBLMySensorsViewController: BBLSensorManagerDelegate {
-  internal func sensorManager(sensorManager: BBLSensorManager, didConnectSensor sensor: BBLSensor) {
-    if loggedInParent.profileSensors.containsObject(sensor) {
-      updateTableView()
-    } else {
-      // (RT) This is a hack because parent may not have added sensor to array yet.  No guarantees on which delegate method gets called first in a multicast delegate pattern.
-      let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(1 * Double(NSEC_PER_SEC)))
-      dispatch_after(delayTime, dispatch_get_main_queue()) {
-        self.updateTableView()
-      }
-    }
-    
+// MARK: BBLMySensorsTableViewCellDelegate
+
+extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Float, andName name: String?) {
+    // TODO:
   }
   
-  internal func sensorManager(sensorManager: BBLSensorManager, didDisconnectSensor sensor: BBLSensor) {
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool) {
+    loggedInParent.removeSensor(tableViewCell.sensor)
+    tableViewCell.sensor.disconnect()
+  }
+}
+
+// MARK: BBLParentDelegate
+
+extension BBLMySensorsViewController: BBLParentDelegate {
+  internal func parent(parent: BBLParent, didAddSensor sensor: BBLSensor) {
+    updateTableView()
+  }
+  
+  internal func parent(parent: BBLParent, didFailAddSensor sensor: BBLSensor, withErrorMessage errorMessage: String) {
+    updateTableView()
+    showDismissAlertWithTitle(BBLMySensorsViewControllerConstants.FailedAddSensorAlert.title, withMessage: BBLMySensorsViewControllerConstants.FailedAddSensorAlert.message + " " + errorMessage)
+  }
+  
+  internal func parent(parent: BBLParent, didRemoveSensor sensor: BBLSensor) {
+    updateTableView()
+  }
+  
+  internal func parent(parent: BBLParent, didFailRemoveSensor sensor: BBLSensor, withErrorMessage errorMessage: String) {
+    updateTableView()
+    showDismissAlertWithTitle(BBLMySensorsViewControllerConstants.FailedRemoveSensorAlert.title, withMessage: BBLMySensorsViewControllerConstants.FailedRemoveSensorAlert.message + " " + errorMessage)
+  }
+  
+}
+
+// MARK: BBLSensorDelegate
+
+extension BBLMySensorsViewController: BBLSensorDelegate {
+  internal func sensor(sensor: BBLSensor, didUpdateSensorValue value: Int) {
+    updateTableView()
+  }
+  
+  internal func sensor(sensor: BBLSensor, didConnect connected: Bool) {
+    updateTableView()
+  }
+  
+  func sensor(sensor: BBLSensor, didDisconnect disconnnected: Bool) {
     updateTableView()
   }
 }

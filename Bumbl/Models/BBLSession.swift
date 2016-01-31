@@ -39,7 +39,7 @@ extension BBLSession: BBLSensorManagerDelegate {
   
   func sensorManager(sensorManager: BBLSensorManager, didConnectSensor sensor: BBLSensor) {
     print("Did connect to sensor " + sensor.description)
-    parent.addSensor(sensor)
+    self.parent.addSensor(sensor)
   }
   
   func sensorManager(sensorManager: BBLSensorManager, didAttemptToScanWhileBluetoothRadioIsOff isBluetoothRadioOff: Bool) {

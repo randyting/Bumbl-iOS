@@ -9,10 +9,11 @@
 import UIKit
 import CoreBluetooth
 
-@objc protocol BBLSensorDelegate {
+@objc protocol BBLSensorDelegate: class {
   optional func sensor(sensor: BBLSensor, didUpdateRSSI rssi: NSNumber)
   optional func sensor(sensor: BBLSensor, didConnect connected: Bool)
   optional func sensor(sensor: BBLSensor, didDisconnect disconnnected: Bool)
+  optional func sensor(sensor: BBLSensor, didUpdateSensorValue value: Int)
 }
 
 internal final class BBLSensor: PFObject, PFSubclassing {
@@ -38,8 +39,8 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   internal var rssi: NSNumber?
   internal var peripheral:CBPeripheral?
   internal weak var sensorManager: BBLSensorManager!
-  
-  private(set) var hasBaby:Bool? {
+  @NSManaged internal var capSenseThreshold:Int
+  private(set) var hasBaby:Bool {
     get {
       if let _ = capSenseValue {
         return capSenseValue > capSenseThreshold
@@ -53,10 +54,8 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   }
   
 // MARK: Private Variables
-  @NSManaged private var capSenseThreshold:Int
   @NSManaged private var connectedParent:BBLParent?
-  private var capSenseValue:Int?
-  
+  private(set) var capSenseValue:Int?
   
 // MARK: Initialization
   
@@ -119,19 +118,22 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   }
   
   internal func onDidConnect() {
-    
     connectedParent = BBLParent.loggedInParent()
-    saveInBackground()
-    
+    delegate?.sensor?(self, didConnect: true)
     peripheral!.discoverServices([BBLSensorInfo.kSensorServiceUUID])
+    peripheral!.delegate = self
     // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
     peripheral?.readRSSI()
-    delegate?.sensor?(self, didConnect: true)
+    
   }
   
   internal func onDidDisconnect() {
     connectedParent = nil
-    saveInBackground()
+    saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+      if let error = error {
+        print(error.localizedDescription)
+      }
+    }
     
     //TODO: Check backend and alert user.
     //TODO: Update UI
@@ -169,6 +171,7 @@ extension BBLSensor: CBPeripheralDelegate {
       var value = 0
       characteristic.value?.getBytes(&value, length: sizeof(Int))
       capSenseValue = value
+      delegate?.sensor?(self, didUpdateSensorValue: capSenseValue!)
     }
   }
   

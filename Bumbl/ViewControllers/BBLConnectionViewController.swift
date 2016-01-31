@@ -94,7 +94,7 @@ extension BBLConnectionViewController: UITableViewDataSource {
   internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier(BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier, forIndexPath: indexPath)
     
-    cell.textLabel!.text = discoveredSensors[indexPath.row].peripheral?.identifier.UUIDString
+    cell.textLabel!.text = discoveredSensors[indexPath.row].uuid
     
     return cell
   }

@@ -18,7 +18,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var currentSession: BBLSession?
   
-  // MARK: Lifecycle
+// MARK: Lifecycle
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     
@@ -53,7 +53,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     NSNotificationCenter.defaultCenter().removeObserver(self)
   }
   
-  // MARK: Setup
+// MARK: Setup
   
   private func setupLocalNotificationsForApplication(application: UIApplication) {
     let notificationTypes: UIUserNotificationType = [.Badge, .Sound, .Alert]
@@ -86,7 +86,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     window.makeKeyAndVisible()
   }
   
-  // MARK: Logout
+// MARK: Logout
   
   internal func parentDidLogout() {
     updateConnectionStatusForParent((currentSession?.parent)!)
@@ -159,7 +159,6 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
       
       let sensorsViewController = BBLMySensorsViewController()
       sensorsViewController.loggedInParent = session.parent
-      sensorsViewController.sensorManager = session.sensorManager
       
       let connectionViewController = BBLConnectionViewController()
       connectionViewController.sensorManager = session.sensorManager
