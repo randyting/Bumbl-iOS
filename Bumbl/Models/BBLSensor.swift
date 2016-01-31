@@ -14,11 +14,12 @@ import CoreBluetooth
   optional func sensor(sensor: BBLSensor, didConnect connected: Bool)
   optional func sensor(sensor: BBLSensor, didDisconnect disconnnected: Bool)
   optional func sensor(sensor: BBLSensor, didUpdateSensorValue value: Int)
+  optional func sensor(sensor: BBLSensor, didDidFailToDeleteSensorWithErrorMessage errorMessage: String)
 }
 
 internal final class BBLSensor: PFObject, PFSubclassing {
   
-// MARK: PFObject Subclassing
+  // MARK: PFObject Subclassing
   
   override class func initialize() {
     struct Static {
@@ -33,13 +34,15 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     return "BabySensor"
   }
   
-// MARK: Public Variables
+  // MARK: Public Variables
+  
   @NSManaged private(set) var uuid: String?
+  @NSManaged internal var capSenseThreshold:Int
   internal weak var delegate: BBLSensorDelegate?
   internal var rssi: NSNumber?
   internal var peripheral:CBPeripheral?
   internal weak var sensorManager: BBLSensorManager!
-  @NSManaged internal var capSenseThreshold:Int
+  
   private(set) var hasBaby:Bool {
     get {
       if let _ = capSenseValue {
@@ -53,28 +56,30 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     }
   }
   
-// MARK: Private Variables
+  // MARK: Private Variables
+  
   @NSManaged private var connectedParent:BBLParent?
+  @NSManaged private var parentsCount: Int
   private(set) var capSenseValue:Int?
   
-// MARK: Initialization
+  // MARK: Initialization
   
   // Designated initializer
   internal convenience init(withPeripheral peripheral: CBPeripheral?,
-          withSensorManager sensorManager: BBLSensorManager!,
-                            withUUID uuid: String!,
-  withCapSenseThreshold capSenseThreshold: Int,
-                    withDelegate delegate: BBLSensorDelegate?) {
-    self.init()
-    self.peripheral = peripheral
-    self.sensorManager = sensorManager
-    self.uuid = uuid
-    self.capSenseThreshold = capSenseThreshold
-    self.delegate = delegate
-    peripheral?.delegate = self
+                      withSensorManager sensorManager: BBLSensorManager!,
+                                        withUUID uuid: String!,
+              withCapSenseThreshold capSenseThreshold: Int,
+                                withDelegate delegate: BBLSensorDelegate?) {
+      self.init()
+      self.peripheral = peripheral
+      self.sensorManager = sensorManager
+      self.uuid = uuid
+      self.capSenseThreshold = capSenseThreshold
+      self.delegate = delegate
+      peripheral?.delegate = self
   }
   
-// MARK: Class Methods
+  // MARK: Class Methods
   
   // Class initializer for instantiating an existing peripheral loaded from the server or persistent storage.
   class func  sensorWith(peripheral: CBPeripheral?,
@@ -101,10 +106,27 @@ internal final class BBLSensor: PFObject, PFSubclassing {
         withUUID: peripheral.identifier.UUIDString,
         withCapSenseThreshold: BBLSensorInfo.kDefaultCapSenseThreshold,
         withDelegate: nil)
-      
   }
-
-// MARK: Connection
+  
+  // MARK: Parents Count
+  
+  internal func incrementParentsCount() {
+    parentsCount++
+  }
+  
+  internal func decrementParentsCount() {
+    parentsCount--
+    if parentsCount == 0 {
+      deleteInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+        if let error = error {
+          self.delegate?.sensor?(self, didDidFailToDeleteSensorWithErrorMessage: error.localizedDescription)
+        }
+      })
+    }
+  }
+  
+  // MARK: Connection
+  
   internal func connect() {
     if let _ = self.peripheral {
       sensorManager.connectToSensor(self)
@@ -124,7 +146,6 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     peripheral!.delegate = self
     // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
     peripheral?.readRSSI()
-    
   }
   
   internal func onDidDisconnect() {
@@ -164,7 +185,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
 extension BBLSensor: CBPeripheralDelegate {
   
   internal func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
-
+    
     let uuid = characteristic.UUID
     
     if uuid == BBLSensorInfo.kCapSenseValueCharacteristicUUID {

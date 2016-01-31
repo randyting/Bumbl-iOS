@@ -18,11 +18,13 @@ import UIKit
 internal final class BBLParent: PFUser {
 
 // MARK: Public Variables
+  
   @NSManaged internal var sensors:[BBLSensor]?
   private(set) var profileSensors:NSMutableSet!
   internal weak var delegate: BBLParentDelegate?
 
 // MARK: Synchronization
+  
   internal func syncSensors(){
     profileSensors = NSMutableSet()
     if let sensors = sensors {
@@ -33,6 +35,7 @@ internal final class BBLParent: PFUser {
   }
   
 // MARK: Sensor Management
+  
   internal func addSensor(sensor: BBLSensor) {
     profileSensors!.addObject(sensor)
     sensors = profileSensors!.allObjects as? [BBLSensor]
@@ -49,7 +52,7 @@ internal final class BBLParent: PFUser {
     guard profileSensors!.containsObject(sensor) else {
       return
     }
-    
+    sensor.decrementParentsCount()
     profileSensors!.removeObject(sensor)
     sensors = profileSensors!.allObjects as? [BBLSensor]
     saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
