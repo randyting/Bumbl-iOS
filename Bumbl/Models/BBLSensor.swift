@@ -72,10 +72,10 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   // Designated initializer
   internal convenience init(withPeripheral peripheral: CBPeripheral?,
-                      withSensorManager sensorManager: BBLSensorManager!,
-                                        withUUID uuid: String!,
-              withCapSenseThreshold capSenseThreshold: Int,
-                                withDelegate delegate: BBLSensorDelegate?) {
+    withSensorManager sensorManager: BBLSensorManager!,
+    withUUID uuid: String!,
+    withCapSenseThreshold capSenseThreshold: Int,
+    withDelegate delegate: BBLSensorDelegate?) {
       self.init()
       self.peripheral = peripheral
       self.sensorManager = sensorManager
@@ -153,6 +153,8 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     peripheral!.delegate = self
     // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
     peripheral?.readRSSI()
+    
+    alertUserWithMessage(BBLSensorInfo.Alerts.sensorConnectedMessage, andTitle: BBLSensorInfo.Alerts.sensorConnectedAlertTitle)
   }
   
   internal func onDidDisconnect() {
@@ -164,16 +166,20 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     }
     
     //TODO: Check backend and alert user.
-    //TODO: Update UI
-    alertUserWithMessage("This is a message that you disconnected.")
+    if hasBaby {
+      alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
+    } else {
+      alertUserWithMessage(BBLSensorInfo.Alerts.sensorDisconnectedMessage, andTitle: BBLSensorInfo.Alerts.sensorDisconnectedAlertTitle)
+    }
+    
     delegate?.sensor?(self, didDisconnect: true)
   }
   
-  private func alertUserWithMessage(message: String) {
+  private func alertUserWithMessage(message: String, andTitle title:String) {
     let notification = UILocalNotification()
     notification.alertAction = nil
-    notification.alertTitle = message
-    notification.alertBody = "Baby Dead"
+    notification.alertTitle = title
+    notification.alertBody = message
     notification.fireDate = NSDate(timeIntervalSinceNow: 0)
     notification.timeZone = NSTimeZone.defaultTimeZone()
     notification.repeatInterval = NSCalendarUnit.Second
