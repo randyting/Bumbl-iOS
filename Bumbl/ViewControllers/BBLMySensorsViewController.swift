@@ -153,6 +153,10 @@ extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
     loggedInParent.removeSensor(tableViewCell.sensor)
     tableViewCell.sensor.disconnect()
   }
+  
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: Int) {
+    tableViewCell.sensor.capSenseThreshold = Int(threshold)
+  }
 }
 
 // MARK: BBLParentDelegate

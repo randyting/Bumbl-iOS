@@ -10,6 +10,7 @@ import UIKit
 
 @objc protocol BBLMySensorsTableViewCellDelegate: class {
   optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Float, andName name: String?)
+  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: Int)
   optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool)
 }
 
@@ -52,11 +53,11 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   @IBOutlet weak var valueForegroundViewWidthConstraint: NSLayoutConstraint!
   @IBAction private func didChangeThresholdSliderValue(sender: UISlider) {
     thresholdTextField.text = String(sender.value)
-    sensor.capSenseThreshold = Int(sender.value)
+    delegate?.tableViewCell?(self, didChangeThreshold: Int(sender.value))
   }
   @IBAction func didEndEditingThresholdTextField(sender: UITextField) {
     thresholdSlider.value = Float((sender.text! as NSString).integerValue)
-    sensor.capSenseThreshold = Int((sender.text! as NSString).integerValue)
+    delegate?.tableViewCell?(self, didChangeThreshold: Int((sender.text! as NSString).integerValue))
   }
   
   @IBAction private func didTapRemoveFromProfileButton(sender: UIButton) {
