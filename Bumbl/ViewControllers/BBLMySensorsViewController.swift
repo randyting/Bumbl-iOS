@@ -145,8 +145,14 @@ extension BBLMySensorsViewController:UITableViewDataSource {
 // MARK: BBLMySensorsTableViewCellDelegate
 
 extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
-  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Float, andName name: String?) {
-    // TODO:
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Int, andName name: String?) {
+    tableViewCell.sensor.capSenseThreshold = threshold
+    tableViewCell.sensor.name = name
+    tableViewCell.sensor.saveInBackgroundWithBlock { (succes: Bool, error: NSError?) -> Void in
+      if let error = error {
+        print(error.localizedDescription)
+      }
+    }
   }
   
   internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool) {
@@ -155,7 +161,7 @@ extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
   }
   
   internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: Int) {
-    tableViewCell.sensor.capSenseThreshold = Int(threshold)
+    tableViewCell.sensor.capSenseThreshold = threshold
   }
 }
 

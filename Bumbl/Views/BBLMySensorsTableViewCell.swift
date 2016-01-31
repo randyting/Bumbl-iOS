@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol BBLMySensorsTableViewCellDelegate: class {
-  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Float, andName name: String?)
+  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Int, andName name: String?)
   optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: Int)
   optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool)
 }
@@ -67,7 +67,7 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   @IBAction private func didTapSaveSettingsButton(sender: UIButton) {
     thresholdTextField.resignFirstResponder()
     nameTextField.resignFirstResponder()
-    delegate?.tableViewCell?(self, didSaveThreshold: thresholdSlider.value, andName: nameTextField.text)
+    delegate?.tableViewCell?(self, didSaveThreshold: Int(thresholdSlider.value), andName: nameTextField.text)
   }
   
   // MARK: Lifecycle
@@ -112,7 +112,7 @@ class BBLMySensorsTableViewCell: UITableViewCell {
       backgroundColor = UIColor.BBLGrayColor()
     }
     
-    nameTextField.text = sensor.uuid
+    nameTextField.text = sensor.name
     uuidLabel.text = sensor.uuid
     
     if let capSenseValue = sensor.capSenseValue {
@@ -132,13 +132,6 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     } else {
       babyDetectedLabel.textColor = UIColor.clearColor()
     }
-  }
-  
-  
-  override func setSelected(selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-    
-    // Configure the view for the selected state
   }
   
 }
