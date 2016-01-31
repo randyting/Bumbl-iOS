@@ -19,6 +19,12 @@ import CoreBluetooth
 
 internal final class BBLSensor: PFObject, PFSubclassing {
   
+  // MARK: Constants
+  
+  private struct BBLSensorConstants {
+    private static let defaultName = "Please Enter Baby Name"
+  }
+  
   // MARK: PFObject Subclassing
   
   override class func initialize() {
@@ -35,7 +41,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   }
   
   // MARK: Public Variables
-  
+  @NSManaged internal var name: String?
   @NSManaged private(set) var uuid: String?
   @NSManaged internal var capSenseThreshold:Int
   internal weak var delegate: BBLSensorDelegate?
@@ -76,6 +82,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
       self.uuid = uuid
       self.capSenseThreshold = capSenseThreshold
       self.delegate = delegate
+      self.name = BBLSensorConstants.defaultName
       peripheral?.delegate = self
   }
   
