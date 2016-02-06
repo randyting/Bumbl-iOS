@@ -9,12 +9,15 @@
 import UIKit
 import CoreBluetooth
 
-@objc protocol BBLSensorDelegate: class {
-  optional func sensor(sensor: BBLSensor, didUpdateRSSI rssi: NSNumber)
-  optional func sensor(sensor: BBLSensor, didConnect connected: Bool)
-  optional func sensor(sensor: BBLSensor, didDisconnect disconnnected: Bool)
-  optional func sensor(sensor: BBLSensor, didUpdateSensorValue value: Int)
-  optional func sensor(sensor: BBLSensor, didDidFailToDeleteSensorWithErrorMessage errorMessage: String)
+internal enum BBLSensorState {
+  case Disconnected, Deactivated, WaitingToBeActivated, Activated, WaitingToBeDeactivated
+}
+
+protocol BBLSensorDelegate: class {
+  func sensor(sensor: BBLSensor, didUpdateRSSI rssi: NSNumber)
+  func sensor(sensor: BBLSensor, didUpdateSensorValue value: Int)
+  func sensor(sensor: BBLSensor, didDidFailToDeleteSensorWithErrorMessage errorMessage: String)
+  func sensor(sensor: BBLSensor, didChangeState state: BBLSensorState)
 }
 
 internal final class BBLSensor: PFObject, PFSubclassing {
@@ -48,8 +51,9 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   internal var rssi: NSNumber?
   internal var peripheral:CBPeripheral?
   internal weak var sensorManager: BBLSensorManager!
+  internal var stateMachine:BBLStateMachine<BBLSensor>!
   
-  private(set) var hasBaby:Bool {
+  private var hasBaby:Bool {
     get {
       if let _ = capSenseValue {
         return capSenseValue > capSenseThreshold
@@ -66,6 +70,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   @NSManaged private var connectedParent:BBLParent?
   @NSManaged private var parentsCount: Int
+  private var countdownTimer:NSTimer!
   private(set) var capSenseValue:Int?
   
   // MARK: Initialization
@@ -84,6 +89,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
       self.delegate = delegate
       self.name = BBLSensorConstants.defaultName
       peripheral?.delegate = self
+      self.stateMachine = BBLStateMachine(initialState: .Disconnected, delegate: self)
   }
   
   // MARK: Class Methods
@@ -126,7 +132,9 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     if parentsCount == 0 {
       deleteInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
         if let error = error {
-          self.delegate?.sensor?(self, didDidFailToDeleteSensorWithErrorMessage: error.localizedDescription)
+          if let delegate = self.delegate as? NSObject where delegate.respondsToSelector("sensor:didDidFailToDeleteSensorWithErrorMessage:") {
+            (delegate as! BBLSensorDelegate).sensor(self, didDidFailToDeleteSensorWithErrorMessage: error.localizedDescription)
+          }
         }
       })
     }
@@ -147,32 +155,11 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   }
   
   internal func onDidConnect() {
-    connectedParent = BBLParent.loggedInParent()
-    delegate?.sensor?(self, didConnect: true)
-    peripheral!.discoverServices([BBLSensorInfo.kSensorServiceUUID])
-    peripheral!.delegate = self
-    // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
-    peripheral?.readRSSI()
-    
-    alertUserWithMessage(BBLSensorInfo.Alerts.sensorConnectedMessage, andTitle: BBLSensorInfo.Alerts.sensorConnectedAlertTitle)
+    stateMachine.state = .Deactivated
   }
   
   internal func onDidDisconnect() {
-    connectedParent = nil
-    saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-      if let error = error {
-        print(error.localizedDescription)
-      }
-    }
-    
-    //TODO: Check backend and alert user.
-    if hasBaby {
-      alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
-    } else {
-      alertUserWithMessage(BBLSensorInfo.Alerts.sensorDisconnectedMessage, andTitle: BBLSensorInfo.Alerts.sensorDisconnectedAlertTitle)
-    }
-    
-    delegate?.sensor?(self, didDisconnect: true)
+    stateMachine.state = .Disconnected
   }
   
   private func alertUserWithMessage(message: String, andTitle title:String) {
@@ -205,7 +192,30 @@ extension BBLSensor: CBPeripheralDelegate {
       var value = 0
       characteristic.value?.getBytes(&value, length: sizeof(Int))
       capSenseValue = value
-      delegate?.sensor?(self, didUpdateSensorValue: capSenseValue!)
+      
+      if let delegate = delegate as? NSObject where delegate.respondsToSelector("sensor:didUpdateSensorValue:") {
+        (delegate as! BBLSensorDelegate).sensor(self, didUpdateSensorValue: capSenseValue!)
+      }
+      
+      switch (stateMachine.state as BBLSensorState) {
+      case .Deactivated:
+        if hasBaby { stateMachine.state = .WaitingToBeActivated }
+      case .WaitingToBeActivated:
+        if !hasBaby {
+          stateMachine.state = .Deactivated
+          stopCountdownTimer(countdownTimer)
+        }
+      case .Activated:
+        if !hasBaby { stateMachine.state = .WaitingToBeDeactivated }
+      case .WaitingToBeDeactivated:
+        if hasBaby {
+          stateMachine.state = .Activated
+          stopCountdownTimer(countdownTimer)
+        }
+      default:
+        // Do nothing
+        break
+      }
     }
   }
   
@@ -224,3 +234,108 @@ extension BBLSensor: CBPeripheralDelegate {
   
 }
 
+// MARK: BBLStateMachineDelegate
+
+extension BBLSensor:BBLStateMachineDelegateProtocol{
+  typealias StateType = BBLSensorState
+  
+  internal func shouldTransitionFrom(from:StateType, to:StateType)->Bool{
+    switch (from, to){
+    case (.Disconnected, .Deactivated),
+    (.Deactivated, .Disconnected),
+    (.Deactivated, .WaitingToBeActivated),
+    (.WaitingToBeActivated, .Deactivated),
+    (.WaitingToBeActivated, .Activated),
+    (.Activated, .WaitingToBeDeactivated),
+    (.WaitingToBeDeactivated, .Activated),
+    (.WaitingToBeDeactivated, .Deactivated):
+      return true
+    case (_, .Disconnected):
+      return true
+    default:
+      return false
+    }
+  }
+  
+  internal func didTransitionFrom(from:StateType, to:StateType){
+    switch (from, to){
+      
+    case (.Disconnected, .Deactivated):
+      connectedParent = BBLParent.loggedInParent()
+      peripheral!.discoverServices([BBLSensorInfo.kSensorServiceUUID])
+      peripheral!.delegate = self
+      // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
+      peripheral?.readRSSI()
+      
+    case (.Deactivated, .WaitingToBeActivated):
+      startCountdownForTimeInSeconds(3)
+      
+    case (.Activated, .WaitingToBeDeactivated):
+      startCountdownForTimeInSeconds(3)
+      
+    case (.WaitingToBeActivated, .Activated):
+      alertUserWithMessage(BBLSensorInfo.Alerts.sensorActivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorActivatedAlertTitle)
+      
+    case (.WaitingToBeDeactivated, .Deactivated):
+      alertUserWithMessage(BBLSensorInfo.Alerts.sensorDeactivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorDeactivatedAlertTitle)
+      
+    case (.Activated, .Disconnected):
+      alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
+      afterDisconnection()
+      
+    case (.WaitingToBeDeactivated, .Disconnected):
+      alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
+      afterDisconnection()
+      
+    case (_, .Disconnected):
+      afterDisconnection()
+      
+      
+    default:
+      break
+    }
+    
+    delegate?.sensor(self, didChangeState: to)
+    
+  }
+  
+  private func afterDisconnection(){
+    stopCountdownTimer(countdownTimer)
+    connectedParent = nil
+    saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+      if let error = error {
+        print(error.localizedDescription)
+      }
+    }
+    //TODO: Check backend and alert user.
+  }
+  
+  
+}
+
+// MARK: Timer
+
+extension BBLSensor {
+  private func startCountdownForTimeInSeconds(seconds: Int) {
+    countdownTimer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(seconds), target: self, selector: "countdownEnded:", userInfo: nil, repeats: false)
+  }
+  
+  internal func countdownEnded(timer: NSTimer) {
+    switch stateMachine.state {
+    case .WaitingToBeActivated:
+      stateMachine.state = .Activated
+    case .WaitingToBeDeactivated:
+      stateMachine.state = .Deactivated
+    default:
+      print("Sensor countdown ended from a state that is not WaitingToBeActivated or WaitingToBeDeactivated.")
+    }
+    
+    stopCountdownTimer(timer)
+  }
+  
+  private func stopCountdownTimer(timer: NSTimer?) {
+    if let timer = timer {
+      timer.invalidate()
+    }
+  }
+}

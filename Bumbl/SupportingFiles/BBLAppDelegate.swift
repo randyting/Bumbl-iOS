@@ -141,6 +141,12 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     
     private func loginWithParent(parent: BBLParent!) {
       BBLSensor.fetchAllInBackground(parent.sensors) { (result: [AnyObject]?, error: NSError?) -> Void in
+        if let sensors = result as? [BBLSensor] {
+          for sensor in sensors {
+            sensor.stateMachine = BBLStateMachine(initialState: .Disconnected, delegate: sensor)
+          }
+        }
+        
         parent.syncSensors()
         
         self.currentSession = BBLSession(withParent: parent,

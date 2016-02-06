@@ -46,7 +46,7 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   @IBOutlet private weak var valueLabel: UILabel!
   @IBOutlet private weak var thresholdSlider: UISlider!
   @IBOutlet private weak var thresholdTextField: UITextField!
-  @IBOutlet private weak var babyDetectedLabel: UILabel!
+  @IBOutlet private weak var sensorStateLabel: UILabel!
   
   @IBOutlet weak var valueBackgroundView: UIView!
   
@@ -102,16 +102,6 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   
   // MARK: Update
   internal func updateValuesWithSensor(sensor: BBLSensor) {
-    if let _ = sensor.peripheral {
-      if sensor.peripheral?.state == .Connected {
-        backgroundColor = UIColor.BBLYellowColor()
-      } else {
-        backgroundColor = UIColor.BBLGrayColor()
-      }
-    } else {
-      backgroundColor = UIColor.BBLGrayColor()
-    }
-    
     nameTextField.text = sensor.name
     uuidLabel.text = sensor.uuid
     
@@ -127,11 +117,25 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     }
     thresholdTextField.text = String(format: "%02d", sensor.capSenseThreshold)
     thresholdSlider.value = Float(sensor.capSenseThreshold)
-    if sensor.hasBaby {
-      babyDetectedLabel.textColor = UIColor.BBLWetAsphaltColor()
-    } else {
-      babyDetectedLabel.textColor = UIColor.clearColor()
+    
+    switch (sensor.stateMachine.state as BBLSensorState) {
+    case .Activated:
+      backgroundColor = UIColor.BBLYellowColor()
+      sensorStateLabel.text = "Activated"
+    case .Deactivated:
+      backgroundColor = UIColor.BBLYellowColor()
+      sensorStateLabel.text = "Deactivated"
+    case .Disconnected:
+      backgroundColor = UIColor.BBLGrayColor()
+      sensorStateLabel.text = "Disconnected"
+    case .WaitingToBeActivated:
+      backgroundColor = UIColor.BBLYellowColor()
+      sensorStateLabel.text = "Waiting To Be Activated"
+    case .WaitingToBeDeactivated:
+      backgroundColor = UIColor.BBLYellowColor()
+      sensorStateLabel.text = "Waiting To Be Deactivated"
     }
+    
   }
-  
+
 }

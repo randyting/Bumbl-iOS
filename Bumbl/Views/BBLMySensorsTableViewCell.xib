@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
@@ -12,7 +12,7 @@
             <rect key="frame" x="0.0" y="0.0" width="774" height="227"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="774" height="227"/>
+                <rect key="frame" x="0.0" y="0.0" width="774" height="226.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="760" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="jkP-iy-QW8">
@@ -23,7 +23,7 @@
                         </connections>
                     </button>
                     <slider opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="UP4-Dx-Uv5">
-                        <rect key="frame" x="13" y="143" width="214" height="31"/>
+                        <rect key="frame" x="13" y="144" width="214" height="31"/>
                         <connections>
                             <action selector="didChangeThresholdSliderValue:" destination="KGk-i7-Jjw" eventType="valueChanged" id="Bi9-4Q-seQ"/>
                         </connections>
@@ -35,7 +35,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n8e-8e-ofM">
-                        <rect key="frame" x="15" y="128" width="210" height="5"/>
+                        <rect key="frame" x="15" y="129" width="210" height="5"/>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="210" id="XVB-4Z-qre"/>
@@ -43,20 +43,20 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" verticalHuggingPriority="248" verticalCompressionResistancePriority="753" translatesAutoresizingMaskIntoConstraints="NO" id="2Rw-BY-3oi">
-                        <rect key="frame" x="15" y="128" width="126" height="5"/>
+                        <rect key="frame" x="15" y="129" width="126" height="5"/>
                         <color key="backgroundColor" red="0.15681437928369168" green="1" blue="0.18440524346413323" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="126" id="5sI-Dp-gmR"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" verticalCompressionResistancePriority="749" text="Baby Detected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ggf-Rq-XoE">
-                        <rect key="frame" x="15" y="188" width="114" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" verticalCompressionResistancePriority="749" text="Sensor State" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ggf-Rq-XoE">
+                        <rect key="frame" x="15" y="189" width="99" height="20"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="jKZ-XF-Cf0">
-                        <rect key="frame" x="230" y="143" width="50" height="30"/>
+                        <rect key="frame" x="230" y="144" width="50" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="XkL-BE-rdu"/>
                         </constraints>
@@ -67,7 +67,7 @@
                         </connections>
                     </textField>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9x1-yP-dtn">
-                        <rect key="frame" x="230" y="122" width="36" height="17"/>
+                        <rect key="frame" x="230" y="123" width="36" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -116,8 +116,8 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="babyDetectedLabel" destination="ggf-Rq-XoE" id="gDS-no-5le"/>
                 <outlet property="nameTextField" destination="YxR-SR-hy9" id="SDP-aS-bdw"/>
+                <outlet property="sensorStateLabel" destination="ggf-Rq-XoE" id="7Vq-HU-UeF"/>
                 <outlet property="thresholdSlider" destination="UP4-Dx-Uv5" id="zCN-m4-1zN"/>
                 <outlet property="thresholdTextField" destination="jKZ-XF-Cf0" id="uHE-0u-qTd"/>
                 <outlet property="uuidLabel" destination="xFn-xm-QCB" id="SXX-k3-S07"/>

@@ -182,6 +182,7 @@ extension BBLSensorManager: CBCentralManagerDelegate {
           callDelegates{$0.sensorManager?(self, didDiscoverSensor: thisSensor)}
           thisSensor.sensorManager = self
           thisSensor.peripheral = peripheral
+          thisSensor.stateMachine = BBLStateMachine(initialState: .Disconnected, delegate: thisSensor)
           thisSensor.connect()
           return
         }
