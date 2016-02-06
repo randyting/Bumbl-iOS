@@ -53,7 +53,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   internal weak var sensorManager: BBLSensorManager!
   internal var stateMachine:BBLStateMachine<BBLSensor>!
   
-  private(set) var hasBaby:Bool {
+  private var hasBaby:Bool {
     get {
       if let _ = capSenseValue {
         return capSenseValue > capSenseThreshold
@@ -262,9 +262,6 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
       
     case (.Disconnected, .Deactivated):
       connectedParent = BBLParent.loggedInParent()
-      if let delegate = delegate as? NSObject where delegate.respondsToSelector("sensor:didChangeState:") {
-        (delegate as! BBLSensorDelegate).sensor(self, didChangeState: .Deactivated)
-      }
       peripheral!.discoverServices([BBLSensorInfo.kSensorServiceUUID])
       peripheral!.delegate = self
       // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
@@ -297,6 +294,9 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
     default:
       break
     }
+    
+    delegate?.sensor(self, didChangeState: to)
+    
   }
   
   private func afterDisconnection(){
@@ -308,9 +308,6 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
       }
     }
     //TODO: Check backend and alert user.
-    if let delegate = delegate as? NSObject where delegate.respondsToSelector("sensor:didChangeState:") {
-      (delegate as! BBLSensorDelegate).sensor(self, didChangeState: .Disconnected)
-    }
   }
   
   
