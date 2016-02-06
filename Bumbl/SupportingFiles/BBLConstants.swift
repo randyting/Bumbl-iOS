@@ -41,12 +41,12 @@ internal struct BBLSensorInfo {
     static let babyInSeatAndOutOfRangeAlertMessage = "Get your baby!"
     
     // When the sensor disconnects without a baby.
-    static let sensorDisconnectedAlertTitle = "Your sensor is still functional."
-    static let sensorDisconnectedMessage = "Sensor disconnected without baby."
+    static let sensorActivatedAlertTitle = "Baby placed in seat."
+    static let sensorActivatedAlertMessage = "Sensor Activated."
     
     // When the sensor connects.
-    static let sensorConnectedAlertTitle = "Your sensor is still functional."
-    static let sensorConnectedMessage = "Sensor connected."
+    static let sensorDeactivatedAlertTitle = "Baby removed from seat"
+    static let sensorDeactivatedAlertMessage = "Sensor Deactivated."
     
   }
 }

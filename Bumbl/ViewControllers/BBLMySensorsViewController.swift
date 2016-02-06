@@ -195,11 +195,16 @@ extension BBLMySensorsViewController: BBLSensorDelegate {
     updateTableView()
   }
   
-  internal func sensor(sensor: BBLSensor, didConnect connected: Bool) {
+  internal func sensor(sensor: BBLSensor, didChangeState state: BBLSensorState) {
     updateTableView()
   }
   
-  func sensor(sensor: BBLSensor, didDisconnect disconnnected: Bool) {
+  internal func sensor(sensor: BBLSensor, didDidFailToDeleteSensorWithErrorMessage errorMessage: String) {
+    //TODO: Handle displaying this error.
+  }
+  
+  internal func sensor(sensor: BBLSensor, didUpdateRSSI rssi: NSNumber) {
     updateTableView()
   }
+
 }
