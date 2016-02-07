@@ -40,16 +40,16 @@ internal struct BBLSensorInfo {
   /// Alerts that will be triggered when the app is backgrounded.
   struct Alerts {
     // When the baby is in the carseat and the sensor disconnects.
-    static let babyInSeatAndOutOfRangeAlertTitle = "Your baby is still in your car!"
-    static let babyInSeatAndOutOfRangeAlertMessage = "Get your baby!"
+    static let babyInSeatAndOutOfRangeAlertTitle = "Get your baby!"
+    static let babyInSeatAndOutOfRangeAlertMessage = " is still in your car!"
     
     // When the sensor disconnects without a baby.
     static let sensorActivatedAlertTitle = "Baby placed in seat."
-    static let sensorActivatedAlertMessage = "Sensor Activated."
+    static let sensorActivatedAlertMessage = "'s Sensor Activated."
     
     // When the sensor connects.
     static let sensorDeactivatedAlertTitle = "Baby removed from seat"
-    static let sensorDeactivatedAlertMessage = "Sensor Deactivated."
+    static let sensorDeactivatedAlertMessage = "'s Sensor Deactivated."
     
   }
 }
