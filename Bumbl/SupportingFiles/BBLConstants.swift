@@ -34,6 +34,9 @@ internal struct BBLSensorInfo {
   /// Cap sense threshold for determining if baby is on sensor or not.
   static let kDefaultCapSenseThreshold = 50
   
+  /// Default delay for transition between activated and deactivated states
+  static let kDefaultDelayInSeconds = 3
+  
   /// Alerts that will be triggered when the app is backgrounded.
   struct Alerts {
     // When the baby is in the carseat and the sensor disconnects.
