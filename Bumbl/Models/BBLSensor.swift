@@ -47,6 +47,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   @NSManaged internal var name: String?
   @NSManaged private(set) var uuid: String?
   @NSManaged internal var capSenseThreshold:Int
+  @NSManaged internal var delayInSeconds:Int
   internal weak var delegate: BBLSensorDelegate?
   internal var rssi: NSNumber?
   internal var peripheral:CBPeripheral?
@@ -80,6 +81,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     withSensorManager sensorManager: BBLSensorManager!,
     withUUID uuid: String!,
     withCapSenseThreshold capSenseThreshold: Int,
+    withDelayInSeconds delayInSeconds: Int,
     withDelegate delegate: BBLSensorDelegate?) {
       self.init()
       self.peripheral = peripheral
@@ -88,6 +90,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
       self.capSenseThreshold = capSenseThreshold
       self.delegate = delegate
       self.name = BBLSensorConstants.defaultName
+      self.delayInSeconds = delayInSeconds
       peripheral?.delegate = self
       self.stateMachine = BBLStateMachine(initialState: .Disconnected, delegate: self)
   }
@@ -102,10 +105,12 @@ internal final class BBLSensor: PFObject, PFSubclassing {
       //TODO: Parse JSON and initialize values
       let uuidFromJSON = "someUniqueIdentifier"
       let capSenseThreshFromJSON = 30
+      let delayInSecondsFromJSON = 3
       return BBLSensor.init(withPeripheral: peripheral,
         withSensorManager: sensorManager,
         withUUID: uuidFromJSON,
         withCapSenseThreshold: capSenseThreshFromJSON,
+        withDelayInSeconds: delayInSecondsFromJSON,
         withDelegate: nil)
       
   }
@@ -118,6 +123,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
         withSensorManager: sensorManager,
         withUUID: peripheral.identifier.UUIDString,
         withCapSenseThreshold: BBLSensorInfo.kDefaultCapSenseThreshold,
+        withDelayInSeconds: BBLSensorInfo.kDefaultDelayInSeconds,
         withDelegate: nil)
   }
   
@@ -268,10 +274,10 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
       peripheral?.readRSSI()
       
     case (.Deactivated, .WaitingToBeActivated):
-      startCountdownForTimeInSeconds(3)
+      startCountdownForTimeInSeconds(delayInSeconds)
       
     case (.Activated, .WaitingToBeDeactivated):
-      startCountdownForTimeInSeconds(3)
+      startCountdownForTimeInSeconds(delayInSeconds)
       
     case (.WaitingToBeActivated, .Activated):
       alertUserWithMessage(BBLSensorInfo.Alerts.sensorActivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorActivatedAlertTitle)
@@ -309,7 +315,6 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
     }
     //TODO: Check backend and alert user.
   }
-  
   
 }
 

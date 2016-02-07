@@ -163,6 +163,11 @@ extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
   internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: Int) {
     tableViewCell.sensor.capSenseThreshold = threshold
   }
+  
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeDelayValue value: Int) {
+    tableViewCell.sensor.delayInSeconds = value
+    updateTableView()
+  }
 }
 
 // MARK: BBLParentDelegate

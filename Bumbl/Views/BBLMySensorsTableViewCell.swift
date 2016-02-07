@@ -12,17 +12,20 @@ import UIKit
   optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Int, andName name: String?)
   optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: Int)
   optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool)
+  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeDelayValue value: Int)
 }
 
 class BBLMySensorsTableViewCell: UITableViewCell {
   
   // MARK: Constants
+  
   private struct BBLMySensorsTableViewCellConstants {
     private static let defaultMaxSliderValue = 100
     private static let defaultSliderValue = 50
   }
   
   // MARK: Public Variables
+  
   internal weak var delegate: BBLMySensorsTableViewCellDelegate?
   internal var sensor: BBLSensor! {
     didSet (newSensor){
@@ -37,24 +40,27 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   }
   
   // MARK: Private Variables
+  
   private var maxSliderValue: Int!
   
   // MARK: Interface Builder
+  
   @IBOutlet private weak var nameTextField: UITextField!
   @IBOutlet private weak var uuidLabel: UILabel!
-  
+  @IBOutlet weak var delayInSecondsLabel: UILabel!
+  @IBOutlet weak var delayInSecondsStepper: UIStepper!
   @IBOutlet private weak var valueLabel: UILabel!
   @IBOutlet private weak var thresholdSlider: UISlider!
   @IBOutlet private weak var thresholdTextField: UITextField!
   @IBOutlet private weak var sensorStateLabel: UILabel!
-  
   @IBOutlet weak var valueBackgroundView: UIView!
-  
   @IBOutlet weak var valueForegroundViewWidthConstraint: NSLayoutConstraint!
+  
   @IBAction private func didChangeThresholdSliderValue(sender: UISlider) {
     thresholdTextField.text = String(sender.value)
     delegate?.tableViewCell?(self, didChangeThreshold: Int(sender.value))
   }
+  
   @IBAction func didEndEditingThresholdTextField(sender: UITextField) {
     thresholdSlider.value = Float((sender.text! as NSString).integerValue)
     delegate?.tableViewCell?(self, didChangeThreshold: Int((sender.text! as NSString).integerValue))
@@ -70,7 +76,12 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     delegate?.tableViewCell?(self, didSaveThreshold: Int(thresholdSlider.value), andName: nameTextField.text)
   }
   
+  @IBAction func stepperValueDidChange(sender: UIStepper) {
+    delegate?.tableViewCell?(self, didChangeDelayValue: Int(sender.value))
+  }
+  
   // MARK: Lifecycle
+  
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     initViews()
@@ -90,6 +101,7 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   }
   
   // MARK: Setup
+  
   private func setupSlider(slider: UISlider) {
     slider.maximumValue = Float(BBLMySensorsTableViewCellConstants.defaultMaxSliderValue)
     slider.minimumValue = 0
@@ -101,9 +113,12 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   }
   
   // MARK: Update
+  
   internal func updateValuesWithSensor(sensor: BBLSensor) {
     nameTextField.text = sensor.name
     uuidLabel.text = sensor.uuid
+    delayInSecondsLabel.text = String(sensor.delayInSeconds)
+    delayInSecondsStepper.value = Double(sensor.delayInSeconds)
     
     if let capSenseValue = sensor.capSenseValue {
       if capSenseValue > maxSliderValue {
