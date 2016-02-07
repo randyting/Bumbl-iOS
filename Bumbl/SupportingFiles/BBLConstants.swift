@@ -34,19 +34,22 @@ internal struct BBLSensorInfo {
   /// Cap sense threshold for determining if baby is on sensor or not.
   static let kDefaultCapSenseThreshold = 50
   
+  /// Default delay for transition between activated and deactivated states
+  static let kDefaultDelayInSeconds = 3
+  
   /// Alerts that will be triggered when the app is backgrounded.
   struct Alerts {
     // When the baby is in the carseat and the sensor disconnects.
-    static let babyInSeatAndOutOfRangeAlertTitle = "Your baby is still in your car!"
-    static let babyInSeatAndOutOfRangeAlertMessage = "Get your baby!"
+    static let babyInSeatAndOutOfRangeAlertTitle = "Get your baby!"
+    static let babyInSeatAndOutOfRangeAlertMessage = " is still in your car!"
     
     // When the sensor disconnects without a baby.
-    static let sensorDisconnectedAlertTitle = "Your sensor is still functional."
-    static let sensorDisconnectedMessage = "Sensor disconnected without baby."
+    static let sensorActivatedAlertTitle = "Baby placed in seat."
+    static let sensorActivatedAlertMessage = "'s Sensor Activated."
     
     // When the sensor connects.
-    static let sensorConnectedAlertTitle = "Your sensor is still functional."
-    static let sensorConnectedMessage = "Sensor connected."
+    static let sensorDeactivatedAlertTitle = "Baby removed from seat"
+    static let sensorDeactivatedAlertMessage = "'s Sensor Deactivated."
     
   }
 }

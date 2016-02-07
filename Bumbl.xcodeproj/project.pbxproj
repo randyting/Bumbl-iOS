@@ -16,6 +16,7 @@
 		2533A5211C5211F5000F9562 /* BBLConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533A51F1C5211F5000F9562 /* BBLConnectionViewController.swift */; };
 		2533A5221C5211F5000F9562 /* BBLConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2533A5201C5211F5000F9562 /* BBLConnectionViewController.xib */; };
 		2533A5241C53EFAA000F9562 /* BBLParseAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533A5231C53EFAA000F9562 /* BBLParseAPIClient.swift */; };
+		2579339E1C6697F1000F3CA6 /* BBLStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2579339D1C6697F1000F3CA6 /* BBLStateMachine.swift */; };
 		25920A601C5469B0007727BD /* BBLMySensorsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25920A5E1C5469B0007727BD /* BBLMySensorsTableViewCell.swift */; };
 		25920A611C5469B0007727BD /* BBLMySensorsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25920A5F1C5469B0007727BD /* BBLMySensorsTableViewCell.xib */; };
 		259A39FF1C4B963B00706E6A /* BBLSensorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */; };
@@ -49,6 +50,7 @@
 		2533A51F1C5211F5000F9562 /* BBLConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLConnectionViewController.swift; path = ViewControllers/BBLConnectionViewController.swift; sourceTree = "<group>"; };
 		2533A5201C5211F5000F9562 /* BBLConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLConnectionViewController.xib; path = ViewControllers/BBLConnectionViewController.xib; sourceTree = "<group>"; };
 		2533A5231C53EFAA000F9562 /* BBLParseAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLParseAPIClient.swift; path = Clients/BBLParseAPIClient.swift; sourceTree = "<group>"; };
+		2579339D1C6697F1000F3CA6 /* BBLStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLStateMachine.swift; path = HelperClasses/BBLStateMachine.swift; sourceTree = "<group>"; };
 		25920A5E1C5469B0007727BD /* BBLMySensorsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLMySensorsTableViewCell.swift; path = Views/BBLMySensorsTableViewCell.swift; sourceTree = "<group>"; };
 		25920A5F1C5469B0007727BD /* BBLMySensorsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLMySensorsTableViewCell.xib; path = Views/BBLMySensorsTableViewCell.xib; sourceTree = "<group>"; };
 		2592264BB6C1997D49E7DB78 /* Pods-Bumbl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bumbl.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bumbl/Pods-Bumbl.debug.xcconfig"; sourceTree = "<group>"; };
@@ -103,6 +105,14 @@
 				251EE2E01C54565C00D295C3 /* UIColor+Bumble.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		2579339F1C6697F8000F3CA6 /* HelperClasses */ = {
+			isa = PBXGroup;
+			children = (
+				2579339D1C6697F1000F3CA6 /* BBLStateMachine.swift */,
+			);
+			name = HelperClasses;
 			sourceTree = "<group>";
 		};
 		25920A5D1C546987007727BD /* Views */ = {
@@ -195,6 +205,7 @@
 		25D08B1E1C41EAC900319C11 /* Bumbl */ = {
 			isa = PBXGroup;
 			children = (
+				2579339F1C6697F8000F3CA6 /* HelperClasses */,
 				25920A5D1C546987007727BD /* Views */,
 				251EE2DD1C540A4700D295C3 /* Extensions */,
 				25B973521C44F64900C5E099 /* Resources */,
@@ -409,6 +420,7 @@
 				2533A5211C5211F5000F9562 /* BBLConnectionViewController.swift in Sources */,
 				251EE2DF1C540AA200D295C3 /* UIViewController+Bumble.swift in Sources */,
 				25B9735A1C44F94D00C5E099 /* BBLSensor.swift in Sources */,
+				2579339E1C6697F1000F3CA6 /* BBLStateMachine.swift in Sources */,
 				25920A601C5469B0007727BD /* BBLMySensorsTableViewCell.swift in Sources */,
 				251EE2E11C54565C00D295C3 /* UIColor+Bumble.swift in Sources */,
 				2533A51E1C520897000F9562 /* BBLSession.swift in Sources */,
