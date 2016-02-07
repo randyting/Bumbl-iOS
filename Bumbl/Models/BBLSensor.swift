@@ -172,7 +172,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     let notification = UILocalNotification()
     notification.alertAction = nil
     notification.alertTitle = title
-    notification.alertBody = message
+    notification.alertBody = name! + message
     notification.fireDate = NSDate(timeIntervalSinceNow: 0)
     notification.timeZone = NSTimeZone.defaultTimeZone()
     notification.repeatInterval = NSCalendarUnit.Second
