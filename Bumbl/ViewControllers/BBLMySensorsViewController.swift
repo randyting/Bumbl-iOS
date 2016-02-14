@@ -33,6 +33,7 @@ class BBLMySensorsViewController: UIViewController {
   
   @IBOutlet weak var mySensorsTableView: UITableView!
   @IBOutlet weak var noProfileSensorsLabel: UILabel!
+  @IBOutlet weak var tableViewBottomToSuperviewBottomConstraint: NSLayoutConstraint!
   
 // MARK: Public Variables
   
@@ -50,6 +51,8 @@ class BBLMySensorsViewController: UIViewController {
     setupTableView(mySensorsTableView)
     setupEmptyTableViewCover(noProfileSensorsLabel)
     setupParent(loggedInParent)
+    setupNotificationsForVC(self);
+    setupGestureRecognizersForView(mySensorsTableView)
   }
   
 // MARK: Setup
@@ -91,6 +94,30 @@ class BBLMySensorsViewController: UIViewController {
     view.textColor = UIColor.BBLYellowColor()
     view.numberOfLines = 0
     view.text = BBLMySensorsViewControllerConstants.noProfileSensorsMessage
+  }
+  
+  private func setupNotificationsForVC(viewController: UIViewController) {
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+  }
+  
+  private func setupGestureRecognizersForView(view: UIView) {
+    let tapGR = UITapGestureRecognizer.init(target: self, action: "didTapTableView:")
+    view.addGestureRecognizer(tapGR)
+  }
+  
+// MARK: Keyboard Actions
+  internal func keyboardWillShow(notification:NSNotification!) {
+    let keyboardFrame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+    tableViewBottomToSuperviewBottomConstraint.constant = keyboardFrame.height
+  }
+  
+  internal func keyboardWillHide(notification:NSNotification!) {
+    tableViewBottomToSuperviewBottomConstraint.constant = 0
+  }
+  
+  internal func didTapTableView(tapGR: UITapGestureRecognizer!) {
+    view.endEditing(true)
   }
 
 // MARK: Navigation Bar
@@ -167,6 +194,10 @@ extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
   internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeDelayValue value: Int) {
     tableViewCell.sensor.delayInSeconds = value
     updateTableView()
+  }
+  
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRebaselineButton: Bool) {
+    tableViewCell.sensor.rebaseline()
   }
 }
 

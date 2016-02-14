@@ -13,6 +13,7 @@ import UIKit
   optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: Int)
   optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool)
   optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeDelayValue value: Int)
+  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRebaselineButton: Bool)
 }
 
 class BBLMySensorsTableViewCell: UITableViewCell {
@@ -78,6 +79,10 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   
   @IBAction func stepperValueDidChange(sender: UIStepper) {
     delegate?.tableViewCell?(self, didChangeDelayValue: Int(sender.value))
+  }
+  
+  @IBAction func didTapRebaselineButton(sender: UIButton) {
+    delegate?.tableViewCell?(self, didTapRebaselineButton: true)
   }
   
   // MARK: Lifecycle
