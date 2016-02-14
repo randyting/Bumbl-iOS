@@ -73,6 +73,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   @NSManaged private var parentsCount: Int
   private var countdownTimer:NSTimer!
   private(set) var capSenseValue:Int?
+  private var rebaselineCharacteristic: CBCharacteristic?
   
   // MARK: Initialization
   
@@ -184,6 +185,14 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     connectedParent = nil
   }
   
+  // MARK: Access
+  
+  internal func rebaseline() {
+    if let rebaselineCharacteristic = rebaselineCharacteristic {
+      peripheral?.writeValue(BBLSensorInfo.kRebaselineValue!, forCharacteristic: rebaselineCharacteristic, type: CBCharacteristicWriteType.WithResponse)
+    }
+  }
+  
 }
 
 // MARK: CBPeripheralDelegate
@@ -230,13 +239,27 @@ extension BBLSensor: CBPeripheralDelegate {
   }
   
   internal func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
-    peripheral.discoverCharacteristics([BBLSensorInfo.kCapSenseValueCharacteristicUUID], forService: (peripheral.services?.first)!)
+    peripheral.discoverCharacteristics([BBLSensorInfo.kCapSenseValueCharacteristicUUID, BBLSensorInfo.kRebaselineCharacteristicUUID], forService: (peripheral.services?.first)!)
   }
   
   internal func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
-    peripheral.setNotifyValue(true, forCharacteristic: (service.characteristics?.first)!)
+    if let characteristics = service.characteristics {
+      for characterstic in characteristics {
+        if characterstic.UUID == BBLSensorInfo.kCapSenseValueCharacteristicUUID {
+          peripheral.setNotifyValue(true, forCharacteristic: characterstic)
+        } else if characterstic.UUID == BBLSensorInfo.kRebaselineCharacteristicUUID {
+          rebaselineCharacteristic = characterstic
+        }
+      }
+    }
+    
   }
   
+  internal func peripheral(peripheral: CBPeripheral, didWriteValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+    if let error = error {
+      print(error.localizedDescription + " Failed to write to characteristic: " + characteristic.description)
+    }
+  }
   
 }
 
