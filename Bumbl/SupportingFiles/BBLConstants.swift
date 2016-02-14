@@ -31,6 +31,9 @@ internal struct BBLSensorInfo {
   /// BLE characteristic UUID for cap sense measurement.
   static let kCapSenseValueCharacteristicUUID = CBUUID.init(string: "0003CAA1-0000-1000-8000-00805F9B0131")
   
+  /// Value to write to rebaseline characteristic to rebaseline
+  static let kRebaselineValue = "rebaseline".dataUsingEncoding(NSUTF8StringEncoding)
+  
   /// Cap sense threshold for determining if baby is on sensor or not.
   static let kDefaultCapSenseThreshold = 50
   

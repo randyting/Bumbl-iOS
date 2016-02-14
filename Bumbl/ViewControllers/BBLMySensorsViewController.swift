@@ -195,6 +195,10 @@ extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
     tableViewCell.sensor.delayInSeconds = value
     updateTableView()
   }
+  
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRebaselineButton: Bool) {
+    tableViewCell.sensor.rebaseline()
+  }
 }
 
 // MARK: BBLParentDelegate
