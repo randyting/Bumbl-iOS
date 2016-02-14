@@ -31,9 +31,6 @@ internal struct BBLSensorInfo {
   /// BLE characteristic UUID for cap sense measurement.
   static let kCapSenseValueCharacteristicUUID = CBUUID.init(string: "0003CAA1-0000-1000-8000-00805F9B0131")
   
-  /// BLE characteristic UUID for rebaselining sensor
-  static let kRebaselineCharacteristicUUID = CBUUID.init(string: "0003CAA1-0000-1000-8000-00805F9B0132")
-  
   /// Value to write to rebaseline characteristic to rebaseline
   static let kRebaselineValue = "rebaseline".dataUsingEncoding(NSUTF8StringEncoding)
   

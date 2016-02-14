@@ -239,16 +239,15 @@ extension BBLSensor: CBPeripheralDelegate {
   }
   
   internal func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
-    peripheral.discoverCharacteristics([BBLSensorInfo.kCapSenseValueCharacteristicUUID, BBLSensorInfo.kRebaselineCharacteristicUUID], forService: (peripheral.services?.first)!)
+    peripheral.discoverCharacteristics([BBLSensorInfo.kCapSenseValueCharacteristicUUID, BBLSensorInfo.kCapSenseValueCharacteristicUUID], forService: (peripheral.services?.first)!)
   }
   
   internal func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
     if let characteristics = service.characteristics {
-      for characterstic in characteristics {
-        if characterstic.UUID == BBLSensorInfo.kCapSenseValueCharacteristicUUID {
-          peripheral.setNotifyValue(true, forCharacteristic: characterstic)
-        } else if characterstic.UUID == BBLSensorInfo.kRebaselineCharacteristicUUID {
-          rebaselineCharacteristic = characterstic
+      for characteristic in characteristics {
+        if characteristic.UUID == BBLSensorInfo.kCapSenseValueCharacteristicUUID {
+          peripheral.setNotifyValue(true, forCharacteristic: characteristic)
+          rebaselineCharacteristic = characteristic
         }
       }
     }
