@@ -75,17 +75,34 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     Parse.setApplicationId("HHgxoEaLenjAwxhAqOGziC9SkHaIi4oeTibRFczc", clientKey: "fK00wH0VssppmFZywgP6pRQQUhvsqLpGG6HYFu5u")
   }
   
-  private func setupBlankLoginViewController(loginViewController: BBLLoginViewController, inWindow window: UIWindow){
-    loginViewController.delegate = self
-    window.rootViewController = loginViewController
+  private func setupSignInPickerVC(signInPickerVC: BBLSignInPickerVC, inWindow: UIWindow) {
+    
+  }
+  
+  private func setupSplashScreenFromStoryboard(storyboard: UIStoryboard, inWindow: UIWindow) {
+    let splashScreenVC = storyboard.instantiateViewControllerWithIdentifier("launchScreen")
+    window?.rootViewController = splashScreenVC
+  }
+
+  private func onboardingCompleteFromDefaults(defaults: NSUserDefaults) -> Bool {
+    return defaults.boolForKey(BBLAppState.kDefaultsOnboardingCompleteKey)
+  }
+  
+  private func setupOnboardingFlowInWindow(window: UIWindow) {
+    let rootVC = UINavigationController(rootViewController: BBLIntroViewController())
+    rootVC.navigationBarHidden = true
+    window.rootViewController = rootVC
   }
   
   private func setupViewsForWindow(window: UIWindow) {
+    
     if let loggedInParent = BBLParent.loggedInParent() {
-      setupBlankLoginViewController(BBLLoginViewController(), inWindow: window) // TODO: (RT) Replace this with a blank launch screen.
+      setupSplashScreenFromStoryboard(UIStoryboard(name: "LaunchScreen", bundle: nil), inWindow: window)
       loginWithParent(loggedInParent)
+    } else if (onboardingCompleteFromDefaults(NSUserDefaults.standardUserDefaults()) == false) {
+      setupOnboardingFlowInWindow(window)
     } else {
-      setupBlankLoginViewController(BBLLoginViewController(), inWindow: window)
+      setupSignInPickerVC(BBLSignInPickerVC(), inWindow: window)
     }
     
     window.makeKeyAndVisible()
@@ -95,7 +112,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   
   internal func parentDidLogout() {
     disconnectAllSensorsAndStopScanningForSession(currentSession)
-    setupBlankLoginViewController(BBLLoginViewController(), inWindow: window!)
+    setupSignInPickerVC(BBLSignInPickerVC(), inWindow: window!)
   }
   
   private func disconnectAllSensorsAndStopScanningForSession(session: BBLSession!) {

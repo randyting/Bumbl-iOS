@@ -15,11 +15,15 @@ extension UIColor {
   }
   
   internal class func BBLYellowColor() -> UIColor {
-    return UIColor.BBLColorfromHexString("#f1c40f")
+    return UIColor(colorLiteralRed: 0.90, green: 0.92, blue: 0.35, alpha: 1.0);
   }
   
   internal class func BBLWetAsphaltColor() -> UIColor {
     return UIColor.BBLColorfromHexString("#34495e")
+  }
+  
+  internal class func BBLDarkGreyTextColor() -> UIColor {
+    return UIColor(colorLiteralRed: 0.27, green: 0.28, blue: 0.32, alpha: 1.0);
   }
   
   private class func BBLColorfromHexString(hexString: String) -> UIColor {
