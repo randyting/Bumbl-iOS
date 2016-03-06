@@ -13,6 +13,7 @@
 		250659041C8BB2820003DC57 /* BBLRemoveBatteryTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 250659021C8BB2820003DC57 /* BBLRemoveBatteryTabViewController.xib */; };
 		250659071C8BBB140003DC57 /* BBLSignInPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250659051C8BBB140003DC57 /* BBLSignInPickerVC.swift */; };
 		250659081C8BBB140003DC57 /* BBLSignInPickerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 250659061C8BBB140003DC57 /* BBLSignInPickerVC.xib */; };
+		2506590A1C8C29120003DC57 /* BBLLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 250659091C8C29120003DC57 /* BBLLoginViewController.xib */; };
 		251EE2DF1C540AA200D295C3 /* UIViewController+Bumble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251EE2DE1C540AA200D295C3 /* UIViewController+Bumble.swift */; };
 		251EE2E11C54565C00D295C3 /* UIColor+Bumble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251EE2E01C54565C00D295C3 /* UIColor+Bumble.swift */; };
 		2533A5181C51E71B000F9562 /* BBLLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533A5171C51E71B000F9562 /* BBLLoginViewController.swift */; };
@@ -53,6 +54,7 @@
 		250659021C8BB2820003DC57 /* BBLRemoveBatteryTabViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLRemoveBatteryTabViewController.xib; path = ViewControllers/Onboarding/BBLRemoveBatteryTabViewController.xib; sourceTree = "<group>"; };
 		250659051C8BBB140003DC57 /* BBLSignInPickerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSignInPickerVC.swift; path = ViewControllers/BBLSignInPickerVC.swift; sourceTree = "<group>"; };
 		250659061C8BBB140003DC57 /* BBLSignInPickerVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLSignInPickerVC.xib; path = ViewControllers/BBLSignInPickerVC.xib; sourceTree = "<group>"; };
+		250659091C8C29120003DC57 /* BBLLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLLoginViewController.xib; path = ViewControllers/BBLLoginViewController.xib; sourceTree = "<group>"; };
 		251EE2DE1C540AA200D295C3 /* UIViewController+Bumble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Bumble.swift"; path = "Extensions/UIViewController+Bumble.swift"; sourceTree = "<group>"; };
 		251EE2E01C54565C00D295C3 /* UIColor+Bumble.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Bumble.swift"; path = "Extensions/UIColor+Bumble.swift"; sourceTree = "<group>"; };
 		2533A5171C51E71B000F9562 /* BBLLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLLoginViewController.swift; path = ViewControllers/BBLLoginViewController.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			children = (
 				250658FC1C8BA1210003DC57 /* Onboarding */,
 				2533A5171C51E71B000F9562 /* BBLLoginViewController.swift */,
+				250659091C8C29120003DC57 /* BBLLoginViewController.xib */,
 				2533A5191C51EC7B000F9562 /* BBLMySensorsViewController.swift */,
 				2533A51A1C51EC7B000F9562 /* BBLMySensorsViewController.xib */,
 				2533A51F1C5211F5000F9562 /* BBLConnectionViewController.swift */,
@@ -355,6 +358,7 @@
 			files = (
 				250659001C8BA1630003DC57 /* BBLIntroViewController.xib in Resources */,
 				250659041C8BB2820003DC57 /* BBLRemoveBatteryTabViewController.xib in Resources */,
+				2506590A1C8C29120003DC57 /* BBLLoginViewController.xib in Resources */,
 				25B973541C44F6EB00C5E099 /* Assets.xcassets in Resources */,
 				25B973561C44F7A000C5E099 /* LaunchScreen.storyboard in Resources */,
 				2533A51C1C51EC7B000F9562 /* BBLMySensorsViewController.xib in Resources */,

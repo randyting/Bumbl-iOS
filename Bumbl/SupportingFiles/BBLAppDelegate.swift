@@ -131,22 +131,22 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: PFLogInViewControllerDelegate
 // MARK: Login
   
-  extension BBLAppDelegate: PFLogInViewControllerDelegate {
+  extension BBLAppDelegate: BBLLoginViewControllerDelegate {
     
-    internal func logInViewController(logInController: PFLogInViewController, didFailToLogInWithError error: NSError?) {
+    internal func logInViewController(logInController: BBLLoginViewController, didFailToLogInWithError error: NSError?) {
       //
     }
     
-    internal func logInViewController(logInController: PFLogInViewController, didLogInUser user: PFUser) {
+    internal func logInViewController(logInController: BBLLoginViewController, didLogInUser user: PFUser) {
       loginWithParent(BBLParent.loggedInParent())
       setCrashlyticsParent(BBLParent.loggedInParent()!)
     }
     
-    internal func logInViewController(logInController: PFLogInViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
+    internal func logInViewController(logInController: BBLLoginViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
       return true
     }
     
-    internal func logInViewControllerDidCancelLogIn(logInController: PFLogInViewController) {
+    internal func logInViewControllerDidCancelLogIn(logInController: BBLLoginViewController) {
       //
     }
     
