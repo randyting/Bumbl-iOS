@@ -146,10 +146,6 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
       return true
     }
     
-    internal func logInViewControllerDidCancelLogIn(logInController: BBLLoginViewController) {
-      //
-    }
-    
     private func setCrashlyticsParent(parent: BBLParent) {
       Crashlytics.sharedInstance().setUserIdentifier(parent.objectId)
       Crashlytics.sharedInstance().setUserName(parent.username)

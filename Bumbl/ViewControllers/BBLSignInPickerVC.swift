@@ -22,6 +22,7 @@ class BBLSignInPickerVC: UIViewController {
     
     let loginVC = BBLLoginViewController()
     loginVC.delegate = UIApplication.sharedApplication().delegate as! BBLAppDelegate
+    loginVC.presentationDelegate = self
     
     presentViewController(loginVC, animated: true, completion: nil)
     
@@ -64,5 +65,12 @@ class BBLSignInPickerVC: UIViewController {
     defaults?.setBool(true, forKey: BBLAppState.kDefaultsOnboardingCompleteKey)
   }
   
+}
+
+extension BBLSignInPickerVC:BBLLoginViewControllerPresentationDelegate {
+  
+  internal func logInViewControllerDidCancelLogIn(logInController: BBLLoginViewController) {
+    dismissViewControllerAnimated(true, completion: nil)
+  }
   
 }
