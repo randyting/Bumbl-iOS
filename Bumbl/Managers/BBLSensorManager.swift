@@ -99,10 +99,21 @@ class BBLSensorManager: NSObject {
   }
   
   internal func disconnectSensor(sensor: BBLSensor!) {
-    centralManager.cancelPeripheralConnection(sensor.peripheral!)
+    
+    guard let peripheral = sensor.peripheral else {
+        return
+    }
+    
+    centralManager.cancelPeripheralConnection(peripheral)
   }
   
   internal func disconnectAllProfileSensorsWithCompletion(completion:()->() ) {
+    
+    if connectedSensors.count == 0 {
+      completion()
+      return
+    }
+    
     disconnectAllSensorsCompletionBlock = completion
     for sensor in profileSensors {
       disconnectSensor(sensor as! BBLSensor)

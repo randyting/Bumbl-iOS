@@ -23,8 +23,17 @@ internal struct BBLViewControllerInfo {
   }
 }
 
+// MARK: App State
+internal struct BBLAppState {
+  
+  /// Key in NSUserdefaults for determining whether onboarding flow should be presented.
+  static let kDefaultsOnboardingCompleteKey = "com.bumbl.kDefaultsOnboardingCompletKey"
+  
+}
+
 // MARK: Sensor Info
 internal struct BBLSensorInfo {
+  
   /// BLE service UUID that all sensors advertise.  The characteristics we use must be under this service.
   static let kSensorServiceUUID = CBUUID.init(string: "0003CAB5-0000-1000-8000-00805F9B0131")
   
@@ -62,4 +71,5 @@ internal struct BBLNotifications {
   /// On parent logout
   static let kParentDidLogoutNotification = "com.randy.ParentDidLogoutNotification"
 }
+
 
