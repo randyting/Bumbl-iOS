@@ -123,9 +123,18 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   private func logoutOfSession(var session: BBLSession?) {
-    BBLParent.logOut()
-    session = nil
+    
+    BBLParent.logOutInBackgroundWithBlock { (error: NSError?) -> Void in
+      if let error = error {
+        print(error.localizedDescription)
+      } else {
+        print("logout complete")
+        session = nil
+      }
+    }
+    
   }
+
 }
 
 // MARK: PFLogInViewControllerDelegate

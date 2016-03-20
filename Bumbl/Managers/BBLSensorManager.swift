@@ -108,6 +108,12 @@ class BBLSensorManager: NSObject {
   }
   
   internal func disconnectAllProfileSensorsWithCompletion(completion:()->() ) {
+    
+    if connectedSensors.count == 0 {
+      completion()
+      return
+    }
+    
     disconnectAllSensorsCompletionBlock = completion
     for sensor in profileSensors {
       disconnectSensor(sensor as! BBLSensor)
