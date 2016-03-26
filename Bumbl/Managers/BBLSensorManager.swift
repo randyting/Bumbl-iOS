@@ -183,7 +183,7 @@ extension BBLSensorManager: CBCentralManagerDelegate {
   
   internal func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
     
-    let uuid = peripheral.identifier.UUIDString
+    let uuid = peripheral.name
     
     //TODO: Log name and RSSI?
     if let profileSensors = profileSensors where profileSensors.count != 0  {
@@ -225,6 +225,11 @@ extension BBLSensorManager: CBCentralManagerDelegate {
   internal func centralManagerDidUpdateState(central: CBCentralManager) {
     if central.state == .PoweredOn {
       scanForSensors()
+    } else if central.state == .PoweredOff {
+      for sensor in connectedSensors {
+        sensor.disconnect()
+      }
+      connectedSensors.removeAll()
     } else {
       connectedSensors.removeAll()
     }
