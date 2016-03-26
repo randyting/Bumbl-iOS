@@ -122,7 +122,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
       
       return BBLSensor.init(withPeripheral: peripheral,
         withSensorManager: sensorManager,
-        withUUID: peripheral.identifier.UUIDString,
+        withUUID: peripheral.name,
         withCapSenseThreshold: BBLSensorInfo.kDefaultCapSenseThreshold,
         withDelayInSeconds: BBLSensorInfo.kDefaultDelayInSeconds,
         withDelegate: nil)
@@ -157,6 +157,9 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   internal func disconnect() {
     if let _ = self.peripheral {
+      if (sensorManager.state == .PoweredOff) {
+        stateMachine.state = .Disconnected
+      }
       sensorManager.disconnectSensor(self)
     }
   }
