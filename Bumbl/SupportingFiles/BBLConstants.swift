@@ -49,11 +49,18 @@ internal struct BBLSensorInfo {
   /// Default delay for transition between activated and deactivated states
   static let kDefaultDelayInSeconds = 3
   
+  /// Default delay for checking if another parent is connected.
+  static let kDefaultCheckOtherParentConnectDelayInSeconds = 5.0
+  
   /// Alerts that will be triggered when the app is backgrounded.
   struct Alerts {
-    // When the baby is in the carseat and the sensor disconnects.
+    // When the baby is in the carseat and the sensor disconnects, but another parent does not connect to the sensor.
     static let babyInSeatAndOutOfRangeAlertTitle = "Get your baby!"
     static let babyInSeatAndOutOfRangeAlertMessage = " is still in your car!"
+    
+    // When the baby is in the carseat and the sensor disconnects, but another parent connects to the sensor.
+    static let babyInSeatWithOtherParentAlertTitle = "Don't worry."
+    static let babyInSeatWithOtherParentAlertMessage = " is safe with another caretaker."
     
     // When the sensor disconnects without a baby.
     static let sensorActivatedAlertTitle = "Baby placed in seat."
