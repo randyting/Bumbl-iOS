@@ -62,7 +62,7 @@ class BBLMySensorsViewController: UIViewController {
   }
   
   private func setupNavigationBar() {
-    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "didTapLogout")
+    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: #selector(BBLMySensorsViewController.didTapLogout))
   }
   
   private func setupTableView(tableView: UITableView) {
@@ -97,12 +97,12 @@ class BBLMySensorsViewController: UIViewController {
   }
   
   private func setupNotificationsForVC(viewController: UIViewController) {
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BBLMySensorsViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BBLMySensorsViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
   }
   
   private func setupGestureRecognizersForView(view: UIView) {
-    let tapGR = UITapGestureRecognizer.init(target: self, action: "didTapTableView:")
+    let tapGR = UITapGestureRecognizer.init(target: self, action: #selector(BBLMySensorsViewController.didTapTableView(_:)))
     view.addGestureRecognizer(tapGR)
   }
   
