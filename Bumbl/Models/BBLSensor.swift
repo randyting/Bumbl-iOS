@@ -74,26 +74,27 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   private var countdownTimer:NSTimer!
   private(set) var capSenseValue:Int?
   private var rebaselineCharacteristic: CBCharacteristic?
+  private var backgroundUpdateTask: UIBackgroundTaskIdentifier = 0
   
   // MARK: Initialization
   
   // Designated initializer
   internal convenience init(withPeripheral peripheral: CBPeripheral?,
-    withSensorManager sensorManager: BBLSensorManager!,
-    withUUID uuid: String!,
-    withCapSenseThreshold capSenseThreshold: Int,
-    withDelayInSeconds delayInSeconds: Int,
-    withDelegate delegate: BBLSensorDelegate?) {
-      self.init()
-      self.peripheral = peripheral
-      self.sensorManager = sensorManager
-      self.uuid = uuid
-      self.capSenseThreshold = capSenseThreshold
-      self.delegate = delegate
-      self.name = BBLSensorConstants.defaultName
-      self.delayInSeconds = delayInSeconds
-      peripheral?.delegate = self
-      self.stateMachine = BBLStateMachine(initialState: .Disconnected, delegate: self)
+                      withSensorManager sensorManager: BBLSensorManager!,
+                                        withUUID uuid: String!,
+              withCapSenseThreshold capSenseThreshold: Int,
+                    withDelayInSeconds delayInSeconds: Int,
+                                withDelegate delegate: BBLSensorDelegate?) {
+    self.init()
+    self.peripheral = peripheral
+    self.sensorManager = sensorManager
+    self.uuid = uuid
+    self.capSenseThreshold = capSenseThreshold
+    self.delegate = delegate
+    self.name = BBLSensorConstants.defaultName
+    self.delayInSeconds = delayInSeconds
+    peripheral?.delegate = self
+    self.stateMachine = BBLStateMachine(initialState: .Disconnected, delegate: self)
   }
   
   // MARK: Class Methods
@@ -101,31 +102,31 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   // Class initializer for instantiating an existing peripheral loaded from the server or persistent storage.
   class func  sensorWith(peripheral: CBPeripheral?,
     withSensorManager sensorManager: BBLSensorManager!,
-    withfromJSONDictionary dictionary: [String:AnyObject]) -> BBLSensor {
-      
-      //TODO: Parse JSON and initialize values
-      let uuidFromJSON = "someUniqueIdentifier"
-      let capSenseThreshFromJSON = 30
-      let delayInSecondsFromJSON = 3
-      return BBLSensor.init(withPeripheral: peripheral,
-        withSensorManager: sensorManager,
-        withUUID: uuidFromJSON,
-        withCapSenseThreshold: capSenseThreshFromJSON,
-        withDelayInSeconds: delayInSecondsFromJSON,
-        withDelegate: nil)
-      
+  withfromJSONDictionary dictionary: [String:AnyObject]) -> BBLSensor {
+    
+    //TODO: Parse JSON and initialize values
+    let uuidFromJSON = "someUniqueIdentifier"
+    let capSenseThreshFromJSON = 30
+    let delayInSecondsFromJSON = 3
+    return BBLSensor.init(withPeripheral: peripheral,
+                       withSensorManager: sensorManager,
+                                withUUID: uuidFromJSON,
+                   withCapSenseThreshold: capSenseThreshFromJSON,
+                      withDelayInSeconds: delayInSecondsFromJSON,
+                            withDelegate: nil)
+    
   }
   
   // Class initializer for instantating a sensor from connection.
   class func  sensorWith(peripheral: CBPeripheral!,
-    withSensorManager sensorManager: BBLSensorManager!) -> BBLSensor {
-      
-      return BBLSensor.init(withPeripheral: peripheral,
-        withSensorManager: sensorManager,
-        withUUID: peripheral.name,
-        withCapSenseThreshold: BBLSensorInfo.kDefaultCapSenseThreshold,
-        withDelayInSeconds: BBLSensorInfo.kDefaultDelayInSeconds,
-        withDelegate: nil)
+                         withSensorManager sensorManager: BBLSensorManager!) -> BBLSensor {
+    
+    return BBLSensor.init(withPeripheral: peripheral,
+                       withSensorManager: sensorManager,
+                                withUUID: peripheral.name,
+                   withCapSenseThreshold: BBLSensorInfo.kDefaultCapSenseThreshold,
+                      withDelayInSeconds: BBLSensorInfo.kDefaultDelayInSeconds,
+                            withDelegate: nil)
   }
   
   // MARK: Parents Count
@@ -273,13 +274,13 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
   internal func shouldTransitionFrom(from:StateType, to:StateType)->Bool{
     switch (from, to){
     case (.Disconnected, .Deactivated),
-    (.Deactivated, .Disconnected),
-    (.Deactivated, .WaitingToBeActivated),
-    (.WaitingToBeActivated, .Deactivated),
-    (.WaitingToBeActivated, .Activated),
-    (.Activated, .WaitingToBeDeactivated),
-    (.WaitingToBeDeactivated, .Activated),
-    (.WaitingToBeDeactivated, .Deactivated):
+         (.Deactivated, .Disconnected),
+         (.Deactivated, .WaitingToBeActivated),
+         (.WaitingToBeActivated, .Deactivated),
+         (.WaitingToBeActivated, .Activated),
+         (.Activated, .WaitingToBeDeactivated),
+         (.WaitingToBeDeactivated, .Activated),
+         (.WaitingToBeDeactivated, .Deactivated):
       return true
     case (_, .Disconnected):
       return true
@@ -311,16 +312,15 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
       alertUserWithMessage(BBLSensorInfo.Alerts.sensorDeactivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorDeactivatedAlertTitle)
       
     case (.Activated, .Disconnected):
-      alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
       afterDisconnection()
+      decideIfUserShouldBeAlerted()
       
     case (.WaitingToBeDeactivated, .Disconnected):
-      alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
       afterDisconnection()
+      decideIfUserShouldBeAlerted()
       
     case (_, .Disconnected):
       afterDisconnection()
-      
       
     default:
       break
@@ -338,7 +338,38 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
         print(error.localizedDescription)
       }
     }
-    //TODO: Check backend and alert user.
+  }
+  
+  private func decideIfUserShouldBeAlerted() {
+    self.backgroundUpdateTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({
+      self.endBackgroundUpdateTask()
+    })
+    
+    NSTimer.scheduledTimerWithTimeInterval(BBLSensorInfo.kDefaultCheckOtherParentConnectDelayInSeconds, target: self, selector:#selector(BBLSensor.checkIfOtherParentConnected), userInfo: nil, repeats: false)
+  }
+  
+  private func endBackgroundUpdateTask() {
+    UIApplication.sharedApplication().endBackgroundTask(self.backgroundUpdateTask)
+    self.backgroundUpdateTask = UIBackgroundTaskInvalid
+  }
+  
+  internal func checkIfOtherParentConnected() {
+    
+    self.fetchInBackgroundWithBlock { (sensor: PFObject?, error: NSError?) in
+      
+      if let error = error {
+        print(error.localizedDescription)
+      } else {
+        
+        if let connectedParent = self.connectedParent where connectedParent != BBLParent.loggedInParent() {
+          self.alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatWithOtherParentAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatWithOtherParentAlertTitle)
+        } else {
+          self.alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
+        }
+
+      }
+      
+    }
   }
   
 }
