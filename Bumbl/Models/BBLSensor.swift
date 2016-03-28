@@ -132,15 +132,15 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   // MARK: Parents Count
   
   internal func incrementParentsCount() {
-    parentsCount++
+    parentsCount += 1
   }
   
   internal func decrementParentsCount() {
-    parentsCount--
+    parentsCount -= 1
     if parentsCount == 0 {
       deleteInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
         if let error = error {
-          if let delegate = self.delegate as? NSObject where delegate.respondsToSelector("sensor:didDidFailToDeleteSensorWithErrorMessage:") {
+          if let delegate = self.delegate as? NSObject where delegate.respondsToSelector(Selector("sensor:didDidFailToDeleteSensorWithErrorMessage:")) {
             (delegate as! BBLSensorDelegate).sensor(self, didDidFailToDeleteSensorWithErrorMessage: error.localizedDescription)
           }
         }
@@ -212,7 +212,7 @@ extension BBLSensor: CBPeripheralDelegate {
       characteristic.value?.getBytes(&value, length: sizeof(Int))
       capSenseValue = value
       
-      if let delegate = delegate as? NSObject where delegate.respondsToSelector("sensor:didUpdateSensorValue:") {
+      if let delegate = delegate as? NSObject where delegate.respondsToSelector(Selector("sensor:didUpdateSensorValue:")) {
         (delegate as! BBLSensorDelegate).sensor(self, didUpdateSensorValue: capSenseValue!)
       }
       
@@ -378,7 +378,7 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
 
 extension BBLSensor {
   private func startCountdownForTimeInSeconds(seconds: Int) {
-    countdownTimer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(seconds), target: self, selector: "countdownEnded:", userInfo: nil, repeats: false)
+    countdownTimer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(seconds), target: self, selector: #selector(BBLSensor.countdownEnded(_:)), userInfo: nil, repeats: false)
   }
   
   internal func countdownEnded(timer: NSTimer) {

@@ -47,6 +47,8 @@ class BBLLoginViewController: UIViewController {
     
     // TODO: Guard against bad input
     
+    dismissKeyboard()
+    
     let username = emailTextField.text
     let password = passwordTextField.text
     
@@ -54,10 +56,10 @@ class BBLLoginViewController: UIViewController {
       return
     }
     
-    
     PFUser.logInWithUsernameInBackground(username!, password: password!) { (user: PFUser?, error: NSError?) -> Void in
       
       if let error = error {
+        self.showLoginFailedAlertWithError(error)
         self.delegate?.logInViewController(self, didFailToLogInWithError: error)
       } else {
         self.delegate?.logInViewController(self, didLogInUser: user!)
@@ -81,6 +83,8 @@ class BBLLoginViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setupAppearance()
+    setupNotificationsForVC(self)
+    setupGestureRecognizersForView(view)
   }
   
   // MARK: Initial Setup
@@ -149,5 +153,47 @@ class BBLLoginViewController: UIViewController {
     button.clipsToBounds = true
     button.layer.cornerRadius = 5.0
   }
+  
+  private func setupNotificationsForVC(viewController: UIViewController) {
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BBLLoginViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BBLLoginViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+  }
+  
+  private func setupGestureRecognizersForView(view: UIView) {
+    let tapGR = UITapGestureRecognizer.init(target: self, action: #selector(BBLLoginViewController.didTapView(_:)))
+    view.addGestureRecognizer(tapGR)
+  }
+  
+  // MARK: Keyboard Actions
+  internal func keyboardWillShow(notification:NSNotification!) {
+    let keyboardFrame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+    // TODO: Change size of scrollview.
+  }
+  
+  internal func keyboardWillHide(notification:NSNotification!) {
+    // TODO: Change size of scrollview.
+  }
+  
+  internal func didTapView(tapGR: UITapGestureRecognizer!) {
+    dismissKeyboard()
+  }
+  
+  private func dismissKeyboard() {
+    view.endEditing(true)
+  }
+  
+  // MARK: Login Error Alert
+  
+  private func showLoginFailedAlertWithError(error: NSError?) {
+    
+    let alertController = UIAlertController(title: "Login Error", message: error?.localizedDescription, preferredStyle: .Alert)
+    
+    let dismissAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+    alertController.addAction(dismissAction)
+    
+    presentViewController(alertController, animated: true, completion: nil)
+  }
+
+
   
 }
