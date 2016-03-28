@@ -183,7 +183,7 @@ extension BBLSensorManager: CBCentralManagerDelegate {
   
   internal func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
     
-    let uuid = peripheral.identifier.UUIDString
+    let uuid = peripheral.name
     
     //TODO: Log name and RSSI?
     if let profileSensors = profileSensors where profileSensors.count != 0  {
@@ -211,11 +211,38 @@ extension BBLSensorManager: CBCentralManagerDelegate {
     discoveredSensorWithPeripheral(peripheral)
   }
   
-  private func discoveredSensorWithPeripheral(peripheral: CBPeripheral) -> BBLSensor {
-    let discoveredSensor = BBLSensor.sensorWith(peripheral, withSensorManager: self)
-    discoveredSensors.insert(discoveredSensor)
-    callDelegates{$0.sensorManager?(self, didDiscoverSensor: discoveredSensor)}
-    return discoveredSensor
+  private func discoveredSensorWithPeripheral(peripheral: CBPeripheral) -> Void {
+    
+    BBLParseAPIClient.queryForExistingBabySensorsWithUUID(peripheral.name!) { (sensors: [BBLSensor]?) in
+      
+      let discoveredSensor: BBLSensor!
+      
+      if let sensors = sensors where sensors.count > 0 {
+        discoveredSensor = sensors.first
+        discoveredSensor.fetchInBackgroundWithBlock({ (result: PFObject?, error: NSError?) in
+          
+          let discoveredSensor = result as! BBLSensor
+          
+          if let error = error {
+            print(error.localizedDescription)
+          } else {
+            self.discoveredSensors.insert(discoveredSensor)
+            self.callDelegates{$0.sensorManager?(self, didDiscoverSensor: discoveredSensor)}
+            discoveredSensor.sensorManager = self
+            discoveredSensor.peripheral = peripheral
+            discoveredSensor.stateMachine = BBLStateMachine(initialState: .Disconnected, delegate: discoveredSensor)
+          }
+          
+        })
+        
+      } else {
+        discoveredSensor = BBLSensor.sensorWith(peripheral, withSensorManager: self)
+        self.discoveredSensors.insert(discoveredSensor)
+        self.callDelegates{$0.sensorManager?(self, didDiscoverSensor: discoveredSensor)}
+      }
+    
+    }
+    
   }
   
   internal func centralManager(central: CBCentralManager, willRestoreState dict: [String : AnyObject]) {
@@ -225,6 +252,11 @@ extension BBLSensorManager: CBCentralManagerDelegate {
   internal func centralManagerDidUpdateState(central: CBCentralManager) {
     if central.state == .PoweredOn {
       scanForSensors()
+    } else if central.state == .PoweredOff {
+      for sensor in connectedSensors {
+        sensor.disconnect()
+      }
+      connectedSensors.removeAll()
     } else {
       connectedSensors.removeAll()
     }

@@ -24,4 +24,18 @@ internal final class BBLParseAPIClient: NSObject {
     }
   }
   
+  class func queryForExistingBabySensorsWithUUID(uuid: String, withCompletion completion:([BBLSensor]?) -> Void) {
+    let query = PFQuery(className: "BabySensor")
+    query.whereKey("uuid", equalTo: uuid)
+    query.findObjectsInBackgroundWithBlock {(sensors:[PFObject]?, error:NSError?) -> Void in
+      
+      if let error = error {
+        print(error.localizedDescription)
+        return
+      } else if let sensors = sensors as? [BBLSensor]{
+        completion(sensors)
+      }
+    }
+  }
+  
 }

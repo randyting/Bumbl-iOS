@@ -38,7 +38,7 @@ class BBLStateMachine<P:BBLStateMachineDelegateProtocol>{
 
 
 protocol BBLStateMachineDelegateProtocol: class{
-  typealias StateType
+  associatedtype StateType
   func shouldTransitionFrom(from:StateType, to:StateType)->Bool
   func didTransitionFrom(from:StateType, to:StateType)
 }

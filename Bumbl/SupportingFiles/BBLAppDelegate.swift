@@ -66,7 +66,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   private func setupNotificationsForObject(object: NSObject) {
-    NSNotificationCenter.defaultCenter().addObserver(object, selector: "parentDidLogout", name: BBLNotifications.kParentDidLogoutNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(object, selector: #selector(BBLAppDelegate.parentDidLogout), name: BBLNotifications.kParentDidLogoutNotification, object: nil)
   }
   
   private func setupParse() {
