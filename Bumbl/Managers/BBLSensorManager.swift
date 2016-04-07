@@ -132,7 +132,7 @@ extension BBLSensorManager: CBCentralManagerDelegate {
     
     if let profileSensors = profileSensors where profileSensors.count != 0 {
       for sensor in profileSensors {
-        if sensor.peripheral == peripheral {
+        if let currentPeripheral = (sensor as! BBLSensor).peripheral where currentPeripheral == peripheral {
           connectedSensors.insert(sensor as! BBLSensor)
           (sensor as! BBLSensor).onDidConnect()
           callDelegates{$0.sensorManager?(self, didConnectSensor: sensor as! BBLSensor)}
@@ -172,7 +172,7 @@ extension BBLSensorManager: CBCentralManagerDelegate {
     if disconnectAllSensorsCompletionBlock == nil {
       if let profileSensors = profileSensors where profileSensors.count != 0 {
         for sensor in profileSensors {
-          if sensor.peripheral == peripheral {
+          if let currentPeripheral = (sensor as! BBLSensor).peripheral where currentPeripheral == peripheral {
             (sensor as! BBLSensor).connect()
           }
         }
