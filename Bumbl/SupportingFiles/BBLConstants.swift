@@ -50,7 +50,7 @@ internal struct BBLSensorInfo {
   static let kDefaultDelayInSeconds = 3
   
   /// Default delay for checking if another parent is connected.
-  static let kDefaultCheckOtherParentConnectDelayInSeconds = 5.0
+  static let kDefaultCheckOtherParentConnectDelayInSeconds = 120.0
   
   /// Alerts that will be triggered when the app is backgrounded.
   struct Alerts {
