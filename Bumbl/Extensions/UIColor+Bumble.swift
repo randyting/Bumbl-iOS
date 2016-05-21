@@ -30,6 +30,10 @@ extension UIColor {
     return UIColor(colorLiteralRed: 0.94, green: 0.72, blue: 0.87, alpha: 1.0);
   }
   
+  internal class func BBLNavyBlueColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#145282");
+  }
+  
   private class func BBLColorfromHexString(hexString: String) -> UIColor {
     var rgbValue: UInt32 = 0
     let scanner = NSScanner(string: hexString)
