@@ -44,7 +44,7 @@ class BBLSignInPickerVC: UIViewController {
   
   private func setupAppearance() {
     
-    view.backgroundColor = UIColor.BBLYellowColor()
+    view.backgroundColor = UIColor.whiteColor()
     
     setupAppearanceForButton(loginButton)
     setupAppearanceForButton(registerButton)
@@ -53,12 +53,10 @@ class BBLSignInPickerVC: UIViewController {
   
   private func setupAppearanceForButton(button: UIButton) {
     
-    button.tintColor = UIColor.BBLDarkGreyTextColor()
-    button.backgroundColor = UIColor.BBLYellowColor()
-    button.layer.shadowColor = UIColor.blackColor().CGColor
-    button.layer.shadowOpacity = 0.8
-    button.layer.shadowRadius = 12
-    button.layer.shadowOffset = CGSize(width: 0, height: -1.0)
+    button.tintColor = UIColor.BBLNavyBlueColor()
+    button.backgroundColor = UIColor.whiteColor()
+    button.addTopBorder(withColor: UIColor.BBLNavyBlueColor(), withThickness: 0.5)
+    
   }
   
   private func markOnboardingCompleteInDefaults(defaults: NSUserDefaults?) {
