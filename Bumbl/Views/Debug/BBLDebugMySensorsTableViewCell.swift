@@ -1,5 +1,5 @@
 //
-//  BBLMySensorsTableViewCell.swift
+//  BBLDebugMySensorsTableViewCell.swift
 //  Bumbl
 //
 //  Created by Randy Ting on 1/23/16.
@@ -8,26 +8,26 @@
 
 import UIKit
 
-@objc protocol BBLMySensorsTableViewCellDelegate: class {
-  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Int, andName name: String?)
-  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: Int)
-  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool)
-  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeDelayValue value: Int)
-  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRebaselineButton: Bool)
+@objc protocol BBLDebugMySensorsTableViewCellDelegate: class {
+  optional func tableViewCell(tableViewCell: BBLDebugMySensorsTableViewCell, didSaveThreshold threshold: Int, andName name: String?)
+  optional func tableViewCell(tableViewCell: BBLDebugMySensorsTableViewCell, didChangeThreshold threshold: Int)
+  optional func tableViewCell(tableViewCell: BBLDebugMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool)
+  optional func tableViewCell(tableViewCell: BBLDebugMySensorsTableViewCell, didChangeDelayValue value: Int)
+  optional func tableViewCell(tableViewCell: BBLDebugMySensorsTableViewCell, didTapRebaselineButton: Bool)
 }
 
-class BBLMySensorsTableViewCell: UITableViewCell {
+class BBLDebugMySensorsTableViewCell: UITableViewCell {
   
   // MARK: Constants
   
-  private struct BBLMySensorsTableViewCellConstants {
+  private struct BBLDebugMySensorsTableViewCellConstants {
     private static let defaultMaxSliderValue = 100
     private static let defaultSliderValue = 50
   }
   
   // MARK: Public Variables
   
-  internal weak var delegate: BBLMySensorsTableViewCellDelegate?
+  internal weak var delegate: BBLDebugMySensorsTableViewCellDelegate?
   internal var sensor: BBLSensor! {
     didSet (newSensor){
       if let newSensor = newSensor {
@@ -108,13 +108,13 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   // MARK: Setup
   
   private func setupSlider(slider: UISlider) {
-    slider.maximumValue = Float(BBLMySensorsTableViewCellConstants.defaultMaxSliderValue)
+    slider.maximumValue = Float(BBLDebugMySensorsTableViewCellConstants.defaultMaxSliderValue)
     slider.minimumValue = 0
-    slider.value = Float(BBLMySensorsTableViewCellConstants.defaultSliderValue)
+    slider.value = Float(BBLDebugMySensorsTableViewCellConstants.defaultSliderValue)
   }
   
   private func resetValues() {
-    maxSliderValue = BBLMySensorsTableViewCellConstants.defaultMaxSliderValue
+    maxSliderValue = BBLDebugMySensorsTableViewCellConstants.defaultMaxSliderValue
   }
   
   // MARK: Update

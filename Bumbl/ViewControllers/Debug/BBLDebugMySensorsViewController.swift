@@ -1,5 +1,5 @@
 //
-//  BBLMySensorsViewController.swift
+//  BBLDebugMySensorsViewController.swift
 //  Bumbl
 //
 //  Created by Randy Ting on 1/21/16.
@@ -8,13 +8,13 @@
 
 import UIKit
 
-class BBLMySensorsViewController: UIViewController {
+class BBLDebugMySensorsViewController: UIViewController {
 
 // MARK: Constants
   
-  private struct BBLMySensorsViewControllerConstants {
+  private struct BBLDebugMySensorsViewControllerConstants {
     private static let kMySensorsTVCReuseIdentifier = "com.randy.mySensorsTVCReuseIdentifier"
-    private static let kMySensorsTVCNibName = "BBLMySensorsTableViewCell"
+    private static let kMySensorsTVCNibName = "BBLDebugMySensorsTableViewCell"
     
     private static let noProfileSensorsMessage = "No sensors were found in your profile.  Please add a sensor to your profile by connecting to one."
     
@@ -62,7 +62,7 @@ class BBLMySensorsViewController: UIViewController {
   }
   
   private func setupNavigationBar() {
-    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: #selector(BBLMySensorsViewController.didTapLogout))
+    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: #selector(BBLDebugMySensorsViewController.didTapLogout))
   }
   
   private func setupTableView(tableView: UITableView) {
@@ -70,8 +70,8 @@ class BBLMySensorsViewController: UIViewController {
     tableView.dataSource = self
     tableView.estimatedRowHeight = 100
     tableView.rowHeight = UITableViewAutomaticDimension
-    let cellNib = UINib(nibName: BBLMySensorsViewControllerConstants.kMySensorsTVCNibName, bundle: NSBundle.mainBundle())
-    tableView.registerNib(cellNib, forCellReuseIdentifier:BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier)
+    let cellNib = UINib(nibName: BBLDebugMySensorsViewControllerConstants.kMySensorsTVCNibName, bundle: NSBundle.mainBundle())
+    tableView.registerNib(cellNib, forCellReuseIdentifier:BBLDebugMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier)
     tableView.tableFooterView = UIView.init(frame: CGRect.zero)
     updateTableView()
   }
@@ -93,16 +93,16 @@ class BBLMySensorsViewController: UIViewController {
     view.backgroundColor = UIColor.BBLWetAsphaltColor()
     view.textColor = UIColor.BBLYellowColor()
     view.numberOfLines = 0
-    view.text = BBLMySensorsViewControllerConstants.noProfileSensorsMessage
+    view.text = BBLDebugMySensorsViewControllerConstants.noProfileSensorsMessage
   }
   
   private func setupNotificationsForVC(viewController: UIViewController) {
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BBLMySensorsViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BBLMySensorsViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BBLDebugMySensorsViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BBLDebugMySensorsViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
   }
   
   private func setupGestureRecognizersForView(view: UIView) {
-    let tapGR = UITapGestureRecognizer.init(target: self, action: #selector(BBLMySensorsViewController.didTapTableView(_:)))
+    let tapGR = UITapGestureRecognizer.init(target: self, action: #selector(BBLDebugMySensorsViewController.didTapTableView(_:)))
     view.addGestureRecognizer(tapGR)
   }
   
@@ -142,7 +142,7 @@ class BBLMySensorsViewController: UIViewController {
 
 // MARK: UITableViewDelegate
 
-extension BBLMySensorsViewController:UITableViewDelegate {
+extension BBLDebugMySensorsViewController:UITableViewDelegate {
   internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: false)
   }
@@ -150,7 +150,7 @@ extension BBLMySensorsViewController:UITableViewDelegate {
 
 // MARK: UITableViewDatasource
 
-extension BBLMySensorsViewController:UITableViewDataSource {
+extension BBLDebugMySensorsViewController:UITableViewDataSource {
   internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     guard let mySensors = mySensors else {
       return 0
@@ -159,7 +159,7 @@ extension BBLMySensorsViewController:UITableViewDataSource {
   }
   
   internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier(BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier, forIndexPath: indexPath) as! BBLMySensorsTableViewCell
+    let cell = tableView.dequeueReusableCellWithIdentifier(BBLDebugMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier, forIndexPath: indexPath) as! BBLDebugMySensorsTableViewCell
     
     cell.delegate = self
     cell.sensor = mySensors[indexPath.row]
@@ -169,10 +169,10 @@ extension BBLMySensorsViewController:UITableViewDataSource {
   }
 }
 
-// MARK: BBLMySensorsTableViewCellDelegate
+// MARK: BBLDebugMySensorsTableViewCellDelegate
 
-extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
-  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Int, andName name: String?) {
+extension BBLDebugMySensorsViewController: BBLDebugMySensorsTableViewCellDelegate {
+  internal func tableViewCell(tableViewCell: BBLDebugMySensorsTableViewCell, didSaveThreshold threshold: Int, andName name: String?) {
     tableViewCell.sensor.capSenseThreshold = threshold
     tableViewCell.sensor.name = name
     tableViewCell.sensor.saveInBackgroundWithBlock { (succes: Bool, error: NSError?) -> Void in
@@ -182,35 +182,35 @@ extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
     }
   }
   
-  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool) {
+  internal func tableViewCell(tableViewCell: BBLDebugMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool) {
     loggedInParent.removeSensor(tableViewCell.sensor)
     tableViewCell.sensor.disconnect()
   }
   
-  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: Int) {
+  internal func tableViewCell(tableViewCell: BBLDebugMySensorsTableViewCell, didChangeThreshold threshold: Int) {
     tableViewCell.sensor.capSenseThreshold = threshold
   }
   
-  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeDelayValue value: Int) {
+  internal func tableViewCell(tableViewCell: BBLDebugMySensorsTableViewCell, didChangeDelayValue value: Int) {
     tableViewCell.sensor.delayInSeconds = value
     updateTableView()
   }
   
-  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRebaselineButton: Bool) {
+  internal func tableViewCell(tableViewCell: BBLDebugMySensorsTableViewCell, didTapRebaselineButton: Bool) {
     tableViewCell.sensor.rebaseline()
   }
 }
 
 // MARK: BBLParentDelegate
 
-extension BBLMySensorsViewController: BBLParentDelegate {
+extension BBLDebugMySensorsViewController: BBLParentDelegate {
   internal func parent(parent: BBLParent, didAddSensor sensor: BBLSensor) {
     updateTableView()
   }
   
   internal func parent(parent: BBLParent, didFailAddSensor sensor: BBLSensor, withErrorMessage errorMessage: String) {
     updateTableView()
-    showDismissAlertWithTitle(BBLMySensorsViewControllerConstants.FailedAddSensorAlert.title, withMessage: BBLMySensorsViewControllerConstants.FailedAddSensorAlert.message + " " + errorMessage)
+    showDismissAlertWithTitle(BBLDebugMySensorsViewControllerConstants.FailedAddSensorAlert.title, withMessage: BBLDebugMySensorsViewControllerConstants.FailedAddSensorAlert.message + " " + errorMessage)
   }
   
   internal func parent(parent: BBLParent, didRemoveSensor sensor: BBLSensor) {
@@ -219,14 +219,14 @@ extension BBLMySensorsViewController: BBLParentDelegate {
   
   internal func parent(parent: BBLParent, didFailRemoveSensor sensor: BBLSensor, withErrorMessage errorMessage: String) {
     updateTableView()
-    showDismissAlertWithTitle(BBLMySensorsViewControllerConstants.FailedRemoveSensorAlert.title, withMessage: BBLMySensorsViewControllerConstants.FailedRemoveSensorAlert.message + " " + errorMessage)
+    showDismissAlertWithTitle(BBLDebugMySensorsViewControllerConstants.FailedRemoveSensorAlert.title, withMessage: BBLDebugMySensorsViewControllerConstants.FailedRemoveSensorAlert.message + " " + errorMessage)
   }
   
 }
 
 // MARK: BBLSensorDelegate
 
-extension BBLMySensorsViewController: BBLSensorDelegate {
+extension BBLDebugMySensorsViewController: BBLSensorDelegate {
   internal func sensor(sensor: BBLSensor, didUpdateSensorValue value: Int) {
     updateTableView()
   }

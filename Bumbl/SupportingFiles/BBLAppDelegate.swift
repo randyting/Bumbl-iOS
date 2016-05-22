@@ -181,10 +181,10 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     private func rootViewControllerFromSession(session: BBLSession!) -> UITabBarController {
       let mainTabBarController = UITabBarController()
       
-      let sensorsViewController = BBLMySensorsViewController()
+      let sensorsViewController = BBLDebugMySensorsViewController()
       sensorsViewController.loggedInParent = session.parent
       
-      let connectionViewController = BBLConnectionViewController()
+      let connectionViewController = BBLDebugConnectionViewController()
       connectionViewController.sensorManager = session.sensorManager
       
       let tabBarViewControllers = [sensorsViewController,
@@ -195,8 +195,8 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
         navigationControllers.append(UINavigationController(rootViewController: vc))
       }
       
-      sensorsViewController.BBLsetupIcon(BBLViewControllerInfo.BBLMySensorsViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLMySensorsViewController.title)
-      connectionViewController.BBLsetupIcon(BBLViewControllerInfo.BBLConnectionViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLConnectionViewController.title)
+      sensorsViewController.BBLsetupIcon(BBLViewControllerInfo.BBLDebugMySensorsViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLDebugMySensorsViewController.title)
+      connectionViewController.BBLsetupIcon(BBLViewControllerInfo.BBLDebugConnectionViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLDebugConnectionViewController.title)
       
       mainTabBarController.viewControllers = navigationControllers
       return mainTabBarController

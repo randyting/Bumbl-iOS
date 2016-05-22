@@ -1,5 +1,5 @@
 //
-//  BBLConnectionViewController.swift
+//  BBLDebugConnectionViewController.swift
 //  Bumbl
 //
 //  Created by Randy Ting on 1/21/16.
@@ -8,10 +8,10 @@
 
 import UIKit
 
-class BBLConnectionViewController: UIViewController {
+class BBLDebugConnectionViewController: UIViewController {
   
   // MARK: Constants
-  private struct BBLConnectionViewControllerConstants {
+  private struct BBLDebugConnectionViewControllerConstants {
     private static let kConnectionViewTVCReuseIdentifier = "com.randy.connectionViewTVCReuseIdentifier"
     
     private struct FailedConnectionAlert{
@@ -44,7 +44,7 @@ class BBLConnectionViewController: UIViewController {
   private func setupTableView(tableView: UITableView) {
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier)
+    tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: BBLDebugConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier)
     tableView.tableFooterView = UIView.init(frame: CGRect.zero)
     updateTableView()
   }
@@ -68,12 +68,12 @@ class BBLConnectionViewController: UIViewController {
     view.backgroundColor = UIColor.BBLGrayColor()
     view.textColor = UIColor.BBLYellowColor()
     view.numberOfLines = 0
-    view.text = BBLConnectionViewControllerConstants.noDiscoveredSensorsMessage
+    view.text = BBLDebugConnectionViewControllerConstants.noDiscoveredSensorsMessage
   }
 }
 
 // MARK: UITableViewDelegate
-extension BBLConnectionViewController: UITableViewDelegate {
+extension BBLDebugConnectionViewController: UITableViewDelegate {
 
   internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -82,7 +82,7 @@ extension BBLConnectionViewController: UITableViewDelegate {
 }
 
 // MARK: UITableViewDatasource
-extension BBLConnectionViewController: UITableViewDataSource {
+extension BBLDebugConnectionViewController: UITableViewDataSource {
   
   internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     guard let discoveredSensors = discoveredSensors else {
@@ -92,7 +92,7 @@ extension BBLConnectionViewController: UITableViewDataSource {
   }
   
   internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier(BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier, forIndexPath: indexPath)
+    let cell = tableView.dequeueReusableCellWithIdentifier(BBLDebugConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier, forIndexPath: indexPath)
     
     cell.textLabel!.text = discoveredSensors[indexPath.row].uuid
     
@@ -102,7 +102,7 @@ extension BBLConnectionViewController: UITableViewDataSource {
 }
 
 // MARK: BBLSensorManagerDelegate
-extension BBLConnectionViewController:BBLSensorManagerDelegate {
+extension BBLDebugConnectionViewController:BBLSensorManagerDelegate {
   internal func sensorManager(sensorManager: BBLSensorManager, didConnectSensor sensor: BBLSensor) {
     updateTableView()
   }
@@ -122,7 +122,7 @@ extension BBLConnectionViewController:BBLSensorManagerDelegate {
   
   private func showConnectionFailedAlert() {
     
-    let alertController = UIAlertController(title: BBLConnectionViewControllerConstants.FailedConnectionAlert.title, message: BBLConnectionViewControllerConstants.FailedConnectionAlert.message, preferredStyle: .Alert)
+    let alertController = UIAlertController(title: BBLDebugConnectionViewControllerConstants.FailedConnectionAlert.title, message: BBLDebugConnectionViewControllerConstants.FailedConnectionAlert.message, preferredStyle: .Alert)
     
     let dismissAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
     alertController.addAction(dismissAction)
