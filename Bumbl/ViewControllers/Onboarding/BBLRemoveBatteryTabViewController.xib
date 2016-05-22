@@ -19,8 +19,8 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BBLQuickStartP2" translatesAutoresizingMaskIntoConstraints="NO" id="we1-i1-MXJ">
                     <rect key="frame" x="0.0" y="100" width="600" height="350"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HMV-sH-KvL">
-                    <rect key="frame" x="259" y="514" width="82" height="36"/>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HMV-sH-KvL">
+                    <rect key="frame" x="272" y="514" width="57" height="36"/>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <state key="normal" title="NEXT "/>
                     <connections>

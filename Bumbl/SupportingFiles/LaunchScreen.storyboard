@@ -18,8 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="BBLSplashOpen" translatesAutoresizingMaskIntoConstraints="NO" id="F06-mD-fn8">
-                                <rect key="frame" x="70" y="50" width="460" height="500"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BBLSplashOpen" translatesAutoresizingMaskIntoConstraints="NO" id="F06-mD-fn8">
+                                <rect key="frame" x="70" y="50" width="460" height="410"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BBLProductOfBumbl" translatesAutoresizingMaskIntoConstraints="NO" id="KRG-ye-qrg">
                                 <rect key="frame" x="200" y="560" width="200" height="20"/>

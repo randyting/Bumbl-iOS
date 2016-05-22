@@ -4,19 +4,19 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BBLLoginViewController" customModule="Bumbl" customModuleProvider="target">
             <connections>
+                <outlet property="backButton" destination="iJl-ZJ-tvQ" id="Wwb-TE-d0x"/>
+                <outlet property="divisionLine" destination="0mx-nF-TRq" id="gd5-9u-cl7"/>
                 <outlet property="emailLabel" destination="R36-ZM-7fe" id="DnO-Pw-T6i"/>
                 <outlet property="emailTextField" destination="3qz-8X-3bs" id="dmo-Ny-dnE"/>
                 <outlet property="loginButton" destination="b8T-EQ-yuq" id="Swb-AF-T9H"/>
                 <outlet property="loginWithFacebookButton" destination="K98-lT-zgW" id="vDz-Hi-7Ux"/>
                 <outlet property="passwordLabel" destination="WR3-Or-pfN" id="MCs-Nr-DFP"/>
                 <outlet property="passwordTextField" destination="OnF-xY-1UA" id="3sI-Gg-KCU"/>
-                <outlet property="registerButton" destination="iJl-ZJ-tvQ" id="Euh-se-h4n"/>
-                <outlet property="titleButton" destination="Bq1-oY-8NF" id="GJv-Km-h0Z"/>
+                <outlet property="titleLabel" destination="xaq-Fy-vX9" id="2Tl-OK-qsG"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Gl5-LJ-CqJ"/>
             </connections>
         </placeholder>
@@ -45,7 +45,7 @@
                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                 </textField>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0mx-nF-TRq">
-                    <rect key="frame" x="30" y="372" width="540" height="1"/>
+                    <rect key="frame" x="0.0" y="372" width="600" height="1"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="0.5" id="5gm-jG-v64"/>
@@ -63,7 +63,7 @@
                         <constraint firstAttribute="width" secondItem="b8T-EQ-yuq" secondAttribute="height" multiplier="1:1" id="E4r-DS-nEI"/>
                         <constraint firstAttribute="width" constant="40" id="U9t-Qy-8tc"/>
                     </constraints>
-                    <state key="normal" image="BBLButtonTriangle"/>
+                    <state key="normal" image="BBLButtonSubmitRight"/>
                     <connections>
                         <action selector="didTapLoginButton:" destination="-1" eventType="touchUpInside" id="wZC-yb-7hT"/>
                     </connections>
@@ -83,30 +83,26 @@
                         <constraint firstAttribute="height" constant="75" id="Gfk-by-NcF"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                    <state key="normal" title="REGISTER"/>
+                    <state key="normal" title="BACK"/>
                     <connections>
-                        <action selector="didTapRegisterButton:" destination="-1" eventType="touchUpInside" id="GgE-kF-n9r"/>
+                        <action selector="didTapBackButton:" destination="-1" eventType="touchUpInside" id="e1U-ke-lC9"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bq1-oY-8NF">
-                    <rect key="frame" x="0.0" y="32" width="600" height="42"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                    <state key="normal" title="LOG IN"/>
-                    <connections>
-                        <action selector="didTapTitleButton:" destination="-1" eventType="touchUpInside" id="L7V-hA-8PG"/>
-                    </connections>
-                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LOG IN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xaq-Fy-vX9">
+                    <rect key="frame" x="265" y="50" width="71" height="27"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="Bq1-oY-8NF" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="04b-zX-aNL"/>
                 <constraint firstItem="WR3-Or-pfN" firstAttribute="leading" secondItem="R36-ZM-7fe" secondAttribute="leading" id="0qS-eV-Jmx"/>
-                <constraint firstItem="Bq1-oY-8NF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="2AO-GP-VAo"/>
                 <constraint firstItem="OnF-xY-1UA" firstAttribute="top" secondItem="WR3-Or-pfN" secondAttribute="bottom" constant="15" id="3O3-U3-u8C"/>
                 <constraint firstItem="0mx-nF-TRq" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="7j1-G5-msk"/>
+                <constraint firstItem="0mx-nF-TRq" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="93e-y3-CSq"/>
                 <constraint firstItem="K98-lT-zgW" firstAttribute="leading" secondItem="R36-ZM-7fe" secondAttribute="leading" id="Ga4-gi-rfY"/>
                 <constraint firstItem="OnF-xY-1UA" firstAttribute="height" secondItem="3qz-8X-3bs" secondAttribute="height" id="JMr-Z1-ToU"/>
-                <constraint firstAttribute="trailing" secondItem="Bq1-oY-8NF" secondAttribute="trailing" id="KMS-e9-PV7"/>
                 <constraint firstItem="0mx-nF-TRq" firstAttribute="top" secondItem="b8T-EQ-yuq" secondAttribute="bottom" constant="20" id="Kov-Rr-Q4c"/>
                 <constraint firstItem="3qz-8X-3bs" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="QDb-Eo-62Z"/>
                 <constraint firstItem="K98-lT-zgW" firstAttribute="top" secondItem="0mx-nF-TRq" secondAttribute="bottom" constant="40" id="Qcj-qh-dJZ"/>
@@ -114,27 +110,22 @@
                 <constraint firstItem="OnF-xY-1UA" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="S00-T7-dOC"/>
                 <constraint firstItem="b8T-EQ-yuq" firstAttribute="trailing" secondItem="3qz-8X-3bs" secondAttribute="trailing" id="SVR-uL-1e7"/>
                 <constraint firstItem="WR3-Or-pfN" firstAttribute="top" secondItem="3qz-8X-3bs" secondAttribute="bottom" constant="15" id="Wdc-o9-0yM"/>
-                <constraint firstItem="0mx-nF-TRq" firstAttribute="leading" secondItem="R36-ZM-7fe" secondAttribute="leading" id="eMA-tY-CRt"/>
+                <constraint firstItem="xaq-Fy-vX9" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="i1M-5M-XN0"/>
                 <constraint firstItem="3qz-8X-3bs" firstAttribute="top" secondItem="R36-ZM-7fe" secondAttribute="bottom" constant="15" id="iF2-Qv-HQ7"/>
+                <constraint firstItem="xaq-Fy-vX9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="50" id="n0I-JL-ogC"/>
                 <constraint firstItem="K98-lT-zgW" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="oUy-5c-oVc"/>
                 <constraint firstItem="R36-ZM-7fe" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="rDQ-Sc-SYl"/>
                 <constraint firstItem="3qz-8X-3bs" firstAttribute="leading" secondItem="R36-ZM-7fe" secondAttribute="leading" id="s7k-KF-Lx1"/>
                 <constraint firstAttribute="bottom" secondItem="iJl-ZJ-tvQ" secondAttribute="bottom" id="tAt-fZ-vbg"/>
                 <constraint firstItem="K98-lT-zgW" firstAttribute="height" secondItem="3qz-8X-3bs" secondAttribute="height" id="tHX-bN-jJD"/>
-                <constraint firstItem="Bq1-oY-8NF" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="topMargin" constant="24" id="tqb-Wh-VSl"/>
                 <constraint firstItem="OnF-xY-1UA" firstAttribute="width" secondItem="3qz-8X-3bs" secondAttribute="width" id="xJX-Ep-Nng"/>
                 <constraint firstAttribute="trailing" secondItem="iJl-ZJ-tvQ" secondAttribute="trailing" id="xQy-JZ-cx4"/>
                 <constraint firstItem="b8T-EQ-yuq" firstAttribute="top" secondItem="OnF-xY-1UA" secondAttribute="bottom" constant="20" id="xRW-pE-UvC"/>
                 <constraint firstItem="R36-ZM-7fe" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="100" id="y58-u1-uiS"/>
             </constraints>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="04b-zX-aNL"/>
-                </mask>
-            </variation>
         </view>
     </objects>
     <resources>
-        <image name="BBLButtonTriangle" width="27" height="35"/>
+        <image name="BBLButtonSubmitRight" width="96" height="96"/>
     </resources>
 </document>
