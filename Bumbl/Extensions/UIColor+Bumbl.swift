@@ -1,5 +1,5 @@
 //
-//  UIColor+Bumble.swift
+//  UIColor+Bumbl.swift
 //  Bumbl
 //
 //  Created by Randy Ting on 1/23/16.
@@ -11,7 +11,11 @@ import Foundation
 extension UIColor {
   
   internal class func BBLGrayColor() -> UIColor {
-    return UIColor.BBLColorfromHexString("#95a5a6")
+    return UIColor.BBLColorfromHexString("#E8E8E8")
+  }
+  
+  internal class func BBLDarkGrayColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#979797")
   }
   
   internal class func BBLYellowColor() -> UIColor {
@@ -27,7 +31,19 @@ extension UIColor {
   }
   
   internal class func BBLPinkColor() -> UIColor {
-    return UIColor(colorLiteralRed: 0.94, green: 0.72, blue: 0.87, alpha: 1.0);
+    return UIColor.BBLColorfromHexString("EE4987")
+  }
+  
+  internal class func BBLNavyBlueColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#145282")
+  }
+  
+  internal class func BBLBlueColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#1977B9")
+  }
+  
+  internal class func BBLTealGreenColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#39BEB2")
   }
   
   private class func BBLColorfromHexString(hexString: String) -> UIColor {

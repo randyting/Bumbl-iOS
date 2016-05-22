@@ -13,10 +13,6 @@ internal class BBLIntroViewController: UIViewController {
   
   // MARK: Interface Builder
   
-  @IBOutlet weak var threeFromTopLabel: UILabel!
-  @IBOutlet weak var twoFromTopLabel: UILabel!
-  @IBOutlet weak var oneFromTopLabel: UILabel!
-  @IBOutlet weak var zeroFromTopLabel: UILabel!
   @IBOutlet weak var nextButton: UIButton!
   
   @IBAction func didTapNextButton(sender: UIButton) {
@@ -33,12 +29,8 @@ internal class BBLIntroViewController: UIViewController {
   // MARK: Initial Setup
   
   private func setupAppearance() {
-    nextButton.tintColor = UIColor.BBLDarkGreyTextColor()
-    view.backgroundColor = UIColor.BBLYellowColor()
-    zeroFromTopLabel.textColor = UIColor.BBLDarkGreyTextColor()
-    oneFromTopLabel.textColor = UIColor.BBLDarkGreyTextColor()
-    twoFromTopLabel.textColor = UIColor.BBLDarkGreyTextColor()
-    threeFromTopLabel.textColor = UIColor.BBLDarkGreyTextColor()
+    nextButton.tintColor = UIColor.BBLNavyBlueColor();
+    view.backgroundColor = UIColor.whiteColor()
   }
   
 }

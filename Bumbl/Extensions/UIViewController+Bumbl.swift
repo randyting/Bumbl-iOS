@@ -1,5 +1,5 @@
 //
-//  UIViewController+Bumble.swift
+//  UIViewController+Bumbl.swift
 //  Bumbl
 //
 //  Created by Randy Ting on 1/23/16.

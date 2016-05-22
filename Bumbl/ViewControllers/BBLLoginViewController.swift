@@ -30,8 +30,8 @@ class BBLLoginViewController: UIViewController {
   
   // MARK: Interface Builder
   
-  
-  @IBOutlet weak var titleButton: UIButton!
+  @IBOutlet weak var divisionLine: UIView!
+  @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var passwordLabel: UILabel!
   
   @IBOutlet weak var emailLabel: UILabel!
@@ -41,7 +41,7 @@ class BBLLoginViewController: UIViewController {
   
   @IBOutlet weak var loginButton: UIButton!
   @IBOutlet weak var loginWithFacebookButton: UIButton!
-  @IBOutlet weak var registerButton: UIButton!
+  @IBOutlet weak var backButton: UIButton!
   
   @IBAction func didTapLoginButton(sender: UIButton) {
     
@@ -71,11 +71,10 @@ class BBLLoginViewController: UIViewController {
   @IBAction func didTapLoginWithFacebookButton(sender: UIButton) {
   }
   
-  @IBAction func didTapRegisterButton(sender: UIButton) {
-  }
-  
-  @IBAction func didTapTitleButton(sender: UIButton) {
+  @IBAction func didTapBackButton(sender: UIButton) {
+    
     presentationDelegate?.logInViewControllerDidCancelLogIn(self);
+    
   }
   
   // MARK: Lifecycle
@@ -91,67 +90,71 @@ class BBLLoginViewController: UIViewController {
   
   private func setupAppearance() {
     
-    view.backgroundColor = UIColor.BBLYellowColor()
+    view.backgroundColor = UIColor.whiteColor()
     
-    setupAppearanceForTitleButton(titleButton)
+    setupAppearanceForTitle(titleLabel)
     
-    setupAppearanceForTextField(emailTextField)
-    setupAppearanceForTextField(passwordTextField)
+    setupAppearanceForSecondaryTextField(emailTextField)
+    setupAppearanceForPrimaryTextField(passwordTextField)
+    
+    setupAppearanceForDivisionLine(divisionLine)
     
     setupAppearanceForFederatedLoginButton(loginWithFacebookButton)
     
     setupAppearanceForCircleButton(loginButton)
-    setupAppearanceForBottomButton(registerButton)
+    setupAppearanceForBottomButton(backButton)
     
   }
   
   private func setupAppearanceForCircleButton(button: UIButton) {
     
-    button.clipsToBounds = true
-    button.layer.cornerRadius = button.frame.height/2
-    button.backgroundColor = UIColor.BBLPinkColor()
+    button.backgroundColor = UIColor.clearColor()
     
   }
   
   private func setupAppearanceForBottomButton(button: UIButton) {
     
-    button.tintColor = UIColor.BBLDarkGreyTextColor()
-    button.backgroundColor = UIColor.BBLYellowColor()
-    button.layer.shadowColor = UIColor.blackColor().CGColor
-    button.layer.shadowOpacity = 0.8
-    button.layer.shadowRadius = 12
-    button.layer.shadowOffset = CGSize(width: 0, height: -1.0)
+    button.tintColor = UIColor.BBLNavyBlueColor()
+    button.backgroundColor = UIColor.whiteColor()
+    button.addTopBorder(withColor: UIColor.BBLDarkGrayColor(), withThickness: 0.5)
     
   }
   
-  private func setupAppearanceForTitleButton(button: UIButton) {
-    button.tintColor = UIColor.BBLDarkGreyTextColor()
+  private func setupAppearanceForTitle(label: UILabel) {
+    label.tintColor = UIColor.BBLDarkGreyTextColor()
   }
   
-  private func setupAppearanceForTextField(textfield: UITextField) {
+  private func setupAppearanceForSecondaryTextField(textfield: UITextField) {
     
-    insetTextInTextfield(textfield, byWidth: 15)
-    textfield.clipsToBounds = true
-    textfield.layer.cornerRadius = textfield.frame.height/2
-    textfield.layer.borderColor = UIColor.grayColor().CGColor
-    textfield.layer.borderWidth = 1.0
+    // TODO: Add drop shadow.
+    textfield.insetText(byWidth: 15)
+    textfield.backgroundColor = UIColor.BBLGrayColor()
+    textfield.makeHorizontalOval(withBorderThickness: 0.0, withBorderColor: nil)
+
+    
   }
   
-  private func insetTextInTextfield(textfield: UITextField, byWidth width: Int) {
+  private func setupAppearanceForPrimaryTextField(textfield: UITextField) {
     
-    let spacerView = UIView(frame:CGRect(x:0, y:0, width:width, height:10))
-    textfield.leftViewMode = UITextFieldViewMode.Always
-    textfield.leftView = spacerView
-    textfield.rightViewMode = UITextFieldViewMode.Always
-    textfield.rightView = spacerView
+    textfield.insetText(byWidth: 15)
+    textfield.makeHorizontalOval(withBorderThickness: 0.0, withBorderColor: nil)
+    textfield.backgroundColor = UIColor.BBLTealGreenColor()
+    
+  }
+  
+  private func setupAppearanceForDivisionLine(view: UIView) {
+    
+    view.backgroundColor = UIColor.BBLDarkGrayColor()
     
   }
   
   private func setupAppearanceForFederatedLoginButton(button: UIButton) {
-    button.tintColor = UIColor.BBLDarkGreyTextColor()
-    button.backgroundColor = UIColor.BBLGrayColor()
-    button.clipsToBounds = true
-    button.layer.cornerRadius = 5.0
+    
+    button.tintColor = UIColor.whiteColor()
+    button.backgroundColor = UIColor.BBLBlueColor()
+    button.makeHorizontalOval(withBorderThickness: 0.0, withBorderColor: nil)
+    // TODO: Add drop shadow.
+    
   }
   
   private func setupNotificationsForVC(viewController: UIViewController) {
