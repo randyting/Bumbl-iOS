@@ -13,7 +13,6 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   override func awakeFromNib() {
     super.awakeFromNib()
     
-    backgroundColor = UIColor.BBLNavyBlueColor()
     // Initialization code
   }
   

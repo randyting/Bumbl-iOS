@@ -17,6 +17,8 @@ class BBLMySensorsViewController: UIViewController {
     private static let kMySensorsTVCReuseIdentifier = "com.randy.mySensorsTVCReuseIdentifier"
     private static let kMySensorsTVCNibName = "BBLMySensorsTableViewCell"
     
+    private static let kTableViewBackgroundImageName = "BBLMySensorsTableViewBackground"
+    
   }
   
   // MARK: Public Variables
@@ -44,6 +46,12 @@ class BBLMySensorsViewController: UIViewController {
     tableView.registerNib(UINib(nibName: BBLMySensorsViewControllerConstants.kMySensorsTVCNibName,
                                  bundle: NSBundle.mainBundle()),
                       forCellReuseIdentifier: BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier)
+    tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.estimatedRowHeight = 100
+    
+    let backgroundView = NSBundle.mainBundle().loadNibNamed("BBLMySensorsBackgroundView", owner: self, options: nil).first as! BBLMySensorsBackgroundView
+    tableView.backgroundView = backgroundView
+    tableView.tableFooterView = UIView(frame: CGRect.zero)
     
   }
   
