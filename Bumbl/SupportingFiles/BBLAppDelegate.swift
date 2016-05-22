@@ -180,8 +180,9 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     
     private func rootViewControllerFromSession(session: BBLSession!) -> UITabBarController {
       let mainTabBarController = UITabBarController()
+      setupAppearanceForTabBar(mainTabBarController.tabBar)
       
-      let sensorsViewController = BBLDebugMySensorsViewController()
+      let sensorsViewController = BBLMySensorsViewController()
       sensorsViewController.loggedInParent = session.parent
       
       let connectionViewController = BBLDebugConnectionViewController()
@@ -195,11 +196,17 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
         navigationControllers.append(UINavigationController(rootViewController: vc))
       }
       
-      sensorsViewController.BBLsetupIcon(BBLViewControllerInfo.BBLDebugMySensorsViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLDebugMySensorsViewController.title)
+      sensorsViewController.BBLsetupIcon(BBLViewControllerInfo.BBLMySensorsViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLMySensorsViewController.title)
       connectionViewController.BBLsetupIcon(BBLViewControllerInfo.BBLDebugConnectionViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLDebugConnectionViewController.title)
       
       mainTabBarController.viewControllers = navigationControllers
       return mainTabBarController
+    }
+    
+    private func setupAppearanceForTabBar(tabBar: UITabBar) {
+      tabBar.barTintColor = UIColor.whiteColor()
+      tabBar.addTopBorder(withColor: UIColor.BBLDarkGrayColor(), withThickness: 0.5)
+      tabBar.tintColor = UIColor.BBLDarkGrayColor()
     }
     
 }

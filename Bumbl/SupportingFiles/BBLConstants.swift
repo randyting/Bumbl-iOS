@@ -13,13 +13,20 @@ import CoreBluetooth
 // MARK: View Controllers
 internal struct BBLViewControllerInfo {
   struct BBLDebugMySensorsViewController {
-    static let title = "My Sensors"
-    static let tabBarIcon:UIImage? = nil
+    static let title = "Debug My Sensors"
+    private static let kHomeTabBarIconName = "BBLHomeTabBarIcon"
+    static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLDebugMySensorsViewController.kHomeTabBarIconName)
   }
   
   struct BBLDebugConnectionViewController {
-    static let title = "Connect"
+    static let title = "Debug Connect"
     static let tabBarIcon:UIImage? = nil
+  }
+  
+  struct BBLMySensorsViewController {
+    static let title = "My Sensors"
+    private static let kHomeTabBarIconName = "BBLHomeTabBarIcon"
+    static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLMySensorsViewController.kHomeTabBarIconName)
   }
 }
 

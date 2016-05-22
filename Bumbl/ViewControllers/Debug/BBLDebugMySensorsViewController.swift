@@ -13,7 +13,7 @@ class BBLDebugMySensorsViewController: UIViewController {
 // MARK: Constants
   
   private struct BBLDebugMySensorsViewControllerConstants {
-    private static let kMySensorsTVCReuseIdentifier = "com.randy.mySensorsTVCReuseIdentifier"
+    private static let kMySensorsTVCReuseIdentifier = "com.randy.myDebugSensorsTVCReuseIdentifier"
     private static let kMySensorsTVCNibName = "BBLDebugMySensorsTableViewCell"
     
     private static let noProfileSensorsMessage = "No sensors were found in your profile.  Please add a sensor to your profile by connecting to one."

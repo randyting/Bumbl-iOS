@@ -15,7 +15,7 @@ extension UIColor {
   }
   
   internal class func BBLDarkGrayColor() -> UIColor {
-    return UIColor.BBLColorfromHexString("#979797")
+    return UIColor.BBLColorfromHexString("#787878")
   }
   
   internal class func BBLYellowColor() -> UIColor {
