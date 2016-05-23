@@ -198,6 +198,13 @@
 			name = Debug;
 			sourceTree = "<group>";
 		};
+		25AF02FA1CF2BF9400718172 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
 		25B9734E1C44F5CF00C5E099 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -274,6 +281,7 @@
 		25D08B1E1C41EAC900319C11 /* Bumbl */ = {
 			isa = PBXGroup;
 			children = (
+				25AF02FA1CF2BF9400718172 /* Protocols */,
 				2579339F1C6697F8000F3CA6 /* HelperClasses */,
 				25920A5D1C546987007727BD /* Views */,
 				251EE2DD1C540A4700D295C3 /* Extensions */,

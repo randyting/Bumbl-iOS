@@ -42,6 +42,10 @@ extension UIColor {
     return UIColor.BBLColorfromHexString("#185181")
   }
   
+  internal class func BBLLightBlueNavBarColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#70B7E6")
+  }
+  
   internal class func BBLBlueColor() -> UIColor {
     return UIColor.BBLColorfromHexString("#1977B9")
   }

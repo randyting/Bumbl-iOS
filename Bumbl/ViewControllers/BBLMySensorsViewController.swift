@@ -46,9 +46,12 @@ class BBLMySensorsViewController: UIViewController {
   // MARK: Lifecycle
   
   override func viewDidLoad() {
+    
     super.viewDidLoad()
     setupParent(loggedInParent)
     setupTableView(mySensorsTableView)
+    setupNavigationItem(navigationItem)
+
   }
   
   // MARK: Setup
@@ -71,6 +74,12 @@ class BBLMySensorsViewController: UIViewController {
     tableView.backgroundView = backgroundView
     tableView.tableFooterView = UIView(frame: CGRect.zero)
     updateTableView()
+  }
+  
+  private func setupNavigationItem(navItem: UINavigationItem) {
+    
+    setupHamburgerMenuForNavItem(navItem)
+    setupBlueNavigationBar(navigationController?.navigationBar)
   }
   
   private func updateTableView() {

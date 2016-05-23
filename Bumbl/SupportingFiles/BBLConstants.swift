@@ -10,6 +10,14 @@ import Foundation
 import CoreBluetooth
 
 
+// MARK: Navigation Bar
+
+internal struct BBLNavigationBarInfo {
+  
+  static let kMenuButtonIconName = "BBLMenuButton"
+  
+}
+
 // MARK: View Controllers
 internal struct BBLViewControllerInfo {
   struct BBLDebugMySensorsViewController {
