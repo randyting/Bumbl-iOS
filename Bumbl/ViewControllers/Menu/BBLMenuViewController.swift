@@ -19,11 +19,22 @@ class BBLMenuViewController: UIViewController {
   
   internal weak var delegate: BBLMenuViewControllerDelegate?
   
+  // MARK: Interface Builder
+  
+  @IBOutlet weak var logoutButton: UIButton!
+  @IBOutlet weak var versionAndBuildNumberLabel: UILabel!
+  
+  @IBAction func didTapLogoutButton(sender: UIButton) {
+    NSNotificationCenter.defaultCenter().postNotificationName(BBLNotifications.kParentDidLogoutNotification, object: self)
+  }
+  
   // MARK: Lifecycle
   
   override func viewDidLoad() {
     setupNavigationItem(navigationItem)
     setupNavigationBar(navigationController?.navigationBar)
+    setupLogoutButtonAppearance(logoutButton)
+    setupVersionAndBuildNumberLabel(versionAndBuildNumberLabel)
   }
   
   // MARK: Initial Setup
@@ -35,14 +46,28 @@ class BBLMenuViewController: UIViewController {
                                                  action: #selector(BBLMenuViewController.didTapDismissButton(_:)))
   }
   
+  @objc internal func didTapDismissButton(sender: UIBarButtonItem) {
+    delegate?.menuViewController?(self, didDismiss: true)
+  }
+  
   private func setupNavigationBar(navBar: UINavigationBar?) {
     navBar?.barTintColor = UIColor.BBLLightBlueNavBarColor()
     navBar?.tintColor = UIColor.blackColor()
     navBar?.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.whiteColor()]
   }
   
-  @objc internal func didTapDismissButton(sender: UIBarButtonItem) {
-    delegate?.menuViewController?(self, didDismiss: true)
+  private func setupLogoutButtonAppearance(button: UIButton) {
+    button.tintColor = UIColor.whiteColor()
+    button.backgroundColor = UIColor.BBLBlueColor()
+    button.makeHorizontalOval(withBorderThickness: 0.0, withBorderColor: nil)
   }
-
+  
+  private func setupVersionAndBuildNumberLabel(label: UILabel) {
+    if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String,
+      let buildNumber = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String {
+      
+      label.text = "Version Number " + version + " Build Number " + buildNumber
+    }
+  }
+  
 }

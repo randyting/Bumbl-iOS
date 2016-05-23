@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BBLMenuViewController" customModule="Bumbl" customModuleProvider="target">
             <connections>
+                <outlet property="logoutButton" destination="Ffz-6q-EJh" id="kdR-dB-R1m"/>
+                <outlet property="versionAndBuildNumberLabel" destination="O67-XP-wrz" id="mw0-lL-5UE"/>
                 <outlet property="view" destination="rQu-io-Igz" id="cAE-LO-voW"/>
             </connections>
         </placeholder>
@@ -25,14 +27,29 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ffz-6q-EJh">
+                    <rect key="frame" x="30" y="487" width="540" height="60"/>
+                    <color key="backgroundColor" red="1" green="0.31801541719999998" blue="0.41633616740000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="GHe-8e-Faa"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="LOGOUT"/>
+                    <connections>
+                        <action selector="didTapLogoutButton:" destination="-1" eventType="touchUpInside" id="XNx-yo-hmO"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="ZNF-jr-Ne5" firstAttribute="top" secondItem="rQu-io-Igz" secondAttribute="top" id="0MV-z6-LQV"/>
+                <constraint firstItem="O67-XP-wrz" firstAttribute="top" secondItem="Ffz-6q-EJh" secondAttribute="bottom" constant="22" id="8pI-OK-Jxr"/>
                 <constraint firstItem="O67-XP-wrz" firstAttribute="top" secondItem="ZNF-jr-Ne5" secondAttribute="bottom" constant="100" id="Lnv-ka-gM8"/>
                 <constraint firstAttribute="trailing" secondItem="ZNF-jr-Ne5" secondAttribute="trailing" id="Seh-EN-vlx"/>
+                <constraint firstItem="Ffz-6q-EJh" firstAttribute="leading" secondItem="rQu-io-Igz" secondAttribute="leading" constant="30" id="Upz-E2-P3w"/>
                 <constraint firstItem="O67-XP-wrz" firstAttribute="centerX" secondItem="rQu-io-Igz" secondAttribute="centerX" id="bcM-Xe-9pb"/>
                 <constraint firstAttribute="bottom" secondItem="O67-XP-wrz" secondAttribute="bottom" constant="10" id="cjx-d3-9eD"/>
+                <constraint firstAttribute="trailing" secondItem="Ffz-6q-EJh" secondAttribute="trailing" constant="30" id="hAO-CR-NGs"/>
                 <constraint firstItem="ZNF-jr-Ne5" firstAttribute="leading" secondItem="rQu-io-Igz" secondAttribute="leading" id="n4g-gr-egP"/>
             </constraints>
             <point key="canvasLocation" x="327" y="431"/>
