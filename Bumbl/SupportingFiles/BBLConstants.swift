@@ -15,6 +15,7 @@ import CoreBluetooth
 internal struct BBLNavigationBarInfo {
   
   static let kMenuButtonIconName = "BBLMenuButton"
+  static let kDismissButtonIconName = "BBLDismissIcon"
   
 }
 

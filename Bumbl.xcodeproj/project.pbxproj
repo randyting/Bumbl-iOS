@@ -36,6 +36,8 @@
 		25AF02F51CF18C4900718172 /* BBLMySensorsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25AF02F31CF18C4900718172 /* BBLMySensorsTableViewCell.xib */; };
 		25AF02F71CF1A08600718172 /* BBLMySensorsBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF02F61CF1A08600718172 /* BBLMySensorsBackgroundView.swift */; };
 		25AF02F91CF1A0A700718172 /* BBLMySensorsBackgroundView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25AF02F81CF1A0A700718172 /* BBLMySensorsBackgroundView.xib */; };
+		25AF02FF1CF2E02700718172 /* BBLMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF02FE1CF2E02700718172 /* BBLMenuViewController.swift */; };
+		25AF03011CF2E04900718172 /* BBLMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25AF03001CF2E04900718172 /* BBLMenuViewController.xib */; };
 		25B973541C44F6EB00C5E099 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25B973531C44F6EB00C5E099 /* Assets.xcassets */; };
 		25B973561C44F7A000C5E099 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */; };
 		25B9735A1C44F94D00C5E099 /* BBLSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B973591C44F94D00C5E099 /* BBLSensor.swift */; };
@@ -86,6 +88,8 @@
 		25AF02F31CF18C4900718172 /* BBLMySensorsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLMySensorsTableViewCell.xib; path = Views/BBLMySensorsTableViewCell.xib; sourceTree = "<group>"; };
 		25AF02F61CF1A08600718172 /* BBLMySensorsBackgroundView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLMySensorsBackgroundView.swift; path = Views/BBLMySensorsBackgroundView.swift; sourceTree = "<group>"; };
 		25AF02F81CF1A0A700718172 /* BBLMySensorsBackgroundView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLMySensorsBackgroundView.xib; path = Views/BBLMySensorsBackgroundView.xib; sourceTree = "<group>"; };
+		25AF02FE1CF2E02700718172 /* BBLMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLMenuViewController.swift; path = ViewControllers/Menu/BBLMenuViewController.swift; sourceTree = "<group>"; };
+		25AF03001CF2E04900718172 /* BBLMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLMenuViewController.xib; path = ViewControllers/Menu/BBLMenuViewController.xib; sourceTree = "<group>"; };
 		25B973531C44F6EB00C5E099 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SupportingFiles/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		25B973591C44F94D00C5E099 /* BBLSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensor.swift; path = Models/BBLSensor.swift; sourceTree = "<group>"; };
@@ -205,6 +209,15 @@
 			name = Protocols;
 			sourceTree = "<group>";
 		};
+		25AF02FD1CF2DFEB00718172 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				25AF02FE1CF2E02700718172 /* BBLMenuViewController.swift */,
+				25AF03001CF2E04900718172 /* BBLMenuViewController.xib */,
+			);
+			name = Menu;
+			sourceTree = "<group>";
+		};
 		25B9734E1C44F5CF00C5E099 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -218,6 +231,7 @@
 		25B9734F1C44F5DD00C5E099 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				25AF02FD1CF2DFEB00718172 /* Menu */,
 				25AF02EA1CF187EA00718172 /* Debug */,
 				250658FC1C8BA1210003DC57 /* Onboarding */,
 				2533A5171C51E71B000F9562 /* BBLLoginViewController.swift */,
@@ -408,6 +422,7 @@
 				25AF02F11CF18A9000718172 /* BBLMySensorsViewController.xib in Resources */,
 				250659041C8BB2820003DC57 /* BBLRemoveBatteryTabViewController.xib in Resources */,
 				2506590A1C8C29120003DC57 /* BBLLoginViewController.xib in Resources */,
+				25AF03011CF2E04900718172 /* BBLMenuViewController.xib in Resources */,
 				25B973541C44F6EB00C5E099 /* Assets.xcassets in Resources */,
 				25B973561C44F7A000C5E099 /* LaunchScreen.storyboard in Resources */,
 				2533A51C1C51EC7B000F9562 /* BBLDebugConnectionViewController.xib in Resources */,
@@ -510,6 +525,7 @@
 				251EE2DF1C540AA200D295C3 /* UIViewController+Bumbl.swift in Sources */,
 				25B9735A1C44F94D00C5E099 /* BBLSensor.swift in Sources */,
 				25AF02E91CF1297E00718172 /* UITextField+Bumbl.swift in Sources */,
+				25AF02FF1CF2E02700718172 /* BBLMenuViewController.swift in Sources */,
 				2579339E1C6697F1000F3CA6 /* BBLStateMachine.swift in Sources */,
 				25AF02F41CF18C4900718172 /* BBLMySensorsTableViewCell.swift in Sources */,
 				25920A601C5469B0007727BD /* BBLDebugMySensorsTableViewCell.swift in Sources */,

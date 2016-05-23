@@ -21,10 +21,12 @@ extension UIViewController {
   }
   
   internal func setupHamburgerMenuForNavItem(navItem: UINavigationItem) {
+    
     navItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: BBLNavigationBarInfo.kMenuButtonIconName),
                                                  style: .Plain,
                                                  target: self,
                                                  action: #selector(self.didTapHamburgerMenuButton(_:)))
+    
   }
   
   internal func setupBlueNavigationBar(navBar: UINavigationBar?) {
@@ -35,8 +37,21 @@ extension UIViewController {
   
   @objc internal func didTapHamburgerMenuButton(sender: UIBarButtonItem) {
     
+    let menuVC = BBLMenuViewController()
+    menuVC.delegate = self
+    let navController = UINavigationController(rootViewController: menuVC)
+    
+    presentViewController(navController, animated: true, completion: nil)
   }
   
   
+  
+}
+
+extension UIViewController: BBLMenuViewControllerDelegate {
+  
+  internal func menuViewController(menuViewController: BBLMenuViewController, didDismiss: Bool){
+    dismissViewControllerAnimated(true, completion: nil)
+  }
   
 }
