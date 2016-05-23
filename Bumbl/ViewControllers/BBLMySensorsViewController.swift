@@ -19,11 +19,25 @@ class BBLMySensorsViewController: UIViewController {
     
     private static let kTableViewBackgroundImageName = "BBLMySensorsTableViewBackground"
     
+    private struct FailedAddSensorAlert{
+      private static let title = "Add Sensor to Profile Failed"
+      private static let message = "Please make sure you have an active internet conection"
+    }
+    
+    private struct FailedRemoveSensorAlert{
+      private static let title = "Remove Sensor from Profile Failed"
+      private static let message = "Please make sure you have an active internet conection"
+    }
+    
   }
   
   // MARK: Public Variables
   
-  internal weak var loggedInParent: BBLParent?
+  internal weak var loggedInParent: BBLParent!
+  
+  // MARK: Private Variables
+  
+  private var mySensors: [BBLSensor]!
   
   // MARK: Interface Builder
   
@@ -33,11 +47,15 @@ class BBLMySensorsViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    setupParent(loggedInParent)
     setupTableView(mySensorsTableView)
   }
   
   // MARK: Setup
+  
+  private func setupParent(parent: BBLParent) {
+    parent.delegate = self
+  }
   
   private func setupTableView(tableView: UITableView) {
     
@@ -52,9 +70,25 @@ class BBLMySensorsViewController: UIViewController {
     let backgroundView = NSBundle.mainBundle().loadNibNamed("BBLMySensorsBackgroundView", owner: self, options: nil).first as! BBLMySensorsBackgroundView
     tableView.backgroundView = backgroundView
     tableView.tableFooterView = UIView(frame: CGRect.zero)
-    
+    updateTableView()
   }
   
+  private func updateTableView() {
+    mySensors = loggedInParent.profileSensors.allObjects as? [BBLSensor]
+    mySensorsTableView.reloadData()
+  }
+  
+  // MARK: Alerts
+  
+  private func showDismissAlertWithTitle(title: String, withMessage message: String) {
+    
+    let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+    
+    let dismissAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+    alertController.addAction(dismissAction)
+    
+    presentViewController(alertController, animated: true, completion: nil)
+  }
   
 }
 
@@ -69,16 +103,105 @@ extension BBLMySensorsViewController: UITableViewDelegate {
 extension BBLMySensorsViewController: UITableViewDataSource {
   
   internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 2
+    guard let mySensors = mySensors else {
+      return 0
+    }
+    return mySensors.count
   }
   
   internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
     let cell = tableView.dequeueReusableCellWithIdentifier(BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier, forIndexPath: indexPath) as! BBLMySensorsTableViewCell
     
-    
-    
+    cell.delegate = self
+    cell.sensor = mySensors[indexPath.row]
+    cell.sensor.delegate = self
     
     return cell
   }
+}
+
+// MARK: BBLMySensorsTableViewCellDelegate
+
+extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Int, andName name: String?) {
+    tableViewCell.sensor.capSenseThreshold = threshold
+    tableViewCell.sensor.name = name
+    tableViewCell.sensor.saveInBackgroundWithBlock { (succes: Bool, error: NSError?) -> Void in
+      if let error = error {
+        print(error.localizedDescription)
+      }
+    }
+  }
+  
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool) {
+    loggedInParent.removeSensor(tableViewCell.sensor)
+    tableViewCell.sensor.disconnect()
+  }
+  
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: Int) {
+    tableViewCell.sensor.capSenseThreshold = threshold
+  }
+  
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeDelayValue value: Int) {
+    tableViewCell.sensor.delayInSeconds = value
+    updateTableView()
+  }
+  
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRebaselineButton: Bool) {
+    tableViewCell.sensor.rebaseline()
+  }
+  
+  internal func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    
+    tableView.separatorInset = UIEdgeInsetsZero
+    tableView.layoutMargins = UIEdgeInsetsZero
+    cell.layoutMargins = UIEdgeInsetsZero
+    
+  }
+  
+}
+
+// MARK: BBLParentDelegate
+
+extension BBLMySensorsViewController: BBLParentDelegate {
+  internal func parent(parent: BBLParent, didAddSensor sensor: BBLSensor) {
+    updateTableView()
+  }
+  
+  internal func parent(parent: BBLParent, didFailAddSensor sensor: BBLSensor, withErrorMessage errorMessage: String) {
+    updateTableView()
+    showDismissAlertWithTitle(BBLMySensorsViewControllerConstants.FailedAddSensorAlert.title, withMessage: BBLMySensorsViewControllerConstants.FailedAddSensorAlert.message + " " + errorMessage)
+  }
+  
+  internal func parent(parent: BBLParent, didRemoveSensor sensor: BBLSensor) {
+    updateTableView()
+  }
+  
+  internal func parent(parent: BBLParent, didFailRemoveSensor sensor: BBLSensor, withErrorMessage errorMessage: String) {
+    updateTableView()
+    showDismissAlertWithTitle(BBLMySensorsViewControllerConstants.FailedRemoveSensorAlert.title, withMessage: BBLMySensorsViewControllerConstants.FailedRemoveSensorAlert.message + " " + errorMessage)
+  }
+  
+}
+
+// MARK: BBLSensorDelegate
+
+extension BBLMySensorsViewController: BBLSensorDelegate {
+  internal func sensor(sensor: BBLSensor, didUpdateSensorValue value: Int) {
+    updateTableView()
+  }
+  
+  internal func sensor(sensor: BBLSensor, didChangeState state: BBLSensorState) {
+    updateTableView()
+  }
+  
+  internal func sensor(sensor: BBLSensor, didDidFailToDeleteSensorWithErrorMessage errorMessage: String) {
+    //TODO: Handle displaying this error.
+  }
+  
+  internal func sensor(sensor: BBLSensor, didUpdateRSSI rssi: NSNumber) {
+    updateTableView()
+  }
+  
 }

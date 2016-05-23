@@ -48,6 +48,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   @NSManaged private(set) var uuid: String?
   @NSManaged internal var capSenseThreshold:Int
   @NSManaged internal var delayInSeconds:Int
+  @NSManaged private(set) var connectedParent:BBLParent?
   internal weak var delegate: BBLSensorDelegate?
   internal var rssi: NSNumber?
   internal var peripheral:CBPeripheral?
@@ -69,7 +70,6 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   // MARK: Private Variables
   
-  @NSManaged private var connectedParent:BBLParent?
   @NSManaged private var parentsCount: Int
   private var countdownTimer:NSTimer!
   private(set) var capSenseValue:Int?
