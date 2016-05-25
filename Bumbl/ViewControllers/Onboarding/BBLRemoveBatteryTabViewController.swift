@@ -32,7 +32,7 @@ class BBLRemoveBatteryTabViewController: UIViewController {
   // MARK: Initial Setup
   
   private func setupAppearance() {
-    nextButton.tintColor = UIColor.BBLDarkGreyTextColor()
+    nextButton.tintColor = UIColor.BBLNavyBlueColor()
   }
   
 }

@@ -2,21 +2,22 @@
 //  BBLMySensorsViewController.swift
 //  Bumbl
 //
-//  Created by Randy Ting on 1/21/16.
+//  Created by Randy Ting on 5/21/16.
 //  Copyright © 2016 Randy Ting. All rights reserved.
 //
 
 import UIKit
 
 class BBLMySensorsViewController: UIViewController {
-
-// MARK: Constants
+  
+  // MARK: Constants
   
   private struct BBLMySensorsViewControllerConstants {
+    
     private static let kMySensorsTVCReuseIdentifier = "com.randy.mySensorsTVCReuseIdentifier"
     private static let kMySensorsTVCNibName = "BBLMySensorsTableViewCell"
     
-    private static let noProfileSensorsMessage = "No sensors were found in your profile.  Please add a sensor to your profile by connecting to one."
+    private static let kTableViewBackgroundImageName = "BBLMySensorsTableViewBackground"
     
     private struct FailedAddSensorAlert{
       private static let title = "Add Sensor to Profile Failed"
@@ -27,106 +28,66 @@ class BBLMySensorsViewController: UIViewController {
       private static let title = "Remove Sensor from Profile Failed"
       private static let message = "Please make sure you have an active internet conection"
     }
+    
   }
   
-// MARK: Interface Builder
+  // MARK: Public Variables
   
-  @IBOutlet weak var mySensorsTableView: UITableView!
-  @IBOutlet weak var noProfileSensorsLabel: UILabel!
-  @IBOutlet weak var tableViewBottomToSuperviewBottomConstraint: NSLayoutConstraint!
+  internal weak var loggedInParent: BBLParent!
   
-// MARK: Public Variables
-  
-  internal var loggedInParent:BBLParent!
-
-// MARK: Private Variables
+  // MARK: Private Variables
   
   private var mySensors: [BBLSensor]!
   
-// MARK: Lifecycle
+  // MARK: Interface Builder
+  
+  @IBOutlet weak var mySensorsTableView: UITableView!
+  
+  // MARK: Lifecycle
   
   override func viewDidLoad() {
+    
     super.viewDidLoad()
-    setupNavigationBar()
-    setupTableView(mySensorsTableView)
-    setupEmptyTableViewCover(noProfileSensorsLabel)
     setupParent(loggedInParent)
-    setupNotificationsForVC(self);
-    setupGestureRecognizersForView(mySensorsTableView)
+    setupTableView(mySensorsTableView)
+    setupNavigationItem(navigationItem)
+
   }
   
-// MARK: Setup
+  // MARK: Setup
   
   private func setupParent(parent: BBLParent) {
     parent.delegate = self
   }
   
-  private func setupNavigationBar() {
-    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: #selector(BBLMySensorsViewController.didTapLogout))
-  }
-  
   private func setupTableView(tableView: UITableView) {
+    
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.estimatedRowHeight = 100
+    tableView.registerNib(UINib(nibName: BBLMySensorsViewControllerConstants.kMySensorsTVCNibName,
+                                 bundle: NSBundle.mainBundle()),
+                      forCellReuseIdentifier: BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier)
     tableView.rowHeight = UITableViewAutomaticDimension
-    let cellNib = UINib(nibName: BBLMySensorsViewControllerConstants.kMySensorsTVCNibName, bundle: NSBundle.mainBundle())
-    tableView.registerNib(cellNib, forCellReuseIdentifier:BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier)
-    tableView.tableFooterView = UIView.init(frame: CGRect.zero)
+    tableView.estimatedRowHeight = 100
+    
+    let backgroundView = NSBundle.mainBundle().loadNibNamed("BBLMySensorsBackgroundView", owner: self, options: nil).first as! BBLMySensorsBackgroundView
+    tableView.backgroundView = backgroundView
+    tableView.tableFooterView = UIView(frame: CGRect.zero)
     updateTableView()
+  }
+  
+  private func setupNavigationItem(navItem: UINavigationItem) {
+    
+    setupHamburgerMenuForNavItem(navItem)
+    setupBlueNavigationBar(navigationController?.navigationBar)
   }
   
   private func updateTableView() {
     mySensors = loggedInParent.profileSensors.allObjects as? [BBLSensor]
-    
-    if mySensors.count == 0 ||
-      mySensors == nil {
-        noProfileSensorsLabel.hidden = false
-    } else {
-      noProfileSensorsLabel.hidden = true
-    }
-    
     mySensorsTableView.reloadData()
   }
   
-  private func setupEmptyTableViewCover(view: UILabel) {
-    view.backgroundColor = UIColor.BBLWetAsphaltColor()
-    view.textColor = UIColor.BBLYellowColor()
-    view.numberOfLines = 0
-    view.text = BBLMySensorsViewControllerConstants.noProfileSensorsMessage
-  }
-  
-  private func setupNotificationsForVC(viewController: UIViewController) {
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BBLMySensorsViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BBLMySensorsViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
-  }
-  
-  private func setupGestureRecognizersForView(view: UIView) {
-    let tapGR = UITapGestureRecognizer.init(target: self, action: #selector(BBLMySensorsViewController.didTapTableView(_:)))
-    view.addGestureRecognizer(tapGR)
-  }
-  
-// MARK: Keyboard Actions
-  internal func keyboardWillShow(notification:NSNotification!) {
-    let keyboardFrame = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
-    tableViewBottomToSuperviewBottomConstraint.constant = keyboardFrame.height
-  }
-  
-  internal func keyboardWillHide(notification:NSNotification!) {
-    tableViewBottomToSuperviewBottomConstraint.constant = 0
-  }
-  
-  internal func didTapTableView(tapGR: UITapGestureRecognizer!) {
-    view.endEditing(true)
-  }
-
-// MARK: Navigation Bar
-  
-  internal func didTapLogout() {
-    NSNotificationCenter.defaultCenter().postNotificationName(BBLNotifications.kParentDidLogoutNotification, object: self)
-  }
-  
-// MARK: Alerts
+  // MARK: Alerts
   
   private func showDismissAlertWithTitle(title: String, withMessage message: String) {
     
@@ -142,15 +103,14 @@ class BBLMySensorsViewController: UIViewController {
 
 // MARK: UITableViewDelegate
 
-extension BBLMySensorsViewController:UITableViewDelegate {
-  internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    tableView.deselectRowAtIndexPath(indexPath, animated: false)
-  }
+extension BBLMySensorsViewController: UITableViewDelegate {
+  
 }
 
-// MARK: UITableViewDatasource
+// MARK: UITableViewDataSource
 
-extension BBLMySensorsViewController:UITableViewDataSource {
+extension BBLMySensorsViewController: UITableViewDataSource {
+  
   internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     guard let mySensors = mySensors else {
       return 0
@@ -159,6 +119,7 @@ extension BBLMySensorsViewController:UITableViewDataSource {
   }
   
   internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    
     let cell = tableView.dequeueReusableCellWithIdentifier(BBLMySensorsViewControllerConstants.kMySensorsTVCReuseIdentifier, forIndexPath: indexPath) as! BBLMySensorsTableViewCell
     
     cell.delegate = self
@@ -199,6 +160,15 @@ extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
   internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRebaselineButton: Bool) {
     tableViewCell.sensor.rebaseline()
   }
+  
+  internal func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    
+    tableView.separatorInset = UIEdgeInsetsZero
+    tableView.layoutMargins = UIEdgeInsetsZero
+    cell.layoutMargins = UIEdgeInsetsZero
+    
+  }
+  
 }
 
 // MARK: BBLParentDelegate
@@ -242,5 +212,5 @@ extension BBLMySensorsViewController: BBLSensorDelegate {
   internal func sensor(sensor: BBLSensor, didUpdateRSSI rssi: NSNumber) {
     updateTableView()
   }
-
+  
 }

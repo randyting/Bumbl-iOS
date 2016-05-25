@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BBLMenuViewController" customModule="Bumbl" customModuleProvider="target">
+            <connections>
+                <outlet property="logoutButton" destination="Ffz-6q-EJh" id="kdR-dB-R1m"/>
+                <outlet property="versionAndBuildNumberLabel" destination="O67-XP-wrz" id="mw0-lL-5UE"/>
+                <outlet property="view" destination="rQu-io-Igz" id="cAE-LO-voW"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="rQu-io-Igz">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZNF-jr-Ne5">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="469"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version no." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O67-XP-wrz">
+                    <rect key="frame" x="257" y="569" width="86" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ffz-6q-EJh">
+                    <rect key="frame" x="30" y="487" width="540" height="60"/>
+                    <color key="backgroundColor" red="1" green="0.31801541719999998" blue="0.41633616740000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="GHe-8e-Faa"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                    <state key="normal" title="LOGOUT"/>
+                    <connections>
+                        <action selector="didTapLogoutButton:" destination="-1" eventType="touchUpInside" id="XNx-yo-hmO"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="ZNF-jr-Ne5" firstAttribute="top" secondItem="rQu-io-Igz" secondAttribute="top" id="0MV-z6-LQV"/>
+                <constraint firstItem="O67-XP-wrz" firstAttribute="top" secondItem="Ffz-6q-EJh" secondAttribute="bottom" constant="22" id="8pI-OK-Jxr"/>
+                <constraint firstItem="O67-XP-wrz" firstAttribute="top" secondItem="ZNF-jr-Ne5" secondAttribute="bottom" constant="100" id="Lnv-ka-gM8"/>
+                <constraint firstAttribute="trailing" secondItem="ZNF-jr-Ne5" secondAttribute="trailing" id="Seh-EN-vlx"/>
+                <constraint firstItem="Ffz-6q-EJh" firstAttribute="leading" secondItem="rQu-io-Igz" secondAttribute="leading" constant="30" id="Upz-E2-P3w"/>
+                <constraint firstItem="O67-XP-wrz" firstAttribute="centerX" secondItem="rQu-io-Igz" secondAttribute="centerX" id="bcM-Xe-9pb"/>
+                <constraint firstAttribute="bottom" secondItem="O67-XP-wrz" secondAttribute="bottom" constant="10" id="cjx-d3-9eD"/>
+                <constraint firstAttribute="trailing" secondItem="Ffz-6q-EJh" secondAttribute="trailing" constant="30" id="hAO-CR-NGs"/>
+                <constraint firstItem="ZNF-jr-Ne5" firstAttribute="leading" secondItem="rQu-io-Igz" secondAttribute="leading" id="n4g-gr-egP"/>
+            </constraints>
+            <point key="canvasLocation" x="327" y="431"/>
+        </view>
+    </objects>
+</document>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" initialViewController="01J-lp-oVM">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -17,26 +18,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Designed in California" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NlQ-Q9-OI5">
-                                <rect key="frame" x="234" y="534" width="133" height="16"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" red="0.20392156862745098" green="0.21176470588235294" blue="0.24705882352941178" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BBLLogo" translatesAutoresizingMaskIntoConstraints="NO" id="F06-mD-fn8">
-                                <rect key="frame" x="200" y="200" width="200" height="200"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BBLSplashOpen" translatesAutoresizingMaskIntoConstraints="NO" id="F06-mD-fn8">
+                                <rect key="frame" x="70" y="50" width="460" height="410"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BBLProductOfBumbl" translatesAutoresizingMaskIntoConstraints="NO" id="KRG-ye-qrg">
+                                <rect key="frame" x="200" y="560" width="200" height="20"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="CfM-sD-hv4"/>
-                                    <constraint firstAttribute="width" constant="200" id="WoI-9J-WZm"/>
+                                    <constraint firstAttribute="width" constant="200" id="QzX-GI-lw1"/>
+                                    <constraint firstAttribute="height" constant="20" id="VoA-SK-saT"/>
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.84313725490196079" green="0.89803921568627454" blue="0.25098039215686274" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="NlQ-Q9-OI5" secondAttribute="bottom" constant="50" id="4E8-T4-3uw"/>
-                            <constraint firstItem="NlQ-Q9-OI5" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="NWS-jE-bAr"/>
+                            <constraint firstItem="F06-mD-fn8" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="30" id="Gfo-Je-A2F"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="KRG-ye-qrg" secondAttribute="bottom" constant="20" id="MiU-ti-QbA"/>
+                            <constraint firstItem="F06-mD-fn8" firstAttribute="top" secondItem="Llm-lL-Icb" secondAttribute="bottom" constant="30" id="RzG-kv-F3B"/>
+                            <constraint firstItem="F06-mD-fn8" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="50" id="VZN-CM-oCV"/>
+                            <constraint firstItem="KRG-ye-qrg" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="XYj-X1-n4n"/>
                             <constraint firstItem="F06-mD-fn8" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="jad-up-Xsm"/>
-                            <constraint firstItem="F06-mD-fn8" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="xRB-y5-8gM"/>
+                            <constraint firstItem="KRG-ye-qrg" firstAttribute="top" secondItem="F06-mD-fn8" secondAttribute="bottom" constant="100" id="xD0-DS-R7x"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -46,6 +47,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BBLLogo" width="162" height="201"/>
+        <image name="BBLProductOfBumbl" width="225" height="29"/>
+        <image name="BBLSplashOpen" width="429" height="672"/>
     </resources>
 </document>
