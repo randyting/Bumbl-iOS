@@ -15,7 +15,7 @@ extension UIColor {
   }
   
   internal class func BBLDarkGrayColor() -> UIColor {
-    return UIColor.BBLColorfromHexString("#979797")
+    return UIColor.BBLColorfromHexString("#787878")
   }
   
   internal class func BBLYellowColor() -> UIColor {
@@ -38,12 +38,24 @@ extension UIColor {
     return UIColor.BBLColorfromHexString("#145282")
   }
   
+  internal class func BBLDarkBlueColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#185181")
+  }
+  
+  internal class func BBLLightBlueNavBarColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#70B7E6")
+  }
+  
   internal class func BBLBlueColor() -> UIColor {
     return UIColor.BBLColorfromHexString("#1977B9")
   }
   
   internal class func BBLTealGreenColor() -> UIColor {
     return UIColor.BBLColorfromHexString("#39BEB2")
+  }
+  
+  internal class func BBLBrightTealGreenColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#3FBEB2")
   }
   
   private class func BBLColorfromHexString(hexString: String) -> UIColor {

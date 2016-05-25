@@ -10,16 +10,32 @@ import Foundation
 import CoreBluetooth
 
 
+// MARK: Navigation Bar
+
+internal struct BBLNavigationBarInfo {
+  
+  static let kMenuButtonIconName = "BBLMenuButton"
+  static let kDismissButtonIconName = "BBLDismissIcon"
+  
+}
+
 // MARK: View Controllers
 internal struct BBLViewControllerInfo {
-  struct BBLMySensorsViewController {
-    static let title = "My Sensors"
+  struct BBLDebugMySensorsViewController {
+    static let title = "Debug My Sensors"
+    private static let kHomeTabBarIconName = "BBLHomeTabBarIcon"
+    static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLDebugMySensorsViewController.kHomeTabBarIconName)
+  }
+  
+  struct BBLDebugConnectionViewController {
+    static let title = "Debug Connect"
     static let tabBarIcon:UIImage? = nil
   }
   
-  struct BBLConnectionViewController {
-    static let title = "Connect"
-    static let tabBarIcon:UIImage? = nil
+  struct BBLMySensorsViewController {
+    static let title = "My Sensors"
+    private static let kHomeTabBarIconName = "BBLHomeTabBarIcon"
+    static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLMySensorsViewController.kHomeTabBarIconName)
   }
 }
 

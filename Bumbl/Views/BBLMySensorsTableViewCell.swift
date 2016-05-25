@@ -2,7 +2,7 @@
 //  BBLMySensorsTableViewCell.swift
 //  Bumbl
 //
-//  Created by Randy Ting on 1/23/16.
+//  Created by Randy Ting on 5/21/16.
 //  Copyright © 2016 Randy Ting. All rights reserved.
 //
 
@@ -18,72 +18,23 @@ import UIKit
 
 class BBLMySensorsTableViewCell: UITableViewCell {
   
-  // MARK: Constants
-  
-  private struct BBLMySensorsTableViewCellConstants {
-    private static let defaultMaxSliderValue = 100
-    private static let defaultSliderValue = 50
-  }
   
   // MARK: Public Variables
   
   internal weak var delegate: BBLMySensorsTableViewCellDelegate?
   internal var sensor: BBLSensor! {
     didSet (newSensor){
-      if let newSensor = newSensor {
-        if newSensor !== sensor
-          || maxSliderValue == nil {
-            resetValues()
-        }
-      }
       updateValuesWithSensor(sensor)
     }
   }
   
-  // MARK: Private Variables
-  
-  private var maxSliderValue: Int!
-  
   // MARK: Interface Builder
   
-  @IBOutlet private weak var nameTextField: UITextField!
-  @IBOutlet private weak var uuidLabel: UILabel!
-  @IBOutlet weak var delayInSecondsLabel: UILabel!
-  @IBOutlet weak var delayInSecondsStepper: UIStepper!
-  @IBOutlet private weak var valueLabel: UILabel!
-  @IBOutlet private weak var thresholdSlider: UISlider!
-  @IBOutlet private weak var thresholdTextField: UITextField!
-  @IBOutlet private weak var sensorStateLabel: UILabel!
-  @IBOutlet weak var valueBackgroundView: UIView!
-  @IBOutlet weak var valueForegroundViewWidthConstraint: NSLayoutConstraint!
-  
-  @IBAction private func didChangeThresholdSliderValue(sender: UISlider) {
-    thresholdTextField.text = String(sender.value)
-    delegate?.tableViewCell?(self, didChangeThreshold: Int(sender.value))
-  }
-  
-  @IBAction func didEndEditingThresholdTextField(sender: UITextField) {
-    thresholdSlider.value = Float((sender.text! as NSString).integerValue)
-    delegate?.tableViewCell?(self, didChangeThreshold: Int((sender.text! as NSString).integerValue))
-  }
-  
-  @IBAction private func didTapRemoveFromProfileButton(sender: UIButton) {
-    delegate?.tableViewCell?(self, didTapRemoveFromProfileButton: true)
-  }
-  
-  @IBAction private func didTapSaveSettingsButton(sender: UIButton) {
-    thresholdTextField.resignFirstResponder()
-    nameTextField.resignFirstResponder()
-    delegate?.tableViewCell?(self, didSaveThreshold: Int(thresholdSlider.value), andName: nameTextField.text)
-  }
-  
-  @IBAction func stepperValueDidChange(sender: UIStepper) {
-    delegate?.tableViewCell?(self, didChangeDelayValue: Int(sender.value))
-  }
-  
-  @IBAction func didTapRebaselineButton(sender: UIButton) {
-    delegate?.tableViewCell?(self, didTapRebaselineButton: true)
-  }
+  @IBOutlet weak var babyNameLabel: UILabel!
+  @IBOutlet weak var statusTitleLabel: UILabel!
+  @IBOutlet weak var assignTitleLabel: UILabel!
+  @IBOutlet weak var statusLabel: UILabel!
+  @IBOutlet weak var connectedParentLabel: UILabel!
   
   // MARK: Lifecycle
   
@@ -98,64 +49,49 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   }
   
   func initViews() {
-    selectionStyle = .None
   }
   
   override func awakeFromNib() {
     super.awakeFromNib()
+    
+    setupAppearanceForTitleLabel(statusTitleLabel)
+    setupAppearanceForTitleLabel(assignTitleLabel)
+    setupAppearanceForTextLabel(babyNameLabel)
+    setupAppearanceForTextLabel(statusLabel)
+    setupAppearanceForTextLabel(connectedParentLabel)
+    
   }
   
-  // MARK: Setup
+  // MARK: Initial Setup
   
-  private func setupSlider(slider: UISlider) {
-    slider.maximumValue = Float(BBLMySensorsTableViewCellConstants.defaultMaxSliderValue)
-    slider.minimumValue = 0
-    slider.value = Float(BBLMySensorsTableViewCellConstants.defaultSliderValue)
+  private func setupAppearanceForTitleLabel(titleLabel: UILabel) {
+    titleLabel.textColor = UIColor.BBLBrightTealGreenColor()
   }
   
-  private func resetValues() {
-    maxSliderValue = BBLMySensorsTableViewCellConstants.defaultMaxSliderValue
+  private func setupAppearanceForTextLabel(textLabel: UILabel) {
+    textLabel.textColor = UIColor.BBLDarkBlueColor()
   }
   
   // MARK: Update
   
   internal func updateValuesWithSensor(sensor: BBLSensor) {
-    nameTextField.text = sensor.name
-    uuidLabel.text = sensor.uuid
-    delayInSecondsLabel.text = String(sensor.delayInSeconds)
-    delayInSecondsStepper.value = Double(sensor.delayInSeconds)
+    babyNameLabel.text = sensor.name
     
-    if let capSenseValue = sensor.capSenseValue {
-      if capSenseValue > maxSliderValue {
-        maxSliderValue = capSenseValue
-        thresholdSlider.maximumValue = Float(maxSliderValue)
-      }
-      valueLabel.text = String(format: "%i", capSenseValue)
-      valueForegroundViewWidthConstraint.constant = CGFloat(capSenseValue)/CGFloat(maxSliderValue) * valueBackgroundView.frame.width
-    } else {
-      valueLabel.text = ""
-    }
-    thresholdTextField.text = String(format: "%02d", sensor.capSenseThreshold)
-    thresholdSlider.value = Float(sensor.capSenseThreshold)
+    connectedParentLabel.text = sensor.connectedParent?.username
     
     switch (sensor.stateMachine.state as BBLSensorState) {
     case .Activated:
-      backgroundColor = UIColor.BBLYellowColor()
-      sensorStateLabel.text = "Activated"
+      statusLabel.text = "Activated"
     case .Deactivated:
-      backgroundColor = UIColor.BBLYellowColor()
-      sensorStateLabel.text = "Deactivated"
+      statusLabel.text = "Deactivated"
     case .Disconnected:
-      backgroundColor = UIColor.BBLGrayColor()
-      sensorStateLabel.text = "Disconnected"
+      statusLabel.text = "Disconnected"
     case .WaitingToBeActivated:
-      backgroundColor = UIColor.BBLYellowColor()
-      sensorStateLabel.text = "Waiting To Be Activated"
+      statusLabel.text = "Waiting To Be Activated"
     case .WaitingToBeDeactivated:
-      backgroundColor = UIColor.BBLYellowColor()
-      sensorStateLabel.text = "Waiting To Be Deactivated"
+      statusLabel.text = "Waiting To Be Deactivated"
     }
-    
   }
-
+  
 }
+

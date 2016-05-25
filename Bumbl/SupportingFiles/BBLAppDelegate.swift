@@ -165,6 +165,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
       BBLSensor.fetchAllInBackground(parent.sensors) { (result: [AnyObject]?, error: NSError?) -> Void in
         if let sensors = result as? [BBLSensor] {
           for sensor in sensors {
+            try! sensor.connectedParent?.fetchIfNeeded()
             sensor.stateMachine = BBLStateMachine(initialState: .Disconnected, delegate: sensor)
           }
         }
@@ -172,19 +173,20 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
         parent.syncSensors()
         
         self.currentSession = BBLSession(withParent: parent,
-          withSensorManager: BBLSensorManager(withCentralManager: CBCentralManager(),
-            withProfileSensors: parent.profileSensors))
+                                         withSensorManager: BBLSensorManager(withCentralManager: CBCentralManager(),
+                                                                              withProfileSensors: parent.profileSensors))
         self.window?.rootViewController = self.rootViewControllerFromSession(self.currentSession!)
       }
     }
     
     private func rootViewControllerFromSession(session: BBLSession!) -> UITabBarController {
       let mainTabBarController = UITabBarController()
+      setupAppearanceForTabBar(mainTabBarController.tabBar)
       
       let sensorsViewController = BBLMySensorsViewController()
       sensorsViewController.loggedInParent = session.parent
       
-      let connectionViewController = BBLConnectionViewController()
+      let connectionViewController = BBLDebugConnectionViewController()
       connectionViewController.sensorManager = session.sensorManager
       
       let tabBarViewControllers = [sensorsViewController,
@@ -196,10 +198,16 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
       }
       
       sensorsViewController.BBLsetupIcon(BBLViewControllerInfo.BBLMySensorsViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLMySensorsViewController.title)
-      connectionViewController.BBLsetupIcon(BBLViewControllerInfo.BBLConnectionViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLConnectionViewController.title)
+      connectionViewController.BBLsetupIcon(BBLViewControllerInfo.BBLDebugConnectionViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLDebugConnectionViewController.title)
       
       mainTabBarController.viewControllers = navigationControllers
       return mainTabBarController
+    }
+    
+    private func setupAppearanceForTabBar(tabBar: UITabBar) {
+      tabBar.barTintColor = UIColor.whiteColor()
+      tabBar.addTopBorder(withColor: UIColor.BBLDarkGrayColor(), withThickness: 0.5)
+      tabBar.tintColor = UIColor.BBLDarkGrayColor()
     }
     
 }
