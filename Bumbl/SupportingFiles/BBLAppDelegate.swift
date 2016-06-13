@@ -118,11 +118,11 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   private func disconnectAllSensorsAndStopScanningForSession(session: BBLSession!) {
     session.sensorManager.stopScanningForSensors()
     session.sensorManager.disconnectAllProfileSensorsWithCompletion { () -> () in
-      self.logoutOfSession(self.currentSession)
+      self.logoutOfSession(&self.currentSession)
     }
   }
   
-  private func logoutOfSession(var session: BBLSession?) {
+  private func logoutOfSession(inout session: BBLSession?) {
     
     BBLParent.logOutInBackgroundWithBlock { (error: NSError?) -> Void in
       if let error = error {
