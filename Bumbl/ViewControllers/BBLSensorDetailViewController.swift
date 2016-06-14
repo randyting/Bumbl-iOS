@@ -130,6 +130,10 @@ class BBLSensorDetailViewController: UIViewController {
   private func updateAllInformation() {
     batteryPercentLabel.text = "50%"
     delayTimeLabel.text = String(sensor.delayInSeconds)
+    
+    babyNameLabel.text = sensor.name
+    statusLabel.text = sensor.stateAsString
+    connectedParentLabel.text = sensor.connectedParent?.username
   }
   
 }
