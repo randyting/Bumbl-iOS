@@ -7,7 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BBLLoginViewController" customModule="Bumbl" customModuleProvider="target">
             <connections>
-                <outlet property="backButton" destination="iJl-ZJ-tvQ" id="Wwb-TE-d0x"/>
                 <outlet property="divisionLine" destination="0mx-nF-TRq" id="gd5-9u-cl7"/>
                 <outlet property="emailLabel" destination="R36-ZM-7fe" id="DnO-Pw-T6i"/>
                 <outlet property="emailTextField" destination="3qz-8X-3bs" id="dmo-Ny-dnE"/>
@@ -76,7 +75,7 @@
                         <action selector="didTapLoginWithFacebookButton:" destination="-1" eventType="touchUpInside" id="MUh-oG-mSM"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iJl-ZJ-tvQ">
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iJl-ZJ-tvQ" customClass="BBLModalBottomButton" customModule="Bumbl" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="525" width="600" height="75"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="75" id="Gfk-by-NcF"/>

@@ -41,7 +41,6 @@ class BBLLoginViewController: UIViewController {
   
   @IBOutlet weak var loginButton: UIButton!
   @IBOutlet weak var loginWithFacebookButton: UIButton!
-  @IBOutlet weak var backButton: UIButton!
   
   @IBAction func didTapLoginButton(sender: UIButton) {
     
@@ -102,21 +101,12 @@ class BBLLoginViewController: UIViewController {
     setupAppearanceForFederatedLoginButton(loginWithFacebookButton)
     
     setupAppearanceForCircleButton(loginButton)
-    setupAppearanceForBottomButton(backButton)
     
   }
   
   private func setupAppearanceForCircleButton(button: UIButton) {
     
     button.backgroundColor = UIColor.clearColor()
-    
-  }
-  
-  private func setupAppearanceForBottomButton(button: UIButton) {
-    
-    button.tintColor = UIColor.BBLNavyBlueColor()
-    button.backgroundColor = UIColor.whiteColor()
-    button.addTopBorder(withColor: UIColor.BBLDarkGrayColor(), withThickness: 0.5)
     
   }
   
