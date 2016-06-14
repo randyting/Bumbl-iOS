@@ -53,6 +53,8 @@ class BBLSensorDetailViewController: UIViewController {
     setupAppearanceForTextLabel(statusLabel)
     setupAppearanceForTextLabel(connectedParentLabel)
     
+    setupNavigationItem(navigationItem)
+    
     updateAllInformation()
   }
   
@@ -111,6 +113,16 @@ class BBLSensorDetailViewController: UIViewController {
   
   private func setupAppearanceForTextLabel(textLabel: UILabel) {
     textLabel.textColor = UIColor.BBLDarkBlueColor()
+  }
+  
+  private func setupNavigationItem(navItem: UINavigationItem) {
+    navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(BBLSensorDetailViewController.didTapEditButton))
+  }
+  
+  // Navigation
+  
+  internal func didTapEditButton(sender: UIBarButtonItem) {
+    // TODO: Push edit sensor VC on nav controller.
   }
   
   // MARK: Update
