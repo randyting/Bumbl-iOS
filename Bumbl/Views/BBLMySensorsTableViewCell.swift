@@ -19,14 +19,32 @@ import UIKit
 class BBLMySensorsTableViewCell: UITableViewCell {
   
   
+  // MARK: Constants
+  
+  private struct BBLMySensorsTableViewCellConstants {
+    private static let defaultMaxCapsenseValue = 100
+    private static let defaultCapsenseValue = 0
+  }
+  
   // MARK: Public Variables
   
   internal weak var delegate: BBLMySensorsTableViewCellDelegate?
   internal var sensor: BBLSensor! {
     didSet (newSensor){
+      if let newSensor = newSensor {
+        if newSensor !== sensor
+          || maxCapsenseValue == nil {
+          resetValues()
+        }
+      }
+      
       updateValuesWithSensor(sensor)
     }
   }
+  
+  // MARK: Private Variables
+  
+  private var maxCapsenseValue: Int!
   
   // MARK: Interface Builder
   
@@ -35,6 +53,7 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   @IBOutlet weak var assignTitleLabel: UILabel!
   @IBOutlet weak var statusLabel: UILabel!
   @IBOutlet weak var connectedParentLabel: UILabel!
+  @IBOutlet weak var sensorValueGaugeView: BBLSensorValueGaugeView!
   
   // MARK: Lifecycle
   
@@ -59,6 +78,7 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     setupAppearanceForTextLabel(babyNameLabel)
     setupAppearanceForTextLabel(statusLabel)
     setupAppearanceForTextLabel(connectedParentLabel)
+    setupAppearanceForSensorValueGaugeView(sensorValueGaugeView)
     
   }
   
@@ -71,6 +91,16 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   private func setupAppearanceForTextLabel(textLabel: UILabel) {
     textLabel.textColor = UIColor.BBLDarkBlueColor()
   }
+  
+  private func setupAppearanceForSensorValueGaugeView(sensorValueGaugeView: BBLSensorValueGaugeView) {
+    sensorValueGaugeView.setGaugeBackgroundColor(UIColor.BBLYellowColor())
+    sensorValueGaugeView.gaugeFillNormalized = 0.2
+  }
+  
+  private func resetValues() {
+    maxCapsenseValue = BBLMySensorsTableViewCellConstants.defaultMaxCapsenseValue
+  }
+  
   
   // MARK: Update
   
@@ -90,6 +120,15 @@ class BBLMySensorsTableViewCell: UITableViewCell {
       statusLabel.text = "Waiting To Be Activated"
     case .WaitingToBeDeactivated:
       statusLabel.text = "Waiting To Be Deactivated"
+    }
+    
+    if let capSenseValue = sensor.capSenseValue {
+      if capSenseValue > maxCapsenseValue {
+        maxCapsenseValue = capSenseValue
+      }
+      sensorValueGaugeView.gaugeFillNormalized = Double(capSenseValue)/Double(maxCapsenseValue)
+    } else {
+      sensorValueGaugeView.gaugeFillNormalized = 0.0
     }
   }
   
