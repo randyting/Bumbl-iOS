@@ -87,6 +87,22 @@ class BBLMySensorsViewController: UIViewController {
     mySensorsTableView.reloadData()
   }
   
+  private func updateTableViewCellSensorValueForSensor(sensor: BBLSensor) {
+    
+    let mySensorsSet = NSSet(array: mySensors)
+    
+    if mySensorsSet.isEqualToSet(loggedInParent.profileSensors as Set<NSObject>) {
+      let row = mySensors.indexOf(sensor)
+      let indexPath = NSIndexPath(forRow: row!, inSection: 0)
+      
+      let cell = mySensorsTableView.cellForRowAtIndexPath(indexPath) as!BBLMySensorsTableViewCell
+      cell.updateValuesWithSensor(sensor)
+    } else {
+      updateTableView()
+    }
+
+  }
+  
   // MARK: Alerts
   
   private func showDismissAlertWithTitle(title: String, withMessage message: String) {
@@ -169,6 +185,14 @@ extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
     
   }
   
+  internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let sensorDetailVC = BBLSensorDetailViewController()
+    sensorDetailVC.sensor = mySensors[indexPath.row]
+    
+    navigationController?.pushViewController(sensorDetailVC, animated: true)
+    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+  }
+  
 }
 
 // MARK: BBLParentDelegate
@@ -198,11 +222,11 @@ extension BBLMySensorsViewController: BBLParentDelegate {
 
 extension BBLMySensorsViewController: BBLSensorDelegate {
   internal func sensor(sensor: BBLSensor, didUpdateSensorValue value: Int) {
-    updateTableView()
+    updateTableViewCellSensorValueForSensor(sensor)
   }
   
   internal func sensor(sensor: BBLSensor, didChangeState state: BBLSensorState) {
-    updateTableView()
+    updateTableViewCellSensorValueForSensor(sensor)
   }
   
   internal func sensor(sensor: BBLSensor, didDidFailToDeleteSensorWithErrorMessage errorMessage: String) {

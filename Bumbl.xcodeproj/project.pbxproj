@@ -16,6 +16,11 @@
 		2506590A1C8C29120003DC57 /* BBLLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 250659091C8C29120003DC57 /* BBLLoginViewController.xib */; };
 		251EE2DF1C540AA200D295C3 /* UIViewController+Bumbl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251EE2DE1C540AA200D295C3 /* UIViewController+Bumbl.swift */; };
 		251EE2E11C54565C00D295C3 /* UIColor+Bumbl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251EE2E01C54565C00D295C3 /* UIColor+Bumbl.swift */; };
+		252324461D0F7F12009D20B0 /* BBLSensorValueGaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252324451D0F7F12009D20B0 /* BBLSensorValueGaugeView.swift */; };
+		252324481D0F7F27009D20B0 /* BBLSensorValueGaugeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 252324471D0F7F27009D20B0 /* BBLSensorValueGaugeView.xib */; };
+		2523244F1D0FCA80009D20B0 /* BBLSensorDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2523244D1D0FCA80009D20B0 /* BBLSensorDetailViewController.swift */; };
+		252324501D0FCA80009D20B0 /* BBLSensorDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2523244E1D0FCA80009D20B0 /* BBLSensorDetailViewController.xib */; };
+		252324531D0FCE94009D20B0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 252324511D0FCE40009D20B0 /* MapKit.framework */; };
 		2533A5181C51E71B000F9562 /* BBLLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533A5171C51E71B000F9562 /* BBLLoginViewController.swift */; };
 		2533A51B1C51EC7B000F9562 /* BBLDebugConnectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2533A5191C51EC7B000F9562 /* BBLDebugConnectionViewController.swift */; };
 		2533A51C1C51EC7B000F9562 /* BBLDebugConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2533A51A1C51EC7B000F9562 /* BBLDebugConnectionViewController.xib */; };
@@ -67,6 +72,11 @@
 		250659091C8C29120003DC57 /* BBLLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLLoginViewController.xib; path = ViewControllers/BBLLoginViewController.xib; sourceTree = "<group>"; };
 		251EE2DE1C540AA200D295C3 /* UIViewController+Bumbl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Bumbl.swift"; path = "Extensions/UIViewController+Bumbl.swift"; sourceTree = "<group>"; };
 		251EE2E01C54565C00D295C3 /* UIColor+Bumbl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Bumbl.swift"; path = "Extensions/UIColor+Bumbl.swift"; sourceTree = "<group>"; };
+		252324451D0F7F12009D20B0 /* BBLSensorValueGaugeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensorValueGaugeView.swift; path = Views/BBLSensorValueGaugeView.swift; sourceTree = "<group>"; };
+		252324471D0F7F27009D20B0 /* BBLSensorValueGaugeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLSensorValueGaugeView.xib; path = Views/BBLSensorValueGaugeView.xib; sourceTree = "<group>"; };
+		2523244D1D0FCA80009D20B0 /* BBLSensorDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensorDetailViewController.swift; path = ViewControllers/BBLSensorDetailViewController.swift; sourceTree = "<group>"; };
+		2523244E1D0FCA80009D20B0 /* BBLSensorDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLSensorDetailViewController.xib; path = ViewControllers/BBLSensorDetailViewController.xib; sourceTree = "<group>"; };
+		252324511D0FCE40009D20B0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		2533A5171C51E71B000F9562 /* BBLLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLLoginViewController.swift; path = ViewControllers/BBLLoginViewController.swift; sourceTree = "<group>"; };
 		2533A5191C51EC7B000F9562 /* BBLDebugConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLDebugConnectionViewController.swift; path = ViewControllers/Debug/BBLDebugConnectionViewController.swift; sourceTree = "<group>"; };
 		2533A51A1C51EC7B000F9562 /* BBLDebugConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLDebugConnectionViewController.xib; path = ViewControllers/Debug/BBLDebugConnectionViewController.xib; sourceTree = "<group>"; };
@@ -110,6 +120,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				252324531D0FCE94009D20B0 /* MapKit.framework in Frameworks */,
 				E83705905EDF82EA44FBFCB0 /* libPods-Bumbl.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -127,6 +138,7 @@
 		0E89F6D36059E4195C59D4FC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				252324511D0FCE40009D20B0 /* MapKit.framework */,
 				E321764C20B9583306C1F4CD /* libPods-Bumbl.a */,
 			);
 			name = Frameworks;
@@ -170,6 +182,8 @@
 				25AF02F31CF18C4900718172 /* BBLMySensorsTableViewCell.xib */,
 				25AF02F61CF1A08600718172 /* BBLMySensorsBackgroundView.swift */,
 				25AF02F81CF1A0A700718172 /* BBLMySensorsBackgroundView.xib */,
+				252324451D0F7F12009D20B0 /* BBLSensorValueGaugeView.swift */,
+				252324471D0F7F27009D20B0 /* BBLSensorValueGaugeView.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -240,6 +254,8 @@
 				250659061C8BBB140003DC57 /* BBLSignInPickerVC.xib */,
 				25AF02EE1CF18A9000718172 /* BBLMySensorsViewController.swift */,
 				25AF02EF1CF18A9000718172 /* BBLMySensorsViewController.xib */,
+				2523244D1D0FCA80009D20B0 /* BBLSensorDetailViewController.swift */,
+				2523244E1D0FCA80009D20B0 /* BBLSensorDetailViewController.xib */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -427,6 +443,8 @@
 				25B973561C44F7A000C5E099 /* LaunchScreen.storyboard in Resources */,
 				2533A51C1C51EC7B000F9562 /* BBLDebugConnectionViewController.xib in Resources */,
 				250659081C8BBB140003DC57 /* BBLSignInPickerVC.xib in Resources */,
+				252324501D0FCA80009D20B0 /* BBLSensorDetailViewController.xib in Resources */,
+				252324481D0F7F27009D20B0 /* BBLSensorValueGaugeView.xib in Resources */,
 				25AF02ED1CF189F200718172 /* BBLDebugMySensorsTableViewCell.xib in Resources */,
 				25AF02F91CF1A0A700718172 /* BBLMySensorsBackgroundView.xib in Resources */,
 				25AF02F51CF18C4900718172 /* BBLMySensorsTableViewCell.xib in Resources */,
@@ -528,8 +546,10 @@
 				25AF02FF1CF2E02700718172 /* BBLMenuViewController.swift in Sources */,
 				2579339E1C6697F1000F3CA6 /* BBLStateMachine.swift in Sources */,
 				25AF02F41CF18C4900718172 /* BBLMySensorsTableViewCell.swift in Sources */,
+				252324461D0F7F12009D20B0 /* BBLSensorValueGaugeView.swift in Sources */,
 				25920A601C5469B0007727BD /* BBLDebugMySensorsTableViewCell.swift in Sources */,
 				251EE2E11C54565C00D295C3 /* UIColor+Bumbl.swift in Sources */,
+				2523244F1D0FCA80009D20B0 /* BBLSensorDetailViewController.swift in Sources */,
 				250658FF1C8BA1630003DC57 /* BBLIntroViewController.swift in Sources */,
 				2533A51E1C520897000F9562 /* BBLSession.swift in Sources */,
 			);
@@ -644,7 +664,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				INFOPLIST_FILE = "$(SRCROOT)/Bumbl/SupportingFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.randyting.Bumbl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -661,7 +681,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "$(SRCROOT)/Bumbl/SupportingFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.randyting.Bumbl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
