@@ -18,6 +18,22 @@ class BBLSensorDetailViewController: UIViewController {
   // MARK: Interface Builder
   
   @IBOutlet weak var locationMapView: MKMapView!
+  @IBOutlet weak var tareButton: UIButton!
+  @IBOutlet weak var batteryPercentLabel: UILabel!
+  @IBOutlet weak var delayTimeLabel: UILabel!
+  @IBOutlet weak var sensorValueGaugeView: BBLSensorValueGaugeView!
+  @IBOutlet weak var emptySpacerView: UIView!
+  
+  @IBOutlet weak var babyNameLabel: UILabel!
+  @IBOutlet weak var statusTitleLabel: UILabel!
+  @IBOutlet weak var assignTitleLabel: UILabel!
+  @IBOutlet weak var statusLabel: UILabel!
+  @IBOutlet weak var connectedParentLabel: UILabel!
+  
+  @IBAction func didTapTareButton(sender: UIButton) {
+    sensor.rebaseline()
+  }
+  
   
   // MARK: Lifecycle
   
@@ -26,7 +42,18 @@ class BBLSensorDetailViewController: UIViewController {
     
     setupViewController()
     setupMapView(locationMapView)
+    setupAppearanceForSensorValueGaugeView(sensorValueGaugeView)
+    setupAppearanceForTareButton(tareButton)
+    setupAppearanceForInformationLabel(batteryPercentLabel)
+    setupAppearanceForInformationLabel(delayTimeLabel)
     
+    setupAppearanceForTitleLabel(statusTitleLabel)
+    setupAppearanceForTitleLabel(assignTitleLabel)
+    setupAppearanceForTextLabel(babyNameLabel)
+    setupAppearanceForTextLabel(statusLabel)
+    setupAppearanceForTextLabel(connectedParentLabel)
+    
+    updateAllInformation()
   }
   
   // MARK: Setup
@@ -60,5 +87,37 @@ class BBLSensorDetailViewController: UIViewController {
     }
   }
   
+  private func setupAppearanceForSensorValueGaugeView(sensorValueGaugeView: BBLSensorValueGaugeView) {
+    sensorValueGaugeView.setGaugeBackgroundColor(UIColor.BBLYellowColor())
+    sensorValueGaugeView.gaugeFillNormalized = 0.2
+  }
+  
+  private func setupAppearanceForTareButton(button: UIButton) {
+    button.titleEdgeInsets = UIEdgeInsets(top: button.bounds.height/3.0,
+                                          left: 0.0,
+                                          bottom: 0.0,
+                                          right: 0.0)
+    button.tintColor = UIColor.whiteColor()
+  }
+  
+  private func setupAppearanceForInformationLabel(label: UILabel) {
+    label.backgroundColor = UIColor.clearColor()
+    label.textColor = UIColor.whiteColor()
+  }
+  
+  private func setupAppearanceForTitleLabel(titleLabel: UILabel) {
+    titleLabel.textColor = UIColor.BBLBrightTealGreenColor()
+  }
+  
+  private func setupAppearanceForTextLabel(textLabel: UILabel) {
+    textLabel.textColor = UIColor.BBLDarkBlueColor()
+  }
+  
+  // MARK: Update
+  
+  private func updateAllInformation() {
+    batteryPercentLabel.text = "50%"
+    delayTimeLabel.text = String(sensor.delayInSeconds)
+  }
   
 }
