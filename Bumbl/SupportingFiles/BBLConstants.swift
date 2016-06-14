@@ -37,6 +37,7 @@ internal struct BBLViewControllerInfo {
     private static let kHomeTabBarIconName = "BBLHomeTabBarIcon"
     static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLMySensorsViewController.kHomeTabBarIconName)
   }
+  
 }
 
 // MARK: App State

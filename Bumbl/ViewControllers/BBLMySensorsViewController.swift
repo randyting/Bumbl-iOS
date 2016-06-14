@@ -169,6 +169,14 @@ extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
     
   }
   
+  internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    let sensorDetailVC = BBLSensorDetailViewController()
+    sensorDetailVC.sensor = mySensors[indexPath.row]
+    
+    navigationController?.pushViewController(sensorDetailVC, animated: true)
+    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+  }
+  
 }
 
 // MARK: BBLParentDelegate
