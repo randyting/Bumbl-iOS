@@ -44,7 +44,7 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   
   // MARK: Private Variables
   
-  private var maxCapsenseValue: Int!
+  private var maxCapsenseValue: Int! = 0
   
   // MARK: Interface Builder
   
@@ -109,18 +109,7 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     
     connectedParentLabel.text = sensor.connectedParent?.username
     
-    switch (sensor.stateMachine.state as BBLSensorState) {
-    case .Activated:
-      statusLabel.text = "Activated"
-    case .Deactivated:
-      statusLabel.text = "Deactivated"
-    case .Disconnected:
-      statusLabel.text = "Disconnected"
-    case .WaitingToBeActivated:
-      statusLabel.text = "Waiting To Be Activated"
-    case .WaitingToBeDeactivated:
-      statusLabel.text = "Waiting To Be Deactivated"
-    }
+    statusLabel.text = sensor.stateAsString
     
     if let capSenseValue = sensor.capSenseValue {
       if capSenseValue > maxCapsenseValue {

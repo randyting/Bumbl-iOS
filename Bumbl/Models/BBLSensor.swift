@@ -54,6 +54,22 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   internal var peripheral:CBPeripheral?
   internal weak var sensorManager: BBLSensorManager!
   internal var stateMachine:BBLStateMachine<BBLSensor>!
+  var stateAsString: String! {
+    get {
+      switch (stateMachine.state) {
+      case .Activated:
+        return "Activated"
+      case .Deactivated:
+        return "Deactivated"
+      case .Disconnected:
+        return "Disconnected"
+      case .WaitingToBeActivated:
+        return "Waiting To Be Activated"
+      case .WaitingToBeDeactivated:
+        return "Waiting To Be Deactivated"
+      }
+    }
+  }
   
   private var hasBaby:Bool {
     get {
