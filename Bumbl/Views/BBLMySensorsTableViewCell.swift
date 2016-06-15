@@ -125,6 +125,8 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     
     avatarImageView.image = BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)?.image()
     avatarBackgroundView.backgroundColor = BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)?.color()
+    
+    sensorValueGaugeView.setGaugeBackgroundColor(BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)!.color())
   }
   
 }
