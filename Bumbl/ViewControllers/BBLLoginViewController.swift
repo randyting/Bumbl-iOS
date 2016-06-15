@@ -36,12 +36,11 @@ class BBLLoginViewController: UIViewController {
   
   @IBOutlet weak var emailLabel: UILabel!
   
-  @IBOutlet weak var emailTextField: UITextField!
-  @IBOutlet weak var passwordTextField: UITextField!
+  @IBOutlet weak var emailTextField: BBLTextField!
+  @IBOutlet weak var passwordTextField: BBLTextField!
   
   @IBOutlet weak var loginButton: UIButton!
   @IBOutlet weak var loginWithFacebookButton: UIButton!
-  @IBOutlet weak var backButton: UIButton!
   
   @IBAction func didTapLoginButton(sender: UIButton) {
     
@@ -86,6 +85,11 @@ class BBLLoginViewController: UIViewController {
     setupGestureRecognizersForView(view)
   }
   
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
+  
+  
   // MARK: Initial Setup
   
   private func setupAppearance() {
@@ -102,7 +106,6 @@ class BBLLoginViewController: UIViewController {
     setupAppearanceForFederatedLoginButton(loginWithFacebookButton)
     
     setupAppearanceForCircleButton(loginButton)
-    setupAppearanceForBottomButton(backButton)
     
   }
   
@@ -112,40 +115,21 @@ class BBLLoginViewController: UIViewController {
     
   }
   
-  private func setupAppearanceForBottomButton(button: UIButton) {
-    
-    button.tintColor = UIColor.BBLNavyBlueColor()
-    button.backgroundColor = UIColor.whiteColor()
-    button.addTopBorder(withColor: UIColor.BBLDarkGrayColor(), withThickness: 0.5)
-    
-  }
-  
   private func setupAppearanceForTitle(label: UILabel) {
     label.tintColor = UIColor.BBLDarkGreyTextColor()
   }
   
   private func setupAppearanceForSecondaryTextField(textfield: UITextField) {
-    
     // TODO: Add drop shadow.
-    textfield.insetText(byWidth: 15)
     textfield.backgroundColor = UIColor.BBLGrayColor()
-    textfield.makeHorizontalOval(withBorderThickness: 0.0, withBorderColor: nil)
-
-    
   }
   
   private func setupAppearanceForPrimaryTextField(textfield: UITextField) {
-    
-    textfield.insetText(byWidth: 15)
-    textfield.makeHorizontalOval(withBorderThickness: 0.0, withBorderColor: nil)
     textfield.backgroundColor = UIColor.BBLTealGreenColor()
-    
   }
   
   private func setupAppearanceForDivisionLine(view: UIView) {
-    
     view.backgroundColor = UIColor.BBLDarkGrayColor()
-    
   }
   
   private func setupAppearanceForFederatedLoginButton(button: UIButton) {

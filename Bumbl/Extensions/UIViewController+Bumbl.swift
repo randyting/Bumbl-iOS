@@ -20,22 +20,16 @@ extension UIViewController {
     self.title = title
   }
   
-  internal func setupHamburgerMenuForNavItem(navItem: UINavigationItem) {
+  internal func BBLsetupHamburgerMenuForNavItem(navItem: UINavigationItem) {
     
     navItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: BBLNavigationBarInfo.kMenuButtonIconName),
                                                  style: .Plain,
                                                  target: self,
-                                                 action: #selector(self.didTapHamburgerMenuButton(_:)))
+                                                 action: #selector(self.BBLdidTapHamburgerMenuButton(_:)))
     
   }
   
-  internal func setupBlueNavigationBar(navBar: UINavigationBar?) {
-    navBar?.barTintColor = UIColor.BBLLightBlueNavBarColor()
-    navBar?.tintColor = UIColor.whiteColor()
-    navBar?.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.whiteColor()]
-  }
-  
-  @objc internal func didTapHamburgerMenuButton(sender: UIBarButtonItem) {
+  @objc internal func BBLdidTapHamburgerMenuButton(sender: UIBarButtonItem) {
     
     let menuVC = BBLMenuViewController()
     menuVC.delegate = self
@@ -43,14 +37,24 @@ extension UIViewController {
     
     presentViewController(navController, animated: true, completion: nil)
   }
+
+  internal func BBLsetupBlueNavigationBar(navBar: UINavigationBar?) {
+    navBar?.barTintColor = UIColor.BBLLightBlueNavBarColor()
+    navBar?.tintColor = UIColor.whiteColor()
+    navBar?.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.whiteColor()]
+  }
   
-  
+  internal func BBLsetupWhiteNavigationBar(navBar: UINavigationBar?) {
+    navBar?.barTintColor = UIColor.whiteColor()
+    navBar?.tintColor = UIColor.blackColor()
+    navBar?.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.blackColor()]
+  }
   
 }
 
 extension UIViewController: BBLMenuViewControllerDelegate {
   
-  internal func menuViewController(menuViewController: BBLMenuViewController, didDismiss: Bool){
+  internal func BBLmenuViewController(menuViewController: BBLMenuViewController, didDismiss: Bool){
     dismissViewControllerAnimated(true, completion: nil)
   }
   

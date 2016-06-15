@@ -9,6 +9,83 @@
 import Foundation
 import CoreBluetooth
 
+// MARK: Avatars
+
+internal struct BBLAvatarsInfo {
+  
+  enum BBLAvatarType: Int {
+    
+    case Rabbit, Pig, Cat, Chick, Dog, Monkey, Count
+    
+    internal func color() -> UIColor {
+      switch self {
+      case .Rabbit:
+        return UIColor.BBLAvatarBlueColor()
+      case .Pig:
+        return UIColor.BBLAvatarGreenColor()
+      case .Cat:
+        return UIColor.BBLAvatarYellowColor()
+      case .Chick:
+        return UIColor.BBLAvatarPurpleColor()
+      case .Dog:
+        return UIColor.BBLAvatarPinkColor()
+      case .Monkey:
+        return UIColor.BBLAvatarOrangeColor()
+      default:
+        fatalError("Unexpected BBLAvatarType index.")
+      }
+    }
+    
+    internal func stringName() -> String {
+      switch self {
+      case .Rabbit:
+        return "Rabbit"
+      case .Pig:
+        return "Pig"
+      case .Cat:
+        return "Cat"
+      case .Chick:
+        return "Chick"
+      case .Dog:
+        return "Dog"
+      case .Monkey:
+        return "Monkey"
+      default:
+        fatalError("Unexpected BBLAvatarType index.")
+      }
+    }
+    
+    
+    internal func image() -> UIImage {
+      switch self {
+      case .Rabbit:
+        return UIImage(named: "BBLRabbitAvatar")!
+      case .Pig:
+        return UIImage(named: "BBLPigAvatar")!
+      case .Cat:
+        return UIImage(named: "BBLCatAvatar")!
+      case .Chick:
+        return UIImage(named: "BBLChickAvatar")!
+      case .Dog:
+        return UIImage(named: "BBLDogAvatar")!
+      case .Monkey:
+        return UIImage(named: "BBLMonkeyAvatar")!
+      default:
+        fatalError("Unexpected BBLAvatarType index.")
+      }
+    }
+    
+    internal func isEqual(rhs: BBLAvatarType) -> Bool {
+      if self.rawValue == rhs.rawValue {
+        return true
+      } else {
+        return false
+      }
+    }
+  }
+  
+}
+
 
 // MARK: Navigation Bar
 
@@ -38,6 +115,12 @@ internal struct BBLViewControllerInfo {
     static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLMySensorsViewController.kHomeTabBarIconName)
   }
   
+  struct BBLEmergencyContactsViewController {
+    static let title = "Emergency Contacts"
+    private static let kEmergencyContactsTabBarIconName = "BBLEmergencyContactsTabBarIcon"
+    static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLEmergencyContactsViewController.kEmergencyContactsTabBarIconName)
+  }
+  
 }
 
 // MARK: App State
@@ -65,9 +148,6 @@ internal struct BBLSensorInfo {
   
   /// Default delay for transition between activated and deactivated states
   static let kDefaultDelayInSeconds = 3
-  
-  /// Default delay for checking if another parent is connected.
-  static let kDefaultCheckOtherParentConnectDelayInSeconds = 120.0
   
   /// Alerts that will be triggered when the app is backgrounded.
   struct Alerts {

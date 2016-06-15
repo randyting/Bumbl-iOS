@@ -46,8 +46,11 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   
   private var maxCapsenseValue: Int! = 0
   
+  
   // MARK: Interface Builder
   
+  @IBOutlet weak var avatarBackgroundView: UIView!
+  @IBOutlet weak var avatarImageView: UIImageView!
   @IBOutlet weak var babyNameLabel: UILabel!
   @IBOutlet weak var statusTitleLabel: UILabel!
   @IBOutlet weak var assignTitleLabel: UILabel!
@@ -119,6 +122,11 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     } else {
       sensorValueGaugeView.gaugeFillNormalized = 0.0
     }
+    
+    avatarImageView.image = BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)?.image()
+    avatarBackgroundView.backgroundColor = BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)?.color()
+    
+    sensorValueGaugeView.setGaugeBackgroundColor(BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)!.color())
   }
   
 }
