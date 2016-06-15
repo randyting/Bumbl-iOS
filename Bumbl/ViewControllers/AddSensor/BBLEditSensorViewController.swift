@@ -39,6 +39,12 @@ class BBLEditSensorViewController: UIViewController {
   @IBOutlet weak var babyNameTextField: BBLTextField!
   @IBOutlet weak var productSerialNumberTextField: BBLTextField!
   @IBOutlet weak var bottomButton: BBLModalBottomButton!
+  @IBOutlet weak var deleteButton: BBLModalBottomButton!
+  
+  @IBAction func didTapDeleteButton(sender: BBLModalBottomButton) {
+    BBLParent.loggedInParent()?.removeSensor(sensor)
+    sensor.disconnect()
+  }
   
   @IBAction func didTapBottomButton(sender: BBLModalBottomButton) {
     
@@ -73,6 +79,7 @@ class BBLEditSensorViewController: UIViewController {
     setupNotificationsForVC(self)
     setupGestureRecognizersForView(view)
     setupModalDismissButtonForNavItem(navigationItem)
+    setupAppearanceForDeleteButton(deleteButton)
     
     updateAllFields()
   }
@@ -115,6 +122,11 @@ class BBLEditSensorViewController: UIViewController {
                                                  style: .Plain,
                                                  target: self,
                                                  action: #selector(BBLMenuViewController.didTapDismissButton(_:)))
+  }
+  
+  private func setupAppearanceForDeleteButton(button: UIButton) {
+    button.backgroundColor = UIColor.redColor()
+    button.tintColor = UIColor.whiteColor()
   }
   
   internal func didTapDismissButton(sender: UIBarButtonItem) {

@@ -80,6 +80,10 @@ class BBLSensorValueGaugeView: UIView {
   
   private func updateGaugeFillNormalized(filledValueNormalized: Double) {
     
+    if filledValueNormalized.isNaN {
+      return
+    }
+    
     let numberOfSubviewsToFill = filledValueNormalized * Double(stackView.arrangedSubviews.count)
     
     for (index, view) in stackView.arrangedSubviews.enumerate() {

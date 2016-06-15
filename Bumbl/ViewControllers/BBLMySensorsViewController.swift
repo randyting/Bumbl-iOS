@@ -212,6 +212,7 @@ extension BBLMySensorsViewController: BBLParentDelegate {
   }
   
   internal func parent(parent: BBLParent, didRemoveSensor sensor: BBLSensor) {
+    navigationController?.popToRootViewControllerAnimated(true)
     updateTableView()
   }
   

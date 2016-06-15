@@ -10,6 +10,7 @@
                 <outlet property="avatarTitleLabelTopConstraint" destination="x4S-eR-AGe" id="koc-zt-1sm"/>
                 <outlet property="babyNameTextField" destination="HPC-H4-kyI" id="ReM-5D-gVv"/>
                 <outlet property="bottomButton" destination="Hvi-7B-vfj" id="Yn4-8A-ZMN"/>
+                <outlet property="deleteButton" destination="4uS-Uz-9Fo" id="6Ep-5q-yh0"/>
                 <outlet property="productSerialNumberTextField" destination="c2R-1e-Mi9" id="sQp-K3-dQB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -72,6 +73,17 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4uS-Uz-9Fo" customClass="BBLModalBottomButton" customModule="Bumbl" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="440" width="600" height="75"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="75" id="ii9-9y-Nhw"/>
+                    </constraints>
+                    <state key="normal" title="DELETE"/>
+                    <connections>
+                        <action selector="didTapBottomButton:" destination="-1" eventType="touchUpInside" id="4zy-wC-Gd7"/>
+                        <action selector="didTapDeleteButton:" destination="-1" eventType="touchUpInside" id="krX-1Z-Fr3"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -82,6 +94,7 @@
                 <constraint firstItem="V2k-yX-WpL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="GMr-f1-yQo"/>
                 <constraint firstItem="HPC-H4-kyI" firstAttribute="height" secondItem="c2R-1e-Mi9" secondAttribute="height" id="IDA-3U-Pfn"/>
                 <constraint firstItem="mQG-is-frP" firstAttribute="leading" secondItem="s3W-Pd-aPU" secondAttribute="leading" id="LrP-A2-ssp"/>
+                <constraint firstItem="4uS-Uz-9Fo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Mzc-6K-MS3"/>
                 <constraint firstItem="c2R-1e-Mi9" firstAttribute="trailing" secondItem="V2k-yX-WpL" secondAttribute="trailing" id="PZw-tA-Aat"/>
                 <constraint firstItem="mQG-is-frP" firstAttribute="top" secondItem="c2R-1e-Mi9" secondAttribute="bottom" constant="15" id="S7t-qO-Qtu"/>
                 <constraint firstItem="s3W-Pd-aPU" firstAttribute="leading" secondItem="V2k-yX-WpL" secondAttribute="leading" id="TA8-Td-bg8"/>
@@ -90,8 +103,10 @@
                 <constraint firstItem="HPC-H4-kyI" firstAttribute="top" secondItem="mQG-is-frP" secondAttribute="bottom" constant="15" id="aON-B1-GNK"/>
                 <constraint firstItem="c2R-1e-Mi9" firstAttribute="leading" secondItem="s3W-Pd-aPU" secondAttribute="leading" id="b2s-El-LRK"/>
                 <constraint firstItem="HPC-H4-kyI" firstAttribute="trailing" secondItem="V2k-yX-WpL" secondAttribute="trailing" id="eGm-cy-76p"/>
+                <constraint firstItem="Hvi-7B-vfj" firstAttribute="top" secondItem="4uS-Uz-9Fo" secondAttribute="bottom" constant="10" id="g3d-PJ-Yih"/>
                 <constraint firstAttribute="trailing" secondItem="V2k-yX-WpL" secondAttribute="trailing" constant="30" id="gDH-SG-OhC"/>
                 <constraint firstItem="HPC-H4-kyI" firstAttribute="width" secondItem="c2R-1e-Mi9" secondAttribute="width" id="lEd-Ze-vuE"/>
+                <constraint firstAttribute="trailing" secondItem="4uS-Uz-9Fo" secondAttribute="trailing" id="qSi-cF-fR6"/>
                 <constraint firstItem="sjO-iR-Ow8" firstAttribute="leading" secondItem="V2k-yX-WpL" secondAttribute="leading" id="rX1-41-Jhw"/>
                 <constraint firstAttribute="bottom" secondItem="Hvi-7B-vfj" secondAttribute="bottom" id="sM6-RL-ae9"/>
                 <constraint firstItem="V2k-yX-WpL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="x4S-eR-AGe"/>
