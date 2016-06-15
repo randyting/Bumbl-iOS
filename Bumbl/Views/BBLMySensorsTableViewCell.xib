@@ -92,6 +92,8 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="assignTitleLabel" destination="INf-GB-zEc" id="Jzn-N5-bdy"/>
+                <outlet property="avatarBackgroundView" destination="Eud-fJ-Eoi" id="8Ss-aA-f7X"/>
+                <outlet property="avatarImageView" destination="D2a-Ue-gTK" id="Xp4-6Q-FMx"/>
                 <outlet property="babyNameLabel" destination="2P3-7p-Tsy" id="4nF-4j-Ve0"/>
                 <outlet property="connectedParentLabel" destination="tXn-11-MqU" id="Bi6-5N-IUF"/>
                 <outlet property="sensorValueGaugeView" destination="ElT-Mc-jZc" id="AUX-nY-nZ5"/>
