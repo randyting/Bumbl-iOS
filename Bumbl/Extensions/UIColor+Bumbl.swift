@@ -61,17 +61,25 @@ extension UIColor {
   internal class func BBLAvatarGreenColor() -> UIColor {
     return UIColor.BBLColorfromHexString("#77B84A")
   }
+  
   internal class func BBLAvatarYellowColor() -> UIColor {
     return UIColor.BBLColorfromHexString("#FEE700")
   }
+  
   internal class func BBLAvatarPurpleColor() -> UIColor {
     return UIColor.BBLColorfromHexString("#4F57C9")
   }
+  
   internal class func BBLAvatarPinkColor() -> UIColor {
     return UIColor.BBLColorfromHexString("#F45297")
   }
+  
   internal class func BBLAvatarBlueColor() -> UIColor {
     return UIColor.BBLColorfromHexString("#6FC0DD")
+  }
+  
+  internal class func BBLAvatarOrangeColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#C77229")
   }
   
   private class func BBLColorfromHexString(hexString: String) -> UIColor {

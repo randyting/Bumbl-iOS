@@ -15,7 +15,7 @@ internal struct BBLAvatarsInfo {
   
   enum BBLAvatarType: Int {
     
-    case Rabbit, Pig, Cat, Chick, Dog, Count
+    case Rabbit, Pig, Cat, Chick, Dog, Monkey, Count
     
     internal func color() -> UIColor {
       switch self {
@@ -29,6 +29,8 @@ internal struct BBLAvatarsInfo {
         return UIColor.BBLAvatarPurpleColor()
       case .Dog:
         return UIColor.BBLAvatarPinkColor()
+      case .Monkey:
+        return UIColor.BBLAvatarOrangeColor()
       default:
         fatalError("Unexpected BBLAvatarType index.")
       }
@@ -46,6 +48,8 @@ internal struct BBLAvatarsInfo {
         return "Chick"
       case .Dog:
         return "Dog"
+      case .Monkey:
+        return "Monkey"
       default:
         fatalError("Unexpected BBLAvatarType index.")
       }
@@ -64,6 +68,8 @@ internal struct BBLAvatarsInfo {
         return UIImage(named: "BBLChickAvatar")!
       case .Dog:
         return UIImage(named: "BBLDogAvatar")!
+      case .Monkey:
+        return UIImage(named: "BBLMonkeyAvatar")!
       default:
         fatalError("Unexpected BBLAvatarType index.")
       }
