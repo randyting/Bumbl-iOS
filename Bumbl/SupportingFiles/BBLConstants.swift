@@ -74,6 +74,14 @@ internal struct BBLAvatarsInfo {
         fatalError("Unexpected BBLAvatarType index.")
       }
     }
+    
+    internal func isEqual(rhs: BBLAvatarType) -> Bool {
+      if self.rawValue == rhs.rawValue {
+        return true
+      } else {
+        return false
+      }
+    }
   }
   
 }

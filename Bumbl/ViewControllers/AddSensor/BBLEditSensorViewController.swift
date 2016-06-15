@@ -27,6 +27,10 @@ class BBLEditSensorViewController: UIViewController {
   internal var sensor: BBLSensor!
   internal weak var delegate: BBLEditSensorViewControllerDelegate?
   
+  // MARK: Private Variables
+  
+  private var selectedAvatar: BBLAvatarsInfo.BBLAvatarType?
+  
   // MARK: Interface Builder
   
   @IBOutlet weak var avatarTitleLabelTopConstraint: NSLayoutConstraint!
@@ -39,6 +43,10 @@ class BBLEditSensorViewController: UIViewController {
   @IBAction func didTapBottomButton(sender: BBLModalBottomButton) {
     
     sensor.name = babyNameTextField.text
+    
+    if let selectedAvatar = selectedAvatar {
+      sensor.avatar = selectedAvatar.rawValue
+    }
     
     sensor.saveInBackgroundWithBlock { (success: Bool, error: NSError?) in
       if let error = error {
@@ -76,6 +84,9 @@ class BBLEditSensorViewController: UIViewController {
                                  forCellWithReuseIdentifier: BBLEditSensorViewControllerConstants.kAvatarCVCReuseIdentifier)
     collectionView.delegate = self
     collectionView.dataSource = self
+    collectionView.backgroundColor = UIColor.clearColor()
+    collectionView.allowsSelection = true
+    collectionView.allowsMultipleSelection = false
   }
   
   private func setupAppearanceForTextField(textField: UITextField) {
@@ -95,6 +106,7 @@ class BBLEditSensorViewController: UIViewController {
   
   private func setupGestureRecognizersForView(view: UIView) {
     let tapGR = UITapGestureRecognizer.init(target: self, action: #selector(BBLLoginViewController.didTapView(_:)))
+    tapGR.delegate = self
     view.addGestureRecognizer(tapGR)
   }
   
@@ -152,7 +164,39 @@ class BBLEditSensorViewController: UIViewController {
 extension BBLEditSensorViewController: UICollectionViewDelegate {
   
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    //
+    
+    if let selectedAvatar = selectedAvatar,
+      let rhs = BBLAvatarsInfo.BBLAvatarType(rawValue:indexPath.row)
+      where selectedAvatar.isEqual(rhs) {
+      
+      collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+      collectionView.delegate?.collectionView!(collectionView, didDeselectItemAtIndexPath: indexPath)
+      return
+
+    } else if let selectedAvatar = selectedAvatar,
+      let rhs = BBLAvatarsInfo.BBLAvatarType(rawValue:indexPath.row)
+      where !selectedAvatar.isEqual(rhs){
+      
+      let lastIndexPath = NSIndexPath(forRow: selectedAvatar.rawValue, inSection: 0)
+      
+      collectionView.deselectItemAtIndexPath(lastIndexPath, animated: true)
+      collectionView.delegate?.collectionView!(collectionView, didDeselectItemAtIndexPath: lastIndexPath)
+      
+      self.selectedAvatar = BBLAvatarsInfo.BBLAvatarType(rawValue: indexPath.row)
+      collectionView.cellForItemAtIndexPath(indexPath)?.contentView.backgroundColor = UIColor.blackColor()
+      return
+    }
+    
+    
+    selectedAvatar = BBLAvatarsInfo.BBLAvatarType(rawValue: indexPath.row)
+    collectionView.cellForItemAtIndexPath(indexPath)?.contentView.backgroundColor = UIColor.blackColor()
+  }
+  
+  func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+    
+    selectedAvatar = nil
+    collectionView.cellForItemAtIndexPath(indexPath)?.contentView.backgroundColor = UIColor.clearColor()
+  
   }
   
 }
@@ -166,11 +210,28 @@ extension BBLEditSensorViewController: UICollectionViewDataSource {
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(BBLEditSensorViewControllerConstants.kAvatarCVCReuseIdentifier, forIndexPath: indexPath)
+    cell.userInteractionEnabled = true
     
-    cell.backgroundColor = UIColor.blackColor()
+    cell.backgroundView = UIImageView(image: BBLAvatarsInfo.BBLAvatarType(rawValue: indexPath.row)?.image())
+    
+    cell.contentView.layer.cornerRadius = cell.contentView.frame.height/2.0
+    cell.contentView.alpha = 0.3
     
     return cell
   }
   
+}
+
+extension BBLEditSensorViewController: UIGestureRecognizerDelegate {
+  
+  func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+    
+    if let touchView = touch.view where touchView.isDescendantOfView(avatarCollectionView) {
+      return false
+    } else {
+      return true
+    }
+    
+  }
   
 }

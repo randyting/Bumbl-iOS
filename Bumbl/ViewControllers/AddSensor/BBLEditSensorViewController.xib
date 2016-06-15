@@ -6,7 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BBLEditSensorViewController" customModule="Bumbl" customModuleProvider="target">
             <connections>
-                <outlet property="avatarCollectionView" destination="HcC-An-Yns" id="Pj5-OL-dJL"/>
+                <outlet property="avatarCollectionView" destination="sjO-iR-Ow8" id="q31-vA-cla"/>
                 <outlet property="avatarTitleLabelTopConstraint" destination="x4S-eR-AGe" id="koc-zt-1sm"/>
                 <outlet property="babyNameTextField" destination="HPC-H4-kyI" id="ReM-5D-gVv"/>
                 <outlet property="bottomButton" destination="Hvi-7B-vfj" id="Yn4-8A-ZMN"/>
@@ -50,19 +50,6 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="HcC-An-Yns">
-                    <rect key="frame" x="30" y="49" width="540" height="60"/>
-                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="60" id="tnt-KB-Gia"/>
-                    </constraints>
-                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kEi-bH-NQp">
-                        <size key="itemSize" width="50" height="50"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hvi-7B-vfj" customClass="BBLModalBottomButton" customModule="Bumbl" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="525" width="600" height="75"/>
                     <constraints>
@@ -73,27 +60,40 @@
                         <action selector="didTapBottomButton:" destination="-1" eventType="touchUpInside" id="hPI-9q-9Ga"/>
                     </connections>
                 </button>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="sjO-iR-Ow8">
+                    <rect key="frame" x="30" y="49" width="540" height="60"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="Aw9-rZ-jhR"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="snQ-Pq-2Fz">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="HcC-An-Yns" firstAttribute="leading" secondItem="V2k-yX-WpL" secondAttribute="leading" id="0pE-sj-OEW"/>
+                <constraint firstItem="s3W-Pd-aPU" firstAttribute="top" secondItem="sjO-iR-Ow8" secondAttribute="bottom" constant="15" id="7lV-f1-Qmh"/>
+                <constraint firstItem="sjO-iR-Ow8" firstAttribute="top" secondItem="V2k-yX-WpL" secondAttribute="bottom" constant="15" id="7r1-zB-YFr"/>
                 <constraint firstAttribute="trailing" secondItem="Hvi-7B-vfj" secondAttribute="trailing" id="82n-QN-7GJ"/>
+                <constraint firstItem="sjO-iR-Ow8" firstAttribute="trailing" secondItem="V2k-yX-WpL" secondAttribute="trailing" id="G0q-Wu-VDD"/>
                 <constraint firstItem="V2k-yX-WpL" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="GMr-f1-yQo"/>
-                <constraint firstItem="HcC-An-Yns" firstAttribute="top" secondItem="V2k-yX-WpL" secondAttribute="bottom" constant="15" id="Hz5-Iz-T5r"/>
                 <constraint firstItem="HPC-H4-kyI" firstAttribute="height" secondItem="c2R-1e-Mi9" secondAttribute="height" id="IDA-3U-Pfn"/>
                 <constraint firstItem="mQG-is-frP" firstAttribute="leading" secondItem="s3W-Pd-aPU" secondAttribute="leading" id="LrP-A2-ssp"/>
+                <constraint firstItem="c2R-1e-Mi9" firstAttribute="trailing" secondItem="V2k-yX-WpL" secondAttribute="trailing" id="PZw-tA-Aat"/>
                 <constraint firstItem="mQG-is-frP" firstAttribute="top" secondItem="c2R-1e-Mi9" secondAttribute="bottom" constant="15" id="S7t-qO-Qtu"/>
                 <constraint firstItem="s3W-Pd-aPU" firstAttribute="leading" secondItem="V2k-yX-WpL" secondAttribute="leading" id="TA8-Td-bg8"/>
                 <constraint firstItem="c2R-1e-Mi9" firstAttribute="top" secondItem="s3W-Pd-aPU" secondAttribute="bottom" constant="15" id="Vbd-ij-W17"/>
                 <constraint firstItem="HPC-H4-kyI" firstAttribute="leading" secondItem="mQG-is-frP" secondAttribute="leading" id="aBN-TC-8lv"/>
                 <constraint firstItem="HPC-H4-kyI" firstAttribute="top" secondItem="mQG-is-frP" secondAttribute="bottom" constant="15" id="aON-B1-GNK"/>
                 <constraint firstItem="c2R-1e-Mi9" firstAttribute="leading" secondItem="s3W-Pd-aPU" secondAttribute="leading" id="b2s-El-LRK"/>
+                <constraint firstItem="HPC-H4-kyI" firstAttribute="trailing" secondItem="V2k-yX-WpL" secondAttribute="trailing" id="eGm-cy-76p"/>
                 <constraint firstAttribute="trailing" secondItem="V2k-yX-WpL" secondAttribute="trailing" constant="30" id="gDH-SG-OhC"/>
-                <constraint firstItem="HcC-An-Yns" firstAttribute="trailing" secondItem="V2k-yX-WpL" secondAttribute="trailing" id="iXn-NP-XyY"/>
                 <constraint firstItem="HPC-H4-kyI" firstAttribute="width" secondItem="c2R-1e-Mi9" secondAttribute="width" id="lEd-Ze-vuE"/>
-                <constraint firstItem="s3W-Pd-aPU" firstAttribute="top" secondItem="HcC-An-Yns" secondAttribute="bottom" constant="15" id="sCh-u1-Rfp"/>
+                <constraint firstItem="sjO-iR-Ow8" firstAttribute="leading" secondItem="V2k-yX-WpL" secondAttribute="leading" id="rX1-41-Jhw"/>
                 <constraint firstAttribute="bottom" secondItem="Hvi-7B-vfj" secondAttribute="bottom" id="sM6-RL-ae9"/>
-                <constraint firstItem="c2R-1e-Mi9" firstAttribute="trailing" secondItem="HcC-An-Yns" secondAttribute="trailing" id="uA8-ws-OL4"/>
                 <constraint firstItem="V2k-yX-WpL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="x4S-eR-AGe"/>
                 <constraint firstItem="Hvi-7B-vfj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xt5-fh-FgJ"/>
             </constraints>
