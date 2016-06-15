@@ -10,7 +10,7 @@ import UIKit
 
 @objc
 protocol BBLMenuViewControllerDelegate: class {
-  optional func menuViewController(menuViewController: BBLMenuViewController, didDismiss: Bool)
+  optional func BBLmenuViewController(menuViewController: BBLMenuViewController, didDismiss: Bool)
 }
 
 class BBLMenuViewController: UIViewController {
@@ -47,7 +47,7 @@ class BBLMenuViewController: UIViewController {
   }
   
   @objc internal func didTapDismissButton(sender: UIBarButtonItem) {
-    delegate?.menuViewController?(self, didDismiss: true)
+    delegate?.BBLmenuViewController?(self, didDismiss: true)
   }
   
   private func setupNavigationBar(navBar: UINavigationBar?) {
