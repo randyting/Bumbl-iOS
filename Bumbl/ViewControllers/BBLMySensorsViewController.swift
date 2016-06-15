@@ -34,6 +34,7 @@ class BBLMySensorsViewController: UIViewController {
   // MARK: Public Variables
   
   internal weak var loggedInParent: BBLParent!
+  internal var sensorManager: BBLSensorManager!
   
   // MARK: Private Variables
   
@@ -42,6 +43,17 @@ class BBLMySensorsViewController: UIViewController {
   // MARK: Interface Builder
   
   @IBOutlet weak var mySensorsTableView: UITableView!
+  
+  @IBAction func didTapAddSensorButton(sender: UIButton) {
+    
+    let connectionVC = BBLConnectionViewController()
+    connectionVC.sensorManager = sensorManager
+    connectionVC.delegate = self
+    
+    let navController = UINavigationController(rootViewController: connectionVC)
+    presentViewController(navController, animated: true, completion: nil)
+    
+  }
   
   // MARK: Lifecycle
   
@@ -242,4 +254,18 @@ extension BBLMySensorsViewController: BBLSensorDelegate {
     updateTableView()
   }
   
+}
+
+// MARK: BBLConnectionViewControllerDelegate
+
+extension BBLMySensorsViewController: BBLConnectionViewControllerDelegate {
+  
+  func connectionViewController(connectionVC: BBLConnectionViewController, didTapBackButton backButton: UIButton) {
+    dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+  func connectionViewController(connectionVC: BBLConnectionViewController, didFinishAddingSensor success: Bool) {
+    dismissViewControllerAnimated(true, completion: nil)
+  }
+
 }

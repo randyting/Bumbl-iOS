@@ -85,6 +85,11 @@ class BBLLoginViewController: UIViewController {
     setupGestureRecognizersForView(view)
   }
   
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
+  
+  
   // MARK: Initial Setup
   
   private func setupAppearance() {

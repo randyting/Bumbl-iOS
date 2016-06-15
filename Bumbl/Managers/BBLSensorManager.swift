@@ -60,7 +60,7 @@ class BBLSensorManager: NSObject {
   }
   
   internal func unregisterDelegate(delegate: BBLSensorManagerDelegate) {
-    delegates.addObject(delegate)
+    delegates.removeObject(delegate)
   }
   
   private func callDelegates(callback: (delegate: BBLSensorManagerDelegate) -> ()) {
