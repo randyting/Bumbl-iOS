@@ -330,11 +330,11 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
       
     case (.Activated, .Disconnected):
       afterDisconnection()
-      decideIfUserShouldBeAlerted()
+      alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
       
     case (.WaitingToBeDeactivated, .Disconnected):
       afterDisconnection()
-      decideIfUserShouldBeAlerted()
+      alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
       
     case (_, .Disconnected):
       afterDisconnection()
@@ -356,39 +356,6 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
       }
     }
   }
-  
-  private func decideIfUserShouldBeAlerted() {
-    self.backgroundUpdateTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({
-      self.endBackgroundUpdateTask()
-    })
-    
-    NSTimer.scheduledTimerWithTimeInterval(BBLSensorInfo.kDefaultCheckOtherParentConnectDelayInSeconds, target: self, selector:#selector(BBLSensor.checkIfOtherParentConnected), userInfo: nil, repeats: false)
-  }
-  
-  private func endBackgroundUpdateTask() {
-    UIApplication.sharedApplication().endBackgroundTask(self.backgroundUpdateTask)
-    self.backgroundUpdateTask = UIBackgroundTaskInvalid
-  }
-  
-  internal func checkIfOtherParentConnected() {
-    
-    self.fetchInBackgroundWithBlock { (sensor: PFObject?, error: NSError?) in
-      
-      if let error = error {
-        print(error.localizedDescription)
-      } else {
-        
-        if let connectedParent = self.connectedParent where connectedParent != BBLParent.loggedInParent() {
-          self.alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatWithOtherParentAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatWithOtherParentAlertTitle)
-        } else {
-          self.alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
-        }
-
-      }
-      
-    }
-  }
-  
 }
 
 // MARK: Timer
