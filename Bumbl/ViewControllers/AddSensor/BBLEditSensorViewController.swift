@@ -84,6 +84,10 @@ class BBLEditSensorViewController: UIViewController {
     updateAllFields()
   }
   
+  deinit {
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
+  
   // MARK: Setup
   
   private func setupCollectionView(collectionView: UICollectionView) {
