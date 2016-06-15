@@ -9,6 +9,69 @@
 import Foundation
 import CoreBluetooth
 
+// MARK: Avatars
+
+internal struct BBLAvatarsInfo {
+  
+  enum BBLAvatarType: Int {
+    
+    case Rabbit, Pig, Cat, Chick, Dog, Count
+    
+    internal func color() -> UIColor {
+      switch self {
+      case .Rabbit:
+        return UIColor.BBLAvatarBlueColor()
+      case .Pig:
+        return UIColor.BBLAvatarGreenColor()
+      case .Cat:
+        return UIColor.BBLAvatarYellowColor()
+      case .Chick:
+        return UIColor.BBLAvatarPurpleColor()
+      case .Dog:
+        return UIColor.BBLAvatarPinkColor()
+      default:
+        fatalError("Unexpected BBLAvatarType index.")
+      }
+    }
+    
+    internal func stringName() -> String {
+      switch self {
+      case .Rabbit:
+        return "Rabbit"
+      case .Pig:
+        return "Pig"
+      case .Cat:
+        return "Cat"
+      case .Chick:
+        return "Chick"
+      case .Dog:
+        return "Dog"
+      default:
+        fatalError("Unexpected BBLAvatarType index.")
+      }
+    }
+    
+    
+    internal func image() -> UIImage {
+      switch self {
+      case .Rabbit:
+        return UIImage(named: "BBLRabbitAvatar")!
+      case .Pig:
+        return UIImage(named: "BBLPigAvatar")!
+      case .Cat:
+        return UIImage(named: "BBLCatAvatar")!
+      case .Chick:
+        return UIImage(named: "BBLChickAvatar")!
+      case .Dog:
+        return UIImage(named: "BBLDogAvatar")!
+      default:
+        fatalError("Unexpected BBLAvatarType index.")
+      }
+    }
+  }
+  
+}
+
 
 // MARK: Navigation Bar
 

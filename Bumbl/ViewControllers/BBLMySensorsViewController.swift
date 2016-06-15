@@ -54,6 +54,10 @@ class BBLMySensorsViewController: UIViewController {
 
   }
   
+  override func viewDidAppear(animated: Bool) {
+    mySensorsTableView.reloadData()
+  }
+  
   // MARK: Setup
   
   private func setupParent(parent: BBLParent) {
@@ -78,8 +82,8 @@ class BBLMySensorsViewController: UIViewController {
   
   private func setupNavigationItem(navItem: UINavigationItem) {
     
-    setupHamburgerMenuForNavItem(navItem)
-    setupBlueNavigationBar(navigationController?.navigationBar)
+    BBLsetupHamburgerMenuForNavItem(navItem)
+    BBLsetupBlueNavigationBar(navigationController?.navigationBar)
   }
   
   private func updateTableView() {

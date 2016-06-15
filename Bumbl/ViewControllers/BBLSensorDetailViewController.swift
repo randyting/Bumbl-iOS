@@ -122,7 +122,12 @@ class BBLSensorDetailViewController: UIViewController {
   // Navigation
   
   internal func didTapEditButton(sender: UIBarButtonItem) {
-    // TODO: Push edit sensor VC on nav controller.
+    let editSensorVC = BBLEditSensorViewController()
+    editSensorVC.delegate = self
+    editSensorVC.sensor = sensor
+    
+    let navController = UINavigationController(rootViewController: editSensorVC)
+    presentViewController(navController, animated: true, completion: nil)
   }
   
   // MARK: Update
@@ -134,6 +139,21 @@ class BBLSensorDetailViewController: UIViewController {
     babyNameLabel.text = sensor.name
     statusLabel.text = sensor.stateAsString
     connectedParentLabel.text = sensor.connectedParent?.username
+    
+    title = sensor.name
+  }
+  
+}
+
+extension BBLSensorDetailViewController: BBLEditSensorViewControllerDelegate {
+  
+  func BBLEditSensorVC(vc: BBLEditSensorViewController, didTapBottomButton bottomButton: BBLModalBottomButton) {
+    dismissViewControllerAnimated(true, completion: nil)
+    updateAllInformation()
+  }
+  
+  func BBLEditSensorVC(vc: BBLEditSensorViewController, didTapCancelButton bottomButton: UIBarButtonItem) {
+    dismissViewControllerAnimated(true, completion: nil)
   }
   
 }
