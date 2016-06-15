@@ -115,6 +115,12 @@ internal struct BBLViewControllerInfo {
     static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLMySensorsViewController.kHomeTabBarIconName)
   }
   
+  struct BBLEmergencyContactsViewController {
+    static let title = "Emergency Contacts"
+    private static let kEmergencyContactsTabBarIconName = "BBLEmergencyContactsTabBarIcon"
+    static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLEmergencyContactsViewController.kEmergencyContactsTabBarIconName)
+  }
+  
 }
 
 // MARK: App State
