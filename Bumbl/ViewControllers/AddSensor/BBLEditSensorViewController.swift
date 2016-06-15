@@ -99,12 +99,13 @@ class BBLEditSensorViewController: UIViewController {
   }
   
   private func setupModalDismissButtonForNavItem(navItem: UINavigationItem) {
-    navItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel,
+    navItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: BBLNavigationBarInfo.kDismissButtonIconName),
+                                                 style: .Plain,
                                                  target: self,
-                                                 action: #selector(BBLEditSensorViewController.didTapCancelIcon(_:)))
+                                                 action: #selector(BBLMenuViewController.didTapDismissButton(_:)))
   }
   
-  internal func didTapCancelIcon(sender: UIBarButtonItem) {
+  internal func didTapDismissButton(sender: UIBarButtonItem) {
     delegate?.BBLEditSensorVC(self, didTapCancelButton: sender)
   }
   
