@@ -187,11 +187,10 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
       sensorsViewController.loggedInParent = session.parent
       sensorsViewController.sensorManager = session.sensorManager
       
-      let connectionViewController = BBLDebugConnectionViewController()
-      connectionViewController.sensorManager = session.sensorManager
+      let emergencyContactsVC = BBLEmergencyContactsViewController()
       
       let tabBarViewControllers = [sensorsViewController,
-        connectionViewController]
+        emergencyContactsVC]
       var navigationControllers = [UINavigationController]()
       
       for vc in tabBarViewControllers {
@@ -199,7 +198,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
       }
       
       sensorsViewController.BBLsetupIcon(BBLViewControllerInfo.BBLMySensorsViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLMySensorsViewController.title)
-      connectionViewController.BBLsetupIcon(BBLViewControllerInfo.BBLDebugConnectionViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLDebugConnectionViewController.title)
+      emergencyContactsVC.BBLsetupIcon(BBLViewControllerInfo.BBLEmergencyContactsViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLEmergencyContactsViewController.title)
       
       mainTabBarController.viewControllers = navigationControllers
       return mainTabBarController
