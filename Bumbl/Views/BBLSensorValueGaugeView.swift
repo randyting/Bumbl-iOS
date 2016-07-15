@@ -88,7 +88,7 @@ class BBLSensorValueGaugeView: UIView {
     
     for (index, view) in stackView.arrangedSubviews.enumerate() {
       if index < Int(numberOfSubviewsToFill) {
-        view.backgroundColor = UIColor.BBLDarkGrayColor()
+        view.backgroundColor = UIColor.BBLDarkBlueColor()
       } else {
         view.backgroundColor = UIColor.whiteColor()
       }

@@ -110,13 +110,13 @@ internal struct BBLViewControllerInfo {
   }
   
   struct BBLMySensorsViewController {
-    static let title = "My Sensors"
+    static let title = "DASHBOARD"
     private static let kHomeTabBarIconName = "BBLHomeTabBarIcon"
     static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLMySensorsViewController.kHomeTabBarIconName)
   }
   
   struct BBLEmergencyContactsViewController {
-    static let title = "Emergency Contacts"
+    static let title = "CONTACTS"
     private static let kEmergencyContactsTabBarIconName = "BBLEmergencyContactsTabBarIcon"
     static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLEmergencyContactsViewController.kEmergencyContactsTabBarIconName)
   }

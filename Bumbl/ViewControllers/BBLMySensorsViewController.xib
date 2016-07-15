@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BBLMySensorsViewController" customModule="Bumbl" customModuleProvider="target">
@@ -19,10 +20,13 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jA-bg-Fmv">
-                    <rect key="frame" x="490" y="470" width="80" height="30"/>
-                    <color key="backgroundColor" red="1" green="0.31801541719999998" blue="0.41633616740000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <state key="normal" title="Add Sensor">
+                <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jA-bg-Fmv">
+                    <rect key="frame" x="540" y="493" width="30" height="27"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="4jA-bg-Fmv" secondAttribute="height" multiplier="19:17" id="ZB3-gz-TPa"/>
+                        <constraint firstAttribute="width" constant="30" id="c1W-MZ-WQa"/>
+                    </constraints>
+                    <state key="normal" image="BBLPlusSymbol">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>
@@ -33,12 +37,15 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="hmA-wd-h9Y" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="1hb-YQ-12b"/>
+                <constraint firstAttribute="bottom" secondItem="4jA-bg-Fmv" secondAttribute="bottom" constant="80" id="6GB-sK-O5T"/>
                 <constraint firstItem="hmA-wd-h9Y" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Rao-Qh-b8j"/>
+                <constraint firstAttribute="bottom" secondItem="hmA-wd-h9Y" secondAttribute="bottom" id="WlX-D6-xPJ"/>
                 <constraint firstAttribute="trailing" secondItem="hmA-wd-h9Y" secondAttribute="trailing" id="aT0-Vz-jic"/>
-                <constraint firstAttribute="bottom" secondItem="4jA-bg-Fmv" secondAttribute="bottom" constant="100" id="ppB-Zq-DqM"/>
                 <constraint firstAttribute="trailing" secondItem="4jA-bg-Fmv" secondAttribute="trailing" constant="30" id="px4-Lm-513"/>
-                <constraint firstAttribute="bottom" secondItem="hmA-wd-h9Y" secondAttribute="bottom" id="tvn-76-fga"/>
             </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="BBLPlusSymbol" width="57" height="51"/>
+    </resources>
 </document>

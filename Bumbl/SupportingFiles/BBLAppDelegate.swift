@@ -207,7 +207,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     private func setupAppearanceForTabBar(tabBar: UITabBar) {
       tabBar.barTintColor = UIColor.whiteColor()
       tabBar.addTopBorder(withColor: UIColor.BBLDarkGrayColor(), withThickness: 0.5)
-      tabBar.tintColor = UIColor.BBLDarkGrayColor()
+      tabBar.tintColor = UIColor.BBLTabBarSelectedIconColor()
     }
     
 }

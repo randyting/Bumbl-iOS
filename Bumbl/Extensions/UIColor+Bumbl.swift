@@ -59,28 +59,33 @@ extension UIColor {
   }
   
   internal class func BBLAvatarGreenColor() -> UIColor {
-    return UIColor.BBLColorfromHexString("#77B84A")
+    return UIColor.BBLColorfromHexString("#BBD7A8")
   }
   
   internal class func BBLAvatarYellowColor() -> UIColor {
-    return UIColor.BBLColorfromHexString("#FEE700")
+    return UIColor.BBLColorfromHexString("#FDEE5B")
   }
   
   internal class func BBLAvatarPurpleColor() -> UIColor {
-    return UIColor.BBLColorfromHexString("#4F57C9")
+    return UIColor.BBLColorfromHexString("#868AC3")
   }
   
   internal class func BBLAvatarPinkColor() -> UIColor {
-    return UIColor.BBLColorfromHexString("#F45297")
+    return UIColor.BBLColorfromHexString("#F39DC1")
   }
   
   internal class func BBLAvatarBlueColor() -> UIColor {
-    return UIColor.BBLColorfromHexString("#6FC0DD")
+    return UIColor.BBLColorfromHexString("#D5E7ED")
   }
   
   internal class func BBLAvatarOrangeColor() -> UIColor {
-    return UIColor.BBLColorfromHexString("#C77229")
+    return UIColor.BBLColorfromHexString("#FAAF3F")
   }
+  
+  internal class func BBLTabBarSelectedIconColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#6189AD")
+  }
+  
   
   private class func BBLColorfromHexString(hexString: String) -> UIColor {
     var rgbValue: UInt32 = 0
