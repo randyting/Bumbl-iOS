@@ -82,6 +82,11 @@ extension UIColor {
     return UIColor.BBLColorfromHexString("#FAAF3F")
   }
   
+  internal class func BBLTabBarSelectedIconColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#6189AD")
+  }
+  
+  
   private class func BBLColorfromHexString(hexString: String) -> UIColor {
     var rgbValue: UInt32 = 0
     let scanner = NSScanner(string: hexString)
