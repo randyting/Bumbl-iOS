@@ -92,7 +92,7 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   // MARK: Initial Setup
   
   private func setupAppearanceForTitleLabel(titleLabel: UILabel) {
-    titleLabel.textColor = UIColor.BBLBrightTealGreenColor()
+    titleLabel.textColor = UIColor.whiteColor()
   }
   
   private func setupAppearanceForTextLabel(textLabel: UILabel) {
