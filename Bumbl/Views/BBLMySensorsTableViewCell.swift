@@ -24,6 +24,8 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   private struct BBLMySensorsTableViewCellConstants {
     private static let defaultMaxCapsenseValue = 100
     private static let defaultCapsenseValue = 0
+    
+    private static let kNoConnectedParentName = "Nobody"
   }
   
   // MARK: Public Variables
@@ -49,6 +51,8 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   
   // MARK: Interface Builder
   
+  @IBOutlet weak var sensorStatusBackgroundView: UIView!
+  @IBOutlet weak var batteryLevelBackgroundView: UIView!
   @IBOutlet weak var avatarBackgroundView: UIView!
   @IBOutlet weak var avatarImageView: UIImageView!
   @IBOutlet weak var babyNameLabel: UILabel!
@@ -110,7 +114,11 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   internal func updateValuesWithSensor(sensor: BBLSensor) {
     babyNameLabel.text = sensor.name
     
-    connectedParentLabel.text = sensor.connectedParent?.username
+    if let connectedParentName = sensor.connectedParent?.username {
+      connectedParentLabel.text = connectedParentName
+    } else {
+      connectedParentLabel.text = BBLMySensorsTableViewCellConstants.kNoConnectedParentName
+    }
     
     statusLabel.text = sensor.stateAsString
     
@@ -124,10 +132,49 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     }
     
     avatarImageView.image = BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)?.image()
-    avatarBackgroundView.backgroundColor = BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)?.color()
     
-    sensorValueGaugeView.setGaugeBackgroundColor(BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)!.color())
+    updateBackgroundViews(withColor: (BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)?.color())!)
+    
   }
+  
+  private func updateBackgroundViews(withColor color: UIColor) {
+    
+    var avatarColorHue = CGFloat()
+    var avatarColorSaturation = CGFloat()
+    var avatarColorBrightness = CGFloat()
+    var avatarColorAlpha = CGFloat()
+    
+    color.getHue(&avatarColorHue,
+                saturation: &avatarColorSaturation,
+                brightness: &avatarColorBrightness,
+                alpha: &avatarColorAlpha)
+    
+    avatarBackgroundView.backgroundColor = UIColor(hue: avatarColorHue,
+                                                   saturation: avatarColorSaturation,
+                                                   brightness: avatarColorBrightness,
+                                                   alpha: avatarColorAlpha)
+    
+    sensorStatusBackgroundView.backgroundColor = UIColor(hue: avatarColorHue,
+                                                         saturation: avatarColorSaturation * 3.0,
+                                                         brightness: avatarColorBrightness,
+                                                         alpha: avatarColorAlpha)
+    
+    batteryLevelBackgroundView.backgroundColor = UIColor(hue: avatarColorHue,
+                                                         saturation: avatarColorSaturation * 5.0,
+                                                         brightness: avatarColorBrightness,
+                                                         alpha: avatarColorAlpha)
+    
+    sensorValueGaugeView.setGaugeBackgroundColor(UIColor(hue: avatarColorHue,
+      saturation: avatarColorSaturation * 8.0,
+      brightness: avatarColorBrightness,
+      alpha: avatarColorAlpha))
+    
+    
+
+
+  }
+  
+  
   
 }
 
