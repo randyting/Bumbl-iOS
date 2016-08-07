@@ -9,8 +9,8 @@
 import UIKit
 
 @objc protocol BBLMySensorsTableViewCellDelegate: class {
-  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Int, andName name: String?)
-  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: Int)
+  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: UInt, andName name: String?)
+  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: UInt)
   optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool)
   optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeDelayValue value: Int)
   optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRebaselineButton: Bool)
@@ -22,7 +22,7 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   // MARK: Constants
   
   private struct BBLMySensorsTableViewCellConstants {
-    private static let defaultMaxCapsenseValue = 100
+    private static let defaultMaxCapsenseValue: UInt = 100
     private static let defaultCapsenseValue = 0
     
     private static let kNoConnectedParentName = "Nobody"
@@ -46,7 +46,7 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   
   // MARK: Private Variables
   
-  private var maxCapsenseValue: Int! = 0
+  private var maxCapsenseValue: UInt! = 0
   
   
   // MARK: Interface Builder
