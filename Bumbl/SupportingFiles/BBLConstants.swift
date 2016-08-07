@@ -144,7 +144,7 @@ internal struct BBLSensorInfo {
   static let kRebaselineValue = "rebaseline".dataUsingEncoding(NSUTF8StringEncoding)
   
   /// Cap sense threshold for determining if baby is on sensor or not.
-  static let kDefaultCapSenseThreshold = 50
+  static let kDefaultCapSenseThreshold: UInt = 50
   
   /// Default delay for transition between activated and deactivated states
   static let kDefaultDelayInSeconds = 3

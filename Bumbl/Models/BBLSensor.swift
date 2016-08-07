@@ -15,7 +15,7 @@ internal enum BBLSensorState {
 
 protocol BBLSensorDelegate: class {
   func sensor(sensor: BBLSensor, didUpdateRSSI rssi: NSNumber)
-  func sensor(sensor: BBLSensor, didUpdateSensorValue value: Int)
+  func sensor(sensor: BBLSensor, didUpdateSensorValue value: UInt)
   func sensor(sensor: BBLSensor, didDidFailToDeleteSensorWithErrorMessage errorMessage: String)
   func sensor(sensor: BBLSensor, didChangeState state: BBLSensorState)
 }
@@ -46,7 +46,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   // MARK: Public Variables
   @NSManaged internal var name: String?
   @NSManaged private(set) var uuid: String?
-  @NSManaged internal var capSenseThreshold:Int
+  @NSManaged internal var capSenseThreshold:UInt
   @NSManaged internal var delayInSeconds:Int
   @NSManaged private(set) var connectedParent:BBLParent?
   @NSManaged internal var avatar: Int
@@ -89,7 +89,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   @NSManaged private var parentsCount: Int
   private var countdownTimer:NSTimer!
-  private(set) var capSenseValue:Int?
+  private(set) var capSenseValue:UInt?
   private var rebaselineCharacteristic: CBCharacteristic?
   private var backgroundUpdateTask: UIBackgroundTaskIdentifier = 0
   
@@ -99,7 +99,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   internal convenience init(withPeripheral peripheral: CBPeripheral?,
                       withSensorManager sensorManager: BBLSensorManager!,
                                         withUUID uuid: String!,
-              withCapSenseThreshold capSenseThreshold: Int,
+              withCapSenseThreshold capSenseThreshold: UInt,
                     withDelayInSeconds delayInSeconds: Int,
                                 withDelegate delegate: BBLSensorDelegate?) {
     self.init()
@@ -123,7 +123,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     
     //TODO: Parse JSON and initialize values
     let uuidFromJSON = "someUniqueIdentifier"
-    let capSenseThreshFromJSON = 30
+    let capSenseThreshFromJSON: UInt = 30
     let delayInSecondsFromJSON = 3
     return BBLSensor.init(withPeripheral: peripheral,
                        withSensorManager: sensorManager,
@@ -157,9 +157,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     if parentsCount == 0 {
       deleteInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
         if let error = error {
-          if let delegate = self.delegate as? NSObject where delegate.respondsToSelector(Selector("sensor:didDidFailToDeleteSensorWithErrorMessage:")) {
-            (delegate as! BBLSensorDelegate).sensor(self, didDidFailToDeleteSensorWithErrorMessage: error.localizedDescription)
-          }
+          self.delegate?.sensor(self, didDidFailToDeleteSensorWithErrorMessage: error.localizedDescription)
         }
       })
     }
@@ -225,13 +223,11 @@ extension BBLSensor: CBPeripheralDelegate {
     let uuid = characteristic.UUID
     
     if uuid == BBLSensorInfo.kCapSenseValueCharacteristicUUID {
-      var value = 0
-      characteristic.value?.getBytes(&value, length: sizeof(Int))
+      var value: UInt = 0
+      characteristic.value?.BBLswapUInt16Data()?.getBytes(&value, length: 2)
       capSenseValue = value
       
-      if let delegate = delegate as? NSObject where delegate.respondsToSelector(Selector("sensor:didUpdateSensorValue:")) {
-        (delegate as! BBLSensorDelegate).sensor(self, didUpdateSensorValue: capSenseValue!)
-      }
+      delegate?.sensor(self, didUpdateSensorValue: capSenseValue!)
       
       switch (stateMachine.state as BBLSensorState) {
       case .Deactivated:
@@ -324,6 +320,7 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
       
     case (.WaitingToBeActivated, .Activated):
       alertUserWithMessage(BBLSensorInfo.Alerts.sensorActivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorActivatedAlertTitle)
+      BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self)
       
     case (.WaitingToBeDeactivated, .Deactivated):
       alertUserWithMessage(BBLSensorInfo.Alerts.sensorDeactivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorDeactivatedAlertTitle)

@@ -165,7 +165,7 @@ extension BBLMySensorsViewController: UITableViewDataSource {
 // MARK: BBLMySensorsTableViewCellDelegate
 
 extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
-  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: Int, andName name: String?) {
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: UInt, andName name: String?) {
     tableViewCell.sensor.capSenseThreshold = threshold
     tableViewCell.sensor.name = name
     tableViewCell.sensor.saveInBackgroundWithBlock { (succes: Bool, error: NSError?) -> Void in
@@ -180,7 +180,7 @@ extension BBLMySensorsViewController: BBLMySensorsTableViewCellDelegate {
     tableViewCell.sensor.disconnect()
   }
   
-  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: Int) {
+  internal func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: UInt) {
     tableViewCell.sensor.capSenseThreshold = threshold
   }
   
@@ -238,7 +238,7 @@ extension BBLMySensorsViewController: BBLParentDelegate {
 // MARK: BBLSensorDelegate
 
 extension BBLMySensorsViewController: BBLSensorDelegate {
-  internal func sensor(sensor: BBLSensor, didUpdateSensorValue value: Int) {
+  internal func sensor(sensor: BBLSensor, didUpdateSensorValue value: UInt) {
     updateTableViewCellSensorValueForSensor(sensor)
   }
   
