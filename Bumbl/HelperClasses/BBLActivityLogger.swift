@@ -31,7 +31,7 @@ class BBLActivityLogger: NSObject {
   
   // MARK: Sensor Value Logging
   
-  internal func logSensorValue(value: Int, forSensor sensor: BBLSensor) {
+  internal func logSensorValue(value: UInt, forSensor sensor: BBLSensor) {
     
     guard let uuid = sensor.uuid else {
       fatalError("Cannot log sensor value because sensor UUID does not exist")
