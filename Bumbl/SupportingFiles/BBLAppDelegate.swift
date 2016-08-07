@@ -11,7 +11,7 @@ import Fabric
 import Crashlytics
 import DigitsKit
 import CoreBluetooth
-import Firebase
+
 
 @UIApplicationMain
 internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,7 +27,6 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     setupNotificationsForObject(self)
     setupFabric()
     setupParse()
-    FIRApp.configure()
     
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     setupViewsForWindow(window!)

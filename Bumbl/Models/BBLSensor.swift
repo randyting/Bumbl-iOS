@@ -320,6 +320,7 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
       
     case (.WaitingToBeActivated, .Activated):
       alertUserWithMessage(BBLSensorInfo.Alerts.sensorActivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorActivatedAlertTitle)
+      BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self)
       
     case (.WaitingToBeDeactivated, .Deactivated):
       alertUserWithMessage(BBLSensorInfo.Alerts.sensorDeactivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorDeactivatedAlertTitle)

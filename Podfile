@@ -14,6 +14,7 @@ pod 'TwitterCore'
 pod 'Parse'
 pod 'ParseUI'
 pod 'Firebase'
+pod 'Firebase/Database'
 end
 
 target 'BumblTests' do
