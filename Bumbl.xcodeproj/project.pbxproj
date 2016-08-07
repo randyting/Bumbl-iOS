@@ -39,6 +39,7 @@
 		257672161D112FA800B63ACE /* BBLEmergencyContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257672141D112FA800B63ACE /* BBLEmergencyContactsViewController.swift */; };
 		257672171D112FA800B63ACE /* BBLEmergencyContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 257672151D112FA800B63ACE /* BBLEmergencyContactsViewController.xib */; };
 		2579339E1C6697F1000F3CA6 /* BBLStateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2579339D1C6697F1000F3CA6 /* BBLStateMachine.swift */; };
+		257EF4861D56C50200CF9F63 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 257EF4851D56C50200CF9F63 /* GoogleService-Info.plist */; };
 		25920A601C5469B0007727BD /* BBLDebugMySensorsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25920A5E1C5469B0007727BD /* BBLDebugMySensorsTableViewCell.swift */; };
 		259A39FF1C4B963B00706E6A /* BBLSensorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */; };
 		259A3A011C4CBC3C00706E6A /* BBLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A3A001C4CBC3C00706E6A /* BBLConstants.swift */; };
@@ -105,6 +106,7 @@
 		257672141D112FA800B63ACE /* BBLEmergencyContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLEmergencyContactsViewController.swift; path = ViewControllers/EmergencyContacts/BBLEmergencyContactsViewController.swift; sourceTree = "<group>"; };
 		257672151D112FA800B63ACE /* BBLEmergencyContactsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLEmergencyContactsViewController.xib; path = ViewControllers/EmergencyContacts/BBLEmergencyContactsViewController.xib; sourceTree = "<group>"; };
 		2579339D1C6697F1000F3CA6 /* BBLStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLStateMachine.swift; path = HelperClasses/BBLStateMachine.swift; sourceTree = "<group>"; };
+		257EF4851D56C50200CF9F63 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "SupportingFiles/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		25920A5E1C5469B0007727BD /* BBLDebugMySensorsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLDebugMySensorsTableViewCell.swift; path = Views/Debug/BBLDebugMySensorsTableViewCell.swift; sourceTree = "<group>"; };
 		2592264BB6C1997D49E7DB78 /* Pods-Bumbl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bumbl.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Bumbl/Pods-Bumbl.debug.xcconfig"; sourceTree = "<group>"; };
 		259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensorManager.swift; path = Managers/BBLSensorManager.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				259A3A001C4CBC3C00706E6A /* BBLConstants.swift */,
 				25B9735B1C44F9FA00C5E099 /* Bumbl-Bridging-Header.h */,
 				25D08B2B1C41EAC900319C11 /* Info.plist */,
+				257EF4851D56C50200CF9F63 /* GoogleService-Info.plist */,
 				25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */,
 			);
 			name = SupportingFiles;
@@ -497,6 +500,7 @@
 				25AF02ED1CF189F200718172 /* BBLDebugMySensorsTableViewCell.xib in Resources */,
 				25AF02F91CF1A0A700718172 /* BBLMySensorsBackgroundView.xib in Resources */,
 				25AF02F51CF18C4900718172 /* BBLMySensorsTableViewCell.xib in Resources */,
+				257EF4861D56C50200CF9F63 /* GoogleService-Info.plist in Resources */,
 				2533A5221C5211F5000F9562 /* BBLDebugMySensorsViewController.xib in Resources */,
 				252324581D10B7E9009D20B0 /* BBLEditSensorViewController.xib in Resources */,
 			);

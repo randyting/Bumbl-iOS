@@ -13,6 +13,7 @@ pod 'Digits'
 pod 'TwitterCore'
 pod 'Parse'
 pod 'ParseUI'
+pod 'Firebase'
 end
 
 target 'BumblTests' do
