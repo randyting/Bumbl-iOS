@@ -157,9 +157,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     if parentsCount == 0 {
       deleteInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
         if let error = error {
-          if let delegate = self.delegate as? NSObject where delegate.respondsToSelector(Selector("sensor:didDidFailToDeleteSensorWithErrorMessage:")) {
-            (delegate as! BBLSensorDelegate).sensor(self, didDidFailToDeleteSensorWithErrorMessage: error.localizedDescription)
-          }
+          self.delegate?.sensor(self, didDidFailToDeleteSensorWithErrorMessage: error.localizedDescription)
         }
       })
     }
@@ -229,9 +227,7 @@ extension BBLSensor: CBPeripheralDelegate {
       characteristic.value?.getBytes(&value, length: sizeof(Int))
       capSenseValue = value
       
-      if let delegate = delegate as? NSObject where delegate.respondsToSelector(Selector("sensor:didUpdateSensorValue:")) {
-        (delegate as! BBLSensorDelegate).sensor(self, didUpdateSensorValue: capSenseValue!)
-      }
+      delegate?.sensor(self, didUpdateSensorValue: capSenseValue!)
       
       switch (stateMachine.state as BBLSensorState) {
       case .Deactivated:
