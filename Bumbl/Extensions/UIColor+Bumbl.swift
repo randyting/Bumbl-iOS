@@ -10,8 +10,24 @@ import Foundation
 
 extension UIColor {
   
+  internal class func BBLGrayTextColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#909090")
+  }
+  
   internal class func BBLGrayColor() -> UIColor {
     return UIColor.BBLColorfromHexString("#E8E8E8")
+  }
+  
+  internal class func BBLActivatedDotGreenColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#33E38A")
+  }
+  
+  internal class func BBLActivatedDotRedColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#F71042")
+  }
+  
+  internal class func BBLActivatedDotGrayColor() -> UIColor {
+    return UIColor.BBLColorfromHexString("#868686")
   }
   
   internal class func BBLDarkGrayColor() -> UIColor {
@@ -43,7 +59,7 @@ extension UIColor {
   }
   
   internal class func BBLLightBlueNavBarColor() -> UIColor {
-    return UIColor.BBLColorfromHexString("#70B7E6")
+    return UIColor.BBLColorfromHexString("#70E6E0")
   }
   
   internal class func BBLBlueColor() -> UIColor {
