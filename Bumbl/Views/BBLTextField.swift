@@ -43,6 +43,15 @@ class BBLTextField: UIView {
       textField.text = newText
     }
   }
+  
+  internal var placeholder: String {
+    get {
+      return textField.placeholder ?? ""
+    }
+    set(newPlaceholder) {
+      textField.placeholder = newPlaceholder
+    }
+  }
 
   // MARK: Lifecycle
   

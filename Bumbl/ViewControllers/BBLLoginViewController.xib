@@ -39,14 +39,14 @@
                     </connections>
                 </button>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dle-BU-nve" customClass="BBLTextField" customModule="Bumbl" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="146" width="600" height="50"/>
+                    <rect key="frame" x="0.0" y="125" width="600" height="50"/>
                     <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="y2x-nT-84U"/>
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wLq-dw-gx0" customClass="BBLTextField" customModule="Bumbl" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="196" width="600" height="50"/>
+                    <rect key="frame" x="0.0" y="175" width="600" height="50"/>
                     <color key="backgroundColor" red="0.20000000000000001" green="0.89019607840000003" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="YN0-xM-ZrL"/>
@@ -60,6 +60,7 @@
                 <constraint firstItem="K98-lT-zgW" firstAttribute="width" secondItem="iJl-ZJ-tvQ" secondAttribute="width" id="IgO-Ln-te9"/>
                 <constraint firstItem="iJl-ZJ-tvQ" firstAttribute="top" secondItem="K98-lT-zgW" secondAttribute="bottom" id="J5e-Xu-vfO"/>
                 <constraint firstItem="wLq-dw-gx0" firstAttribute="top" secondItem="Dle-BU-nve" secondAttribute="bottom" id="LWH-vp-BS9"/>
+                <constraint firstItem="Dle-BU-nve" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="-150" id="LuI-Iz-cfp"/>
                 <constraint firstItem="Dle-BU-nve" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="O0o-Xm-Gaq"/>
                 <constraint firstItem="iJl-ZJ-tvQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="R6s-0M-co6"/>
                 <constraint firstAttribute="trailing" secondItem="Dle-BU-nve" secondAttribute="trailing" id="bOw-8p-U22"/>
@@ -70,6 +71,11 @@
                 <constraint firstItem="wLq-dw-gx0" firstAttribute="height" secondItem="Dle-BU-nve" secondAttribute="height" id="xOl-i6-v7k"/>
                 <constraint firstAttribute="trailing" secondItem="iJl-ZJ-tvQ" secondAttribute="trailing" id="xQy-JZ-cx4"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="IDx-Ld-SiQ"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>
