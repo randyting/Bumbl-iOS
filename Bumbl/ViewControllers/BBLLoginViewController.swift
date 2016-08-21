@@ -106,6 +106,7 @@ class BBLLoginViewController: UIViewController {
     title = BBLLoginViewControllerConstants.kTitle
     
     setupAppearanceForFederatedLoginButton(loginWithFacebookButton)
+    BBLsetupBlueNavigationBar(navigationController?.navigationBar)
     
   }
   

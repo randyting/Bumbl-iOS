@@ -21,7 +21,7 @@
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K98-lT-zgW">
                     <rect key="frame" x="0.0" y="450" width="600" height="75"/>
                     <color key="backgroundColor" red="1" green="0.31801541719999998" blue="0.41633616740000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
                     <state key="normal" title="Facebook"/>
                     <connections>
                         <action selector="didTapLoginWithFacebookButton:" destination="-1" eventType="touchUpInside" id="MUh-oG-mSM"/>
@@ -32,7 +32,7 @@
                     <constraints>
                         <constraint firstAttribute="height" constant="75" id="Gfk-by-NcF"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                     <state key="normal" title="Log in"/>
                     <connections>
                         <action selector="didTapLoginButton:" destination="-1" eventType="touchUpInside" id="sAt-LI-u4y"/>
