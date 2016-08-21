@@ -77,7 +77,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   private func setupSignInPickerVC(signInPickerVC: BBLSignInPickerVC, inWindow: UIWindow) {
-    window?.rootViewController = signInPickerVC
+    window?.rootViewController = UINavigationController(rootViewController: signInPickerVC)
   }
   
   private func setupSplashScreenFromStoryboard(storyboard: UIStoryboard, inWindow: UIWindow) {

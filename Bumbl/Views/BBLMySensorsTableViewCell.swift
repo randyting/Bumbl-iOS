@@ -26,6 +26,8 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     private static let defaultCapsenseValue = 0
     
     private static let kNoConnectedParentName = "Nobody"
+    
+    private static let kblinkTimeInterval = 0.5
   }
   
   // MARK: Public Variables
@@ -47,6 +49,8 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   // MARK: Private Variables
   
   private var maxCapsenseValue: UInt! = 0
+  private var blinkTimer: NSTimer!
+  private var shouldBlinkActivatedIndicatorDot = false
   
   
   // MARK: Interface Builder
@@ -87,6 +91,7 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     setupAppearanceForTextLabel(batteryLevelLabel)
     setupAppearanceForTextLabel(temperatureLabel)
     setupAppearanceForActivatedIndicatorDot(activatedIndicatorDot)
+    setupTimer()
     
   }
   
@@ -114,6 +119,10 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     maxCapsenseValue = BBLMySensorsTableViewCellConstants.defaultMaxCapsenseValue
   }
   
+  private func setupTimer() {
+    blinkTimer = NSTimer.scheduledTimerWithTimeInterval(BBLMySensorsTableViewCellConstants.kblinkTimeInterval, target: self, selector: #selector(BBLMySensorsTableViewCell.toggleActivatedIndicatorDotColor), userInfo: nil, repeats: true)
+  }
+  
   
   // MARK: Update
   
@@ -130,9 +139,12 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     
     avatarImageView.image = BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)?.image()
     
+    shouldBlinkActivatedIndicatorDot = false
     switch sensor.stateMachine.state {
-    case .Activated, .WaitingToBeDeactivated:
+    case .Activated:
       activatedIndicatorDot.backgroundColor = UIColor.BBLActivatedDotGreenColor()
+    case .WaitingToBeDeactivated, .WaitingToBeActivated:
+      shouldBlinkActivatedIndicatorDot = true
     case .Disconnected:
       activatedIndicatorDot.backgroundColor = UIColor.BBLActivatedDotGrayColor()
     default:
@@ -141,6 +153,15 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     
   }
   
+  // MARK: Blinking
+  
+  internal func toggleActivatedIndicatorDotColor() {
+    if shouldBlinkActivatedIndicatorDot {
+      activatedIndicatorDot.backgroundColor =
+        (activatedIndicatorDot.backgroundColor == UIColor.BBLActivatedDotGreenColor() ?
+          UIColor.BBLActivatedDotGrayColor() : UIColor.BBLActivatedDotGreenColor())
+    }
+  }
 
 }
 

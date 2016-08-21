@@ -18,17 +18,16 @@ class BBLSensorDetailViewController: UIViewController {
   // MARK: Interface Builder
   
   @IBOutlet weak var locationMapView: MKMapView!
-  @IBOutlet weak var tareButton: UIButton!
   @IBOutlet weak var batteryPercentLabel: UILabel!
-  @IBOutlet weak var delayTimeLabel: UILabel!
-  @IBOutlet weak var sensorValueGaugeView: BBLSensorValueGaugeView!
-  @IBOutlet weak var emptySpacerView: UIView!
+  @IBOutlet weak var temperatureLabel: UILabel!
   
-  @IBOutlet weak var babyNameLabel: UILabel!
+  @IBOutlet weak var avatarImageView: UIImageView!
   @IBOutlet weak var statusTitleLabel: UILabel!
   @IBOutlet weak var assignTitleLabel: UILabel!
   @IBOutlet weak var statusLabel: UILabel!
   @IBOutlet weak var connectedParentLabel: UILabel!
+  
+  @IBOutlet weak var topLevelStackViewBottomToSuperviewBottomConstraint: NSLayoutConstraint!
   
   @IBAction func didTapTareButton(sender: UIButton) {
     sensor.rebaseline()
@@ -42,16 +41,14 @@ class BBLSensorDetailViewController: UIViewController {
     
     setupViewController()
     setupMapView(locationMapView)
-    setupAppearanceForSensorValueGaugeView(sensorValueGaugeView)
-    setupAppearanceForTareButton(tareButton)
     setupAppearanceForInformationLabel(batteryPercentLabel)
-    setupAppearanceForInformationLabel(delayTimeLabel)
     
     setupAppearanceForTitleLabel(statusTitleLabel)
     setupAppearanceForTitleLabel(assignTitleLabel)
-    setupAppearanceForTextLabel(babyNameLabel)
     setupAppearanceForTextLabel(statusLabel)
     setupAppearanceForTextLabel(connectedParentLabel)
+    setupAppearanceForTextLabel(batteryPercentLabel)
+    setupAppearanceForTextLabel(temperatureLabel)
     
     setupNavigationItem(navigationItem)
     
@@ -62,44 +59,40 @@ class BBLSensorDetailViewController: UIViewController {
   
   private func setupViewController() {
     title = sensor.name
+    topLevelStackViewBottomToSuperviewBottomConstraint.constant = tabBarController!.tabBar.frame.height
   }
   
   private func setupMapView(mapView: MKMapView) {
     // TODO: Grab location from sensor.
-    let location = "1234 Ortega Street, San Francisco, CA 94122"
-    let geocoder = CLGeocoder()
-    geocoder.geocodeAddressString(location) { (placemarks: [CLPlacemark]?, error: NSError?) in
+    
+    CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: 37.3318, longitude: -122.0312), completionHandler: {(placemarks, error) -> Void in
+      
       if let error = error {
-        print(error.localizedDescription)
-      } else {
-        if let placemarks = placemarks where placemarks.count > 0 {
-         let topResult = placemarks.first!
-          let placemark = MKPlacemark(placemark: topResult)
-          
-          
-          var region = mapView.region
-          region.center = (placemark.region as! CLCircularRegion).center
-          region.span.longitudeDelta /= 1000.0
-          region.span.latitudeDelta /= 1000.0
-          
-          mapView.setRegion(region, animated: true)
-          mapView.addAnnotation(placemark)
-        }
+        print("Reverse geocoder failed with error" + error.localizedDescription)
+        return
       }
-    }
+      
+      if let placemarks = placemarks where placemarks.count > 0 {
+        let pm = MKPlacemark(placemark: placemarks[0])
+        
+        var region = mapView.region
+        region.center = pm.coordinate
+        region.span.longitudeDelta /= 1000.0
+        region.span.latitudeDelta /= 1000.0
+        
+        mapView.setRegion(region, animated: false)
+        mapView.addAnnotation(pm)
+      }
+      else {
+        print("Problem with the data received from geocoder")
+      }
+    })
+    
   }
   
   private func setupAppearanceForSensorValueGaugeView(sensorValueGaugeView: BBLSensorValueGaugeView) {
     sensorValueGaugeView.setGaugeBackgroundColor(UIColor.BBLYellowColor())
     sensorValueGaugeView.gaugeFillNormalized = 0.2
-  }
-  
-  private func setupAppearanceForTareButton(button: UIButton) {
-    button.titleEdgeInsets = UIEdgeInsets(top: button.bounds.height/3.0,
-                                          left: 0.0,
-                                          bottom: 0.0,
-                                          right: 0.0)
-    button.tintColor = UIColor.whiteColor()
   }
   
   private func setupAppearanceForInformationLabel(label: UILabel) {
@@ -108,7 +101,7 @@ class BBLSensorDetailViewController: UIViewController {
   }
   
   private func setupAppearanceForTitleLabel(titleLabel: UILabel) {
-    titleLabel.textColor = UIColor.BBLBrightTealGreenColor()
+    titleLabel.textColor = UIColor.BBLGrayTextColor()
   }
   
   private func setupAppearanceForTextLabel(textLabel: UILabel) {
@@ -126,21 +119,20 @@ class BBLSensorDetailViewController: UIViewController {
     editSensorVC.delegate = self
     editSensorVC.sensor = sensor
     
-    let navController = UINavigationController(rootViewController: editSensorVC)
-    presentViewController(navController, animated: true, completion: nil)
+    navigationController?.pushViewController(editSensorVC, animated: true)
   }
   
   // MARK: Update
   
   private func updateAllInformation() {
     batteryPercentLabel.text = "50%"
-    delayTimeLabel.text = String(sensor.delayInSeconds)
     
-    babyNameLabel.text = sensor.name
     statusLabel.text = sensor.stateAsString
     connectedParentLabel.text = sensor.connectedParent?.username
     
     title = sensor.name
+    
+    avatarImageView.image = BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)?.image()
   }
   
 }
@@ -148,12 +140,9 @@ class BBLSensorDetailViewController: UIViewController {
 extension BBLSensorDetailViewController: BBLEditSensorViewControllerDelegate {
   
   func BBLEditSensorVC(vc: BBLEditSensorViewController, didTapBottomButton bottomButton: BBLModalBottomButton) {
-    dismissViewControllerAnimated(true, completion: nil)
+    navigationController?.popViewControllerAnimated(true)
+    tabBarController?.tabBar.hidden = false
     updateAllInformation()
-  }
-  
-  func BBLEditSensorVC(vc: BBLEditSensorViewController, didTapCancelButton bottomButton: UIBarButtonItem) {
-    dismissViewControllerAnimated(true, completion: nil)
   }
   
 }

@@ -17,9 +17,10 @@ class BBLConnectionViewController: UIViewController {
   
   // MARK: Constants
   private struct BBLConnectionViewControllerConstants {
-    private static let kTitle = "DISCOVER SENSORS"
+    private static let kTitle = "Device Found"
     
     private static let kConnectionViewTVCReuseIdentifier = "com.randy.connectionViewTVCReuseIdentifier"
+    private static let kConnectionTVCNibName = "BBLConnectionTableViewCell"
     
     private struct FailedConnectionAlert{
       private static let title = "Connection Failed"
@@ -32,6 +33,8 @@ class BBLConnectionViewController: UIViewController {
   // MARK: Interface Builder
   @IBOutlet private weak var connectionTableView: UITableView!
   @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
+  
+  @IBOutlet weak var tableViewTopToSuperviewConstraint: NSLayoutConstraint!
   
   @IBAction func didTapBackButton(sender: BBLModalBottomButton) {
     delegate?.connectionViewController(self, didTapBackButton: sender)
@@ -49,21 +52,31 @@ class BBLConnectionViewController: UIViewController {
     super.viewDidLoad()
     
     title = BBLConnectionViewControllerConstants.kTitle
+    BBLsetupBlueNavigationBar(navigationController?.navigationBar)
+
     setupSensorManager(sensorManager)
     setupEmptyTableViewCover(activityIndicatorView)
     setupTableView(connectionTableView)
+    setupTopPositionConstraint(tableViewTopToSuperviewConstraint)
   }
   
   deinit {
     sensorManager.unregisterDelegate(self)
   }
   
-  // MARK: Tableview
+  // MARK: Setup
   private func setupTableView(tableView: UITableView) {
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier)
+    tableView.registerNib(UINib(nibName: BBLConnectionViewControllerConstants.kConnectionTVCNibName,
+                                  bundle: NSBundle.mainBundle()),
+              forCellReuseIdentifier: BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier)
     tableView.tableFooterView = UIView.init(frame: CGRect.zero)
+    tableView.separatorStyle = .None
+    tableView.backgroundColor = UIColor.clearColor()
+    
+    let backgroundView = NSBundle.mainBundle().loadNibNamed("BBLMySensorsBackgroundView", owner: self, options: nil).first as! BBLMySensorsBackgroundView
+    tableView.backgroundView = backgroundView
     updateTableView()
   }
   
@@ -85,6 +98,12 @@ class BBLConnectionViewController: UIViewController {
   private func setupEmptyTableViewCover(view: UIActivityIndicatorView) {
     view.backgroundColor = UIColor.BBLGrayColor()
     view.startAnimating()
+  }
+  
+  private func setupTopPositionConstraint(constraint: NSLayoutConstraint) {
+    if let navigationController = navigationController {
+      constraint.constant = navigationController.navigationBar.bounds.height + 20
+    }
   }
 }
 
@@ -108,11 +127,16 @@ extension BBLConnectionViewController: UITableViewDataSource {
   }
   
   internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier(BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier, forIndexPath: indexPath)
+    let cell = tableView.dequeueReusableCellWithIdentifier(BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier, forIndexPath: indexPath) as! BBLConnectionTableViewCell
     
-    cell.textLabel!.text = discoveredSensors[indexPath.row].uuid
+    cell.textField.text = discoveredSensors[indexPath.row].uuid!
+    cell.textField.textField.userInteractionEnabled = false
     
     return cell
+  }
+  
+  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    return 60
   }
   
 }
