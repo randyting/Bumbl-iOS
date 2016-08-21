@@ -24,7 +24,7 @@ class BBLSignInPickerVC: UIViewController {
     loginVC.delegate = UIApplication.sharedApplication().delegate as! BBLAppDelegate
     loginVC.presentationDelegate = self
     
-    presentViewController(loginVC, animated: true, completion: nil)
+    navigationController?.pushViewController(loginVC, animated: true)
     
   }
   
@@ -38,6 +38,10 @@ class BBLSignInPickerVC: UIViewController {
     setupAppearance()
     markOnboardingCompleteInDefaults(userDefaults)
     
+  }
+  
+  override func viewWillAppear(animated: Bool) {
+    navigationController?.navigationBarHidden = true
   }
   
   // MARK: Initial Setup
