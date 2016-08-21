@@ -10,7 +10,6 @@ import UIKit
 
 protocol BBLEditSensorViewControllerDelegate: class {
   func BBLEditSensorVC(vc: BBLEditSensorViewController, didTapBottomButton bottomButton: BBLModalBottomButton)
-  func BBLEditSensorVC(vc: BBLEditSensorViewController, didTapCancelButton bottomButton: UIBarButtonItem)
 }
 
 class BBLEditSensorViewController: UIViewController {
@@ -74,13 +73,14 @@ class BBLEditSensorViewController: UIViewController {
     super.viewDidLoad()
     title = BBLEditSensorViewControllerConstants.kTitle
     selectedAvatar = BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)
+    tabBarController?.tabBar.hidden = true
+    
     setupTextFields()
     setupCollectionView(avatarCollectionView)
     BBLsetupBlueNavigationBar(navigationController?.navigationBar)
     setupTopPositionConstraint(avatarTitleLabelTopConstraint)
     setupNotificationsForVC(self)
     setupGestureRecognizersForView(view)
-    setupModalDismissButtonForNavItem(navigationItem)
     setupAppearanceForDeleteButton(deleteButton)
     
     updateAllFields()
@@ -88,6 +88,10 @@ class BBLEditSensorViewController: UIViewController {
   
   deinit {
     NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
+  
+  override func willMoveToParentViewController(parent: UIViewController?) {
+    tabBarController?.tabBar.hidden = false
   }
   
   // MARK: Setup
@@ -127,20 +131,9 @@ class BBLEditSensorViewController: UIViewController {
     view.addGestureRecognizer(tapGR)
   }
   
-  private func setupModalDismissButtonForNavItem(navItem: UINavigationItem) {
-    navItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: BBLNavigationBarInfo.kDismissButtonIconName),
-                                                 style: .Plain,
-                                                 target: self,
-                                                 action: #selector(BBLMenuViewController.didTapDismissButton(_:)))
-  }
-  
   private func setupAppearanceForDeleteButton(button: UIButton) {
     button.backgroundColor = UIColor.redColor()
     button.tintColor = UIColor.whiteColor()
-  }
-  
-  internal func didTapDismissButton(sender: UIBarButtonItem) {
-    delegate?.BBLEditSensorVC(self, didTapCancelButton: sender)
   }
   
   // MARK: Keyboard Actions

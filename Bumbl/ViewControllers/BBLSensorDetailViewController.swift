@@ -119,8 +119,7 @@ class BBLSensorDetailViewController: UIViewController {
     editSensorVC.delegate = self
     editSensorVC.sensor = sensor
     
-    let navController = UINavigationController(rootViewController: editSensorVC)
-    presentViewController(navController, animated: true, completion: nil)
+    navigationController?.pushViewController(editSensorVC, animated: true)
   }
   
   // MARK: Update
@@ -141,12 +140,9 @@ class BBLSensorDetailViewController: UIViewController {
 extension BBLSensorDetailViewController: BBLEditSensorViewControllerDelegate {
   
   func BBLEditSensorVC(vc: BBLEditSensorViewController, didTapBottomButton bottomButton: BBLModalBottomButton) {
-    dismissViewControllerAnimated(true, completion: nil)
+    navigationController?.popViewControllerAnimated(true)
+    tabBarController?.tabBar.hidden = false
     updateAllInformation()
-  }
-  
-  func BBLEditSensorVC(vc: BBLEditSensorViewController, didTapCancelButton bottomButton: UIBarButtonItem) {
-    dismissViewControllerAnimated(true, completion: nil)
   }
   
 }

@@ -87,9 +87,7 @@
                 <constraint firstItem="HPC-H4-kyI" firstAttribute="height" secondItem="c2R-1e-Mi9" secondAttribute="height" id="IDA-3U-Pfn"/>
                 <constraint firstItem="c2R-1e-Mi9" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JkU-TA-niT"/>
                 <constraint firstItem="4uS-Uz-9Fo" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Mzc-6K-MS3"/>
-                <constraint firstItem="c2R-1e-Mi9" firstAttribute="trailing" secondItem="V2k-yX-WpL" secondAttribute="trailing" id="PZw-tA-Aat"/>
                 <constraint firstItem="HPC-H4-kyI" firstAttribute="top" secondItem="c2R-1e-Mi9" secondAttribute="bottom" id="d62-Qb-4CE"/>
-                <constraint firstItem="HPC-H4-kyI" firstAttribute="trailing" secondItem="V2k-yX-WpL" secondAttribute="trailing" id="eGm-cy-76p"/>
                 <constraint firstItem="Hvi-7B-vfj" firstAttribute="top" secondItem="4uS-Uz-9Fo" secondAttribute="bottom" id="g3d-PJ-Yih"/>
                 <constraint firstAttribute="trailing" secondItem="V2k-yX-WpL" secondAttribute="trailing" constant="18" id="gDH-SG-OhC"/>
                 <constraint firstItem="HPC-H4-kyI" firstAttribute="width" secondItem="c2R-1e-Mi9" secondAttribute="width" id="lEd-Ze-vuE"/>
@@ -99,12 +97,6 @@
                 <constraint firstItem="V2k-yX-WpL" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="35" id="x4S-eR-AGe"/>
                 <constraint firstItem="Hvi-7B-vfj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xt5-fh-FgJ"/>
             </constraints>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="PZw-tA-Aat"/>
-                    <exclude reference="eGm-cy-76p"/>
-                </mask>
-            </variation>
         </view>
     </objects>
 </document>
