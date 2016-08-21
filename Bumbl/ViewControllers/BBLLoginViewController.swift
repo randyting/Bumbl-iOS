@@ -33,7 +33,7 @@ class BBLLoginViewController: UIViewController {
     private static let kEmailTextFieldPlaceholder = "user@bumblbaby.com"
     
     private static let kPasswordTextFieldTitle = "Password"
-    private static let kPassworTextFieldPlaceholder = "password"
+    private static let kPasswordTextFieldPlaceholder = "password"
   
   }
   
@@ -121,7 +121,7 @@ class BBLLoginViewController: UIViewController {
     emailTextField.placeholder = BBLLoginViewControllerConstants.kEmailTextFieldPlaceholder
     
     passwordTextField.title = BBLLoginViewControllerConstants.kPasswordTextFieldTitle
-    passwordTextField.placeholder = BBLLoginViewControllerConstants.kPassworTextFieldPlaceholder
+    passwordTextField.placeholder = BBLLoginViewControllerConstants.kPasswordTextFieldPlaceholder
   }
   
   private func setupAppearanceForFederatedLoginButton(button: UIButton) {

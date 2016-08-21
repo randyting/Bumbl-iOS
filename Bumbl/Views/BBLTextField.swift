@@ -14,6 +14,9 @@ class BBLTextField: UIView {
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var textField: UITextField!
   
+  // MARK: Public Properties
+  
+  internal var isTextField = true
   
   // MARK: Computed Properties
   
@@ -71,9 +74,19 @@ class BBLTextField: UIView {
   }
   
   func initViews() {
+    textField.delegate = self
   }
   
   override func awakeFromNib() {
     super.awakeFromNib()
   }
+  
+}
+
+extension BBLTextField: UITextFieldDelegate {
+  
+  func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+    return isTextField
+  }
+  
 }

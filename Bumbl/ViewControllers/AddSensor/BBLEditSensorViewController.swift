@@ -18,7 +18,12 @@ class BBLEditSensorViewController: UIViewController {
   struct BBLEditSensorViewControllerConstants {
     
     private static let kAvatarCVCReuseIdentifier = "com.randy.avatarCVCReuseIdentifier"
-    private static let kTitle = "EDIT SENSOR"
+    private static let kTitle = "Device Info"
+    
+    private static let kDeviceNoListingTitle = "Device No."
+    
+    private static let kBabyNameTextFieldTitle = "Baby Name"
+    private static let kBabyNameTextFieldPlaceholder = "Enter Baby Name"
     
   }
   
@@ -48,7 +53,7 @@ class BBLEditSensorViewController: UIViewController {
   
   @IBAction func didTapBottomButton(sender: BBLModalBottomButton) {
     
-//    sensor.name = babyNameTextField.text
+    sensor.name = babyNameTextField.text
     
     if let selectedAvatar = selectedAvatar {
       sensor.avatar = selectedAvatar.rawValue
@@ -67,14 +72,11 @@ class BBLEditSensorViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    
     title = BBLEditSensorViewControllerConstants.kTitle
-    
+    selectedAvatar = BBLAvatarsInfo.BBLAvatarType(rawValue: sensor.avatar)
+    setupTextFields()
     setupCollectionView(avatarCollectionView)
-//    setupAppearanceForTextField(babyNameTextField)
-//    setupAppearanceForTextField(productSerialNumberTextField)
-    BBLsetupWhiteNavigationBar(navigationController?.navigationBar)
+    BBLsetupBlueNavigationBar(navigationController?.navigationBar)
     setupTopPositionConstraint(avatarTitleLabelTopConstraint)
     setupNotificationsForVC(self)
     setupGestureRecognizersForView(view)
@@ -90,6 +92,14 @@ class BBLEditSensorViewController: UIViewController {
   
   // MARK: Setup
   
+  private func setupTextFields() {
+    productSerialNumberTextField.title = BBLEditSensorViewControllerConstants.kDeviceNoListingTitle
+    productSerialNumberTextField.isTextField = false
+    
+    babyNameTextField.title = BBLEditSensorViewControllerConstants.kBabyNameTextFieldTitle
+    babyNameTextField.placeholder = BBLEditSensorViewControllerConstants.kBabyNameTextFieldPlaceholder
+  }
+  
   private func setupCollectionView(collectionView: UICollectionView) {
     collectionView.registerClass(UICollectionViewCell.self,
                                  forCellWithReuseIdentifier: BBLEditSensorViewControllerConstants.kAvatarCVCReuseIdentifier)
@@ -100,13 +110,9 @@ class BBLEditSensorViewController: UIViewController {
     collectionView.allowsMultipleSelection = false
   }
   
-  private func setupAppearanceForTextField(textField: UITextField) {
-    textField.backgroundColor = UIColor.BBLTealGreenColor()
-  }
-  
   private func setupTopPositionConstraint(constraint: NSLayoutConstraint) {
     if let navigationController = navigationController {
-      constraint.constant = navigationController.navigationBar.bounds.height + 40
+      constraint.constant = navigationController.navigationBar.bounds.height + 35
     }
   }
   
@@ -158,8 +164,8 @@ class BBLEditSensorViewController: UIViewController {
   // MARK: Update
   
   private func updateAllFields() {
-//    productSerialNumberTextField.text = sensor.uuid
-//    babyNameTextField.text = sensor.name
+    productSerialNumberTextField.text = sensor.uuid!
+    babyNameTextField.text = sensor.name!
   }
   
   // MARK: Save Error Alert
@@ -185,8 +191,7 @@ extension BBLEditSensorViewController: UICollectionViewDelegate {
       let rhs = BBLAvatarsInfo.BBLAvatarType(rawValue:indexPath.row)
       where selectedAvatar.isEqual(rhs) {
       
-      collectionView.deselectItemAtIndexPath(indexPath, animated: true)
-      collectionView.delegate?.collectionView!(collectionView, didDeselectItemAtIndexPath: indexPath)
+      unhighlightAvatarAtIndexPath(indexPath, inCollectionView: collectionView)
       return
 
     } else if let selectedAvatar = selectedAvatar,
@@ -194,18 +199,13 @@ extension BBLEditSensorViewController: UICollectionViewDelegate {
       where !selectedAvatar.isEqual(rhs){
       
       let lastIndexPath = NSIndexPath(forRow: selectedAvatar.rawValue, inSection: 0)
-      
-      collectionView.deselectItemAtIndexPath(lastIndexPath, animated: true)
-      collectionView.delegate?.collectionView!(collectionView, didDeselectItemAtIndexPath: lastIndexPath)
-      
-      self.selectedAvatar = BBLAvatarsInfo.BBLAvatarType(rawValue: indexPath.row)
-      collectionView.cellForItemAtIndexPath(indexPath)?.contentView.backgroundColor = UIColor.blackColor()
+      unhighlightAvatarAtIndexPath(lastIndexPath, inCollectionView: collectionView)
+      highlightAvatarAtIndexPath(indexPath, inCollectionView: collectionView)
       return
     }
     
-    
-    selectedAvatar = BBLAvatarsInfo.BBLAvatarType(rawValue: indexPath.row)
-    collectionView.cellForItemAtIndexPath(indexPath)?.contentView.backgroundColor = UIColor.blackColor()
+    highlightAvatarAtIndexPath(indexPath, inCollectionView: collectionView)
+
   }
   
   func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
@@ -213,6 +213,16 @@ extension BBLEditSensorViewController: UICollectionViewDelegate {
     selectedAvatar = nil
     collectionView.cellForItemAtIndexPath(indexPath)?.contentView.backgroundColor = UIColor.clearColor()
   
+  }
+  
+  private func unhighlightAvatarAtIndexPath(indexPath: NSIndexPath, inCollectionView collectionView: UICollectionView) {
+    collectionView.deselectItemAtIndexPath(indexPath, animated: true)
+    collectionView.delegate?.collectionView!(collectionView, didDeselectItemAtIndexPath: indexPath)
+  }
+  
+  private func highlightAvatarAtIndexPath(indexPath: NSIndexPath, inCollectionView collectionView: UICollectionView) {
+    selectedAvatar = BBLAvatarsInfo.BBLAvatarType(rawValue: indexPath.row)
+    collectionView.cellForItemAtIndexPath(indexPath)?.contentView.backgroundColor = UIColor.blackColor()
   }
   
 }
@@ -232,6 +242,10 @@ extension BBLEditSensorViewController: UICollectionViewDataSource {
     
     cell.contentView.layer.cornerRadius = cell.contentView.frame.height/2.0
     cell.contentView.alpha = 0.3
+    
+    if BBLAvatarsInfo.BBLAvatarType(rawValue: indexPath.row) == selectedAvatar {
+      cell.contentView.backgroundColor = UIColor.blackColor()
+    }
     
     return cell
   }
