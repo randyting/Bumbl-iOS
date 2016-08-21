@@ -23,6 +23,14 @@ internal protocol BBLLoginViewControllerPresentationDelegate: class {
 
 class BBLLoginViewController: UIViewController {
   
+  // MARK: Constants
+  
+  private struct BBLLoginViewControllerConstants {
+  
+    private static let kTitle = "Account Login"
+  
+  }
+  
   // MARK: Public Variables
   
   internal weak var delegate: BBLLoginViewControllerDelegate?
@@ -30,12 +38,7 @@ class BBLLoginViewController: UIViewController {
   
   // MARK: Interface Builder
   
-  @IBOutlet weak var divisionLine: UIView!
-  @IBOutlet weak var titleLabel: UILabel!
-  @IBOutlet weak var passwordLabel: UILabel!
-  
-  @IBOutlet weak var emailLabel: UILabel!
-  
+
   @IBOutlet weak var emailTextField: BBLTextField!
   @IBOutlet weak var passwordTextField: BBLTextField!
   
@@ -51,11 +54,11 @@ class BBLLoginViewController: UIViewController {
     let username = emailTextField.text
     let password = passwordTextField.text
     
-    if (delegate?.logInViewController(self, shouldBeginLogInWithUsername: username!, password: password!) == false) {
+    if (delegate?.logInViewController(self, shouldBeginLogInWithUsername: username, password: password) == false) {
       return
     }
     
-    PFUser.logInWithUsernameInBackground(username!, password: password!) { (user: PFUser?, error: NSError?) -> Void in
+    PFUser.logInWithUsernameInBackground(username, password: password) { (user: PFUser?, error: NSError?) -> Void in
       
       if let error = error {
         self.showLoginFailedAlertWithError(error)
@@ -70,19 +73,23 @@ class BBLLoginViewController: UIViewController {
   @IBAction func didTapLoginWithFacebookButton(sender: UIButton) {
   }
   
-  @IBAction func didTapBackButton(sender: UIButton) {
-    
-    presentationDelegate?.logInViewControllerDidCancelLogIn(self);
-    
-  }
-  
   // MARK: Lifecycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
     setupAppearance()
+    setupTextFields()
     setupNotificationsForVC(self)
     setupGestureRecognizersForView(view)
+  }
+  
+  override func willMoveToParentViewController(parent: UIViewController?) {
+    guard let _ = parent else {
+      presentationDelegate?.logInViewControllerDidCancelLogIn(self)
+      return
+    }
+    
+
   }
   
   deinit {
@@ -95,49 +102,21 @@ class BBLLoginViewController: UIViewController {
   private func setupAppearance() {
     
     view.backgroundColor = UIColor.whiteColor()
-    
-    setupAppearanceForTitle(titleLabel)
-    
-    setupAppearanceForSecondaryTextField(emailTextField)
-    setupAppearanceForPrimaryTextField(passwordTextField)
-    
-    setupAppearanceForDivisionLine(divisionLine)
+    navigationController?.navigationBarHidden = false
+    title = BBLLoginViewControllerConstants.kTitle
     
     setupAppearanceForFederatedLoginButton(loginWithFacebookButton)
     
-    setupAppearanceForCircleButton(loginButton)
-    
   }
   
-  private func setupAppearanceForCircleButton(button: UIButton) {
-    
-    button.backgroundColor = UIColor.clearColor()
-    
-  }
-  
-  private func setupAppearanceForTitle(label: UILabel) {
-    label.tintColor = UIColor.BBLDarkGreyTextColor()
-  }
-  
-  private func setupAppearanceForSecondaryTextField(textfield: UITextField) {
-    // TODO: Add drop shadow.
-    textfield.backgroundColor = UIColor.BBLGrayColor()
-  }
-  
-  private func setupAppearanceForPrimaryTextField(textfield: UITextField) {
-    textfield.backgroundColor = UIColor.BBLTealGreenColor()
-  }
-  
-  private func setupAppearanceForDivisionLine(view: UIView) {
-    view.backgroundColor = UIColor.BBLDarkGrayColor()
+  private func setupTextFields() {
+    emailTextField.title = "Email"
   }
   
   private func setupAppearanceForFederatedLoginButton(button: UIButton) {
     
     button.tintColor = UIColor.whiteColor()
     button.backgroundColor = UIColor.BBLBlueColor()
-    button.makeHorizontalOval(withBorderThickness: 0.0, withBorderColor: nil)
-    // TODO: Add drop shadow.
     
   }
   

@@ -48,7 +48,7 @@ class BBLEditSensorViewController: UIViewController {
   
   @IBAction func didTapBottomButton(sender: BBLModalBottomButton) {
     
-    sensor.name = babyNameTextField.text
+//    sensor.name = babyNameTextField.text
     
     if let selectedAvatar = selectedAvatar {
       sensor.avatar = selectedAvatar.rawValue
@@ -72,8 +72,8 @@ class BBLEditSensorViewController: UIViewController {
     title = BBLEditSensorViewControllerConstants.kTitle
     
     setupCollectionView(avatarCollectionView)
-    setupAppearanceForTextField(babyNameTextField)
-    setupAppearanceForTextField(productSerialNumberTextField)
+//    setupAppearanceForTextField(babyNameTextField)
+//    setupAppearanceForTextField(productSerialNumberTextField)
     BBLsetupWhiteNavigationBar(navigationController?.navigationBar)
     setupTopPositionConstraint(avatarTitleLabelTopConstraint)
     setupNotificationsForVC(self)
@@ -158,8 +158,8 @@ class BBLEditSensorViewController: UIViewController {
   // MARK: Update
   
   private func updateAllFields() {
-    productSerialNumberTextField.text = sensor.uuid
-    babyNameTextField.text = sensor.name
+//    productSerialNumberTextField.text = sensor.uuid
+//    babyNameTextField.text = sensor.name
   }
   
   // MARK: Save Error Alert
