@@ -64,16 +64,29 @@ class BBLSensorDetailViewController: UIViewController {
   
   private func setupMapView(mapView: MKMapView) {
     // TODO: Grab location from sensor.
-    let placemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: Double(37.3318), longitude: Double(-122.0312)),
-                                addressDictionary: nil)
     
-    var region = mapView.region
-    region.center = placemark.coordinate
-    region.span.longitudeDelta /= 1000.0
-    region.span.latitudeDelta /= 1000.0
-    
-    mapView.setRegion(region, animated: true)
-    mapView.addAnnotation(placemark)
+    CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: 37.3318, longitude: -122.0312), completionHandler: {(placemarks, error) -> Void in
+      
+      if let error = error {
+        print("Reverse geocoder failed with error" + error.localizedDescription)
+        return
+      }
+      
+      if let placemarks = placemarks where placemarks.count > 0 {
+        let pm = MKPlacemark(placemark: placemarks[0])
+        
+        var region = mapView.region
+        region.center = pm.coordinate
+        region.span.longitudeDelta /= 1000.0
+        region.span.latitudeDelta /= 1000.0
+        
+        mapView.setRegion(region, animated: false)
+        mapView.addAnnotation(pm)
+      }
+      else {
+        print("Problem with the data received from geocoder")
+      }
+    })
     
   }
   
