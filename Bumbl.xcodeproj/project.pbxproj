@@ -40,6 +40,8 @@
 		257EF4881D56C8AA00CF9F63 /* BBLActivityLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257EF4871D56C8AA00CF9F63 /* BBLActivityLogger.swift */; };
 		2593FA431D69411100F754C9 /* BBLTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2593FA421D69411100F754C9 /* BBLTextField.swift */; };
 		2593FA451D69412100F754C9 /* BBLTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2593FA441D69412100F754C9 /* BBLTextField.xib */; };
+		2593FA481D699AD500F754C9 /* BBLConnectionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2593FA461D699AD500F754C9 /* BBLConnectionTableViewCell.swift */; };
+		2593FA491D699AD500F754C9 /* BBLConnectionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2593FA471D699AD500F754C9 /* BBLConnectionTableViewCell.xib */; };
 		259A39FF1C4B963B00706E6A /* BBLSensorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */; };
 		259A3A011C4CBC3C00706E6A /* BBLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 259A3A001C4CBC3C00706E6A /* BBLConstants.swift */; };
 		25AF02E71CF1228400718172 /* UIView+Bumbl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25AF02E61CF1228400718172 /* UIView+Bumbl.swift */; };
@@ -107,6 +109,8 @@
 		257EF4871D56C8AA00CF9F63 /* BBLActivityLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLActivityLogger.swift; path = HelperClasses/BBLActivityLogger.swift; sourceTree = "<group>"; };
 		2593FA421D69411100F754C9 /* BBLTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLTextField.swift; path = Views/BBLTextField.swift; sourceTree = "<group>"; };
 		2593FA441D69412100F754C9 /* BBLTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLTextField.xib; path = Views/BBLTextField.xib; sourceTree = "<group>"; };
+		2593FA461D699AD500F754C9 /* BBLConnectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLConnectionTableViewCell.swift; path = Views/BBLConnectionTableViewCell.swift; sourceTree = "<group>"; };
+		2593FA471D699AD500F754C9 /* BBLConnectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLConnectionTableViewCell.xib; path = Views/BBLConnectionTableViewCell.xib; sourceTree = "<group>"; };
 		259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensorManager.swift; path = Managers/BBLSensorManager.swift; sourceTree = "<group>"; };
 		259A3A001C4CBC3C00706E6A /* BBLConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLConstants.swift; path = SupportingFiles/BBLConstants.swift; sourceTree = "<group>"; };
 		25AF02E61CF1228400718172 /* UIView+Bumbl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Bumbl.swift"; path = "Extensions/UIView+Bumbl.swift"; sourceTree = "<group>"; };
@@ -236,6 +240,8 @@
 				2523245B1D10BB2E009D20B0 /* BBLModalBottomButton.swift */,
 				2593FA421D69411100F754C9 /* BBLTextField.swift */,
 				2593FA441D69412100F754C9 /* BBLTextField.xib */,
+				2593FA461D699AD500F754C9 /* BBLConnectionTableViewCell.swift */,
+				2593FA471D699AD500F754C9 /* BBLConnectionTableViewCell.xib */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -489,6 +495,7 @@
 				253A106A1D112AEC00EBC02E /* BBLAddSensorViewController.xib in Resources */,
 				250659041C8BB2820003DC57 /* BBLRemoveBatteryTabViewController.xib in Resources */,
 				2506590A1C8C29120003DC57 /* BBLLoginViewController.xib in Resources */,
+				2593FA491D699AD500F754C9 /* BBLConnectionTableViewCell.xib in Resources */,
 				25AF03011CF2E04900718172 /* BBLMenuViewController.xib in Resources */,
 				25B973541C44F6EB00C5E099 /* Assets.xcassets in Resources */,
 				25B973561C44F7A000C5E099 /* LaunchScreen.storyboard in Resources */,
@@ -653,6 +660,7 @@
 				25AF02F41CF18C4900718172 /* BBLMySensorsTableViewCell.swift in Sources */,
 				252324461D0F7F12009D20B0 /* BBLSensorValueGaugeView.swift in Sources */,
 				251EE2E11C54565C00D295C3 /* UIColor+Bumbl.swift in Sources */,
+				2593FA481D699AD500F754C9 /* BBLConnectionTableViewCell.swift in Sources */,
 				2523244F1D0FCA80009D20B0 /* BBLSensorDetailViewController.swift in Sources */,
 				250658FF1C8BA1630003DC57 /* BBLIntroViewController.swift in Sources */,
 				2533A51E1C520897000F9562 /* BBLSession.swift in Sources */,
