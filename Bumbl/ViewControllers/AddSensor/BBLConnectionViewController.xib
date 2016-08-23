@@ -2,12 +2,15 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BBLConnectionViewController" customModule="Bumbl" customModuleProvider="target">
             <connections>
-                <outlet property="activityIndicatorView" destination="jdR-Ak-pe6" id="fno-DE-D8u"/>
+                <outlet property="beeLogoAlignCenterConstraint" destination="5Sd-z0-zkD" id="Ab4-1Z-Ouw"/>
                 <outlet property="connectionTableView" destination="3HA-nG-IWH" id="v7i-UR-RTp"/>
+                <outlet property="loadingMessageLabel" destination="lKB-W6-wdH" id="qyQ-1G-cfj"/>
+                <outlet property="loadingView" destination="CXv-Rb-L3T" id="Ycz-j4-bYs"/>
                 <outlet property="tableViewTopToSuperviewConstraint" destination="fGy-Lj-gyo" id="KBJ-gK-31L"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -32,25 +35,50 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="525"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </tableView>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="jdR-Ak-pe6">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CXv-Rb-L3T">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="525"/>
-                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                </activityIndicatorView>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BBLBeeLogo" translatesAutoresizingMaskIntoConstraints="NO" id="5zK-Lu-tdt">
+                            <rect key="frame" x="225" y="138" width="150" height="150"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="150" id="BDk-XX-tOL"/>
+                                <constraint firstAttribute="width" secondItem="5zK-Lu-tdt" secondAttribute="height" multiplier="1:1" id="za2-LU-cVi"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Looking for nearby sensors..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lKB-W6-wdH">
+                            <rect key="frame" x="195" y="352" width="405" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="5zK-Lu-tdt" firstAttribute="centerY" secondItem="CXv-Rb-L3T" secondAttribute="centerY" constant="-50" id="5Sd-z0-zkD"/>
+                        <constraint firstAttribute="trailing" secondItem="lKB-W6-wdH" secondAttribute="trailing" id="BEG-9i-c0c"/>
+                        <constraint firstItem="lKB-W6-wdH" firstAttribute="centerY" secondItem="CXv-Rb-L3T" secondAttribute="centerY" constant="100" id="Htf-oD-hJ3"/>
+                        <constraint firstItem="lKB-W6-wdH" firstAttribute="leading" secondItem="5zK-Lu-tdt" secondAttribute="leading" constant="-30" id="fPM-rt-pp5"/>
+                        <constraint firstItem="5zK-Lu-tdt" firstAttribute="centerX" secondItem="CXv-Rb-L3T" secondAttribute="centerX" id="uxR-vT-Bhw"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="3HA-nG-IWH" secondAttribute="trailing" id="Hro-eD-2tO"/>
                 <constraint firstAttribute="trailing" secondItem="wMD-em-wwQ" secondAttribute="trailing" id="IeW-C5-2nV"/>
-                <constraint firstAttribute="trailing" secondItem="jdR-Ak-pe6" secondAttribute="trailing" id="Mpg-ce-Ca8"/>
+                <constraint firstItem="wMD-em-wwQ" firstAttribute="top" secondItem="CXv-Rb-L3T" secondAttribute="bottom" id="QDO-K9-Rfx"/>
                 <constraint firstItem="wMD-em-wwQ" firstAttribute="top" secondItem="3HA-nG-IWH" secondAttribute="bottom" id="Rt0-nR-UJV"/>
                 <constraint firstItem="wMD-em-wwQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="TyD-JR-zbz"/>
-                <constraint firstItem="jdR-Ak-pe6" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ava-XU-qeG"/>
-                <constraint firstItem="wMD-em-wwQ" firstAttribute="top" secondItem="jdR-Ak-pe6" secondAttribute="bottom" id="c3K-c6-csl"/>
+                <constraint firstItem="CXv-Rb-L3T" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dGn-se-exx"/>
                 <constraint firstAttribute="bottom" secondItem="wMD-em-wwQ" secondAttribute="bottom" id="e2G-RN-hXO"/>
+                <constraint firstAttribute="trailing" secondItem="CXv-Rb-L3T" secondAttribute="trailing" id="emE-5A-cSX"/>
                 <constraint firstItem="3HA-nG-IWH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fGy-Lj-gyo"/>
-                <constraint firstItem="jdR-Ak-pe6" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="nG5-70-YsY"/>
                 <constraint firstItem="3HA-nG-IWH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="wEr-Bn-NSX"/>
+                <constraint firstItem="CXv-Rb-L3T" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="xqs-Zv-btA"/>
             </constraints>
         </view>
     </objects>
+    <resources>
+        <image name="BBLBeeLogo" width="119" height="142"/>
+    </resources>
 </document>
