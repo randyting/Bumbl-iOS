@@ -45,6 +45,9 @@ class BBLEditSensorViewController: UIViewController {
   @IBOutlet weak var bottomButton: BBLModalBottomButton!
   @IBOutlet weak var deleteButton: BBLModalBottomButton!
   
+  @IBOutlet var bottomTextFieldToBottomConstraint: NSLayoutConstraint!
+  @IBOutlet var productSerialNumberLabelTopToAvatarCollectionViewConstraint: NSLayoutConstraint!
+  
   @IBAction func didTapDeleteButton(sender: BBLModalBottomButton) {
     BBLParent.loggedInParent()?.removeSensor(sensor)
     sensor.disconnect()
@@ -115,6 +118,7 @@ class BBLEditSensorViewController: UIViewController {
   }
   
   private func setupTopPositionConstraint(constraint: NSLayoutConstraint) {
+    bottomTextFieldToBottomConstraint.active = false
     if let navigationController = navigationController {
       constraint.constant = navigationController.navigationBar.bounds.height + 35
     }
@@ -138,12 +142,23 @@ class BBLEditSensorViewController: UIViewController {
   
   // MARK: Keyboard Actions
   internal func keyboardWillShow(notification:NSNotification!) {
-    (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
-    // TODO: Change size of scrollview.
+    let keyboardHeight = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue().height
+    let animationDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey] as! NSTimeInterval
+    let options = UIViewAnimationOptions(rawValue: UInt((notification.userInfo![UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+    productSerialNumberLabelTopToAvatarCollectionViewConstraint.active = false
+    
+    
+    UIView.animateWithDuration(animationDuration, delay: 0.0, options:options, animations: {
+      self.bottomTextFieldToBottomConstraint.active = true
+      self.bottomTextFieldToBottomConstraint.constant = keyboardHeight
+      }, completion: nil)
+    
+    
   }
   
   internal func keyboardWillHide(notification:NSNotification!) {
-    // TODO: Change size of scrollview.
+    productSerialNumberLabelTopToAvatarCollectionViewConstraint.active = true
+    bottomTextFieldToBottomConstraint.active = false
   }
   
   internal func didTapView(tapGR: UITapGestureRecognizer!) {
@@ -186,7 +201,7 @@ extension BBLEditSensorViewController: UICollectionViewDelegate {
       
       unhighlightAvatarAtIndexPath(indexPath, inCollectionView: collectionView)
       return
-
+      
     } else if let selectedAvatar = selectedAvatar,
       let rhs = BBLAvatarsInfo.BBLAvatarType(rawValue:indexPath.row)
       where !selectedAvatar.isEqual(rhs){
@@ -198,14 +213,14 @@ extension BBLEditSensorViewController: UICollectionViewDelegate {
     }
     
     highlightAvatarAtIndexPath(indexPath, inCollectionView: collectionView)
-
+    
   }
   
   func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
     
     selectedAvatar = nil
     collectionView.cellForItemAtIndexPath(indexPath)?.contentView.backgroundColor = UIColor.clearColor()
-  
+    
   }
   
   private func unhighlightAvatarAtIndexPath(indexPath: NSIndexPath, inCollectionView collectionView: UICollectionView) {
