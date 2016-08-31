@@ -12,7 +12,7 @@ protocol BBLEditSensorViewControllerDelegate: class {
   func BBLEditSensorVC(vc: BBLEditSensorViewController, didTapBottomButton bottomButton: BBLModalBottomButton)
 }
 
-class BBLEditSensorViewController: UIViewController {
+class BBLEditSensorViewController: BBLViewController {
   
   struct BBLEditSensorViewControllerConstants {
     
@@ -80,7 +80,6 @@ class BBLEditSensorViewController: UIViewController {
     
     setupTextFields()
     setupCollectionView(avatarCollectionView)
-    BBLsetupBlueNavigationBar(navigationController?.navigationBar)
     setupTopPositionConstraint(avatarTitleLabelTopConstraint)
     setupNotificationsForVC(self)
     setupGestureRecognizersForView(view)

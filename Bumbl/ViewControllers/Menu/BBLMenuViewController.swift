@@ -13,7 +13,7 @@ protocol BBLMenuViewControllerDelegate: class {
   optional func BBLmenuViewController(menuViewController: BBLMenuViewController, didDismiss: Bool)
 }
 
-class BBLMenuViewController: UIViewController {
+class BBLMenuViewController: BBLViewController {
   
   // MARK: Public Variables
   
@@ -31,8 +31,8 @@ class BBLMenuViewController: UIViewController {
   // MARK: Lifecycle
   
   override func viewDidLoad() {
+    super.viewDidLoad()
     setupNavigationItem(navigationItem)
-    setupNavigationBar(navigationController?.navigationBar)
     setupLogoutButtonAppearance(logoutButton)
     setupVersionAndBuildNumberLabel(versionAndBuildNumberLabel)
   }
@@ -48,12 +48,6 @@ class BBLMenuViewController: UIViewController {
   
   @objc internal func didTapDismissButton(sender: UIBarButtonItem) {
     delegate?.BBLmenuViewController?(self, didDismiss: true)
-  }
-  
-  private func setupNavigationBar(navBar: UINavigationBar?) {
-    navBar?.barTintColor = UIColor.BBLLightBlueNavBarColor()
-    navBar?.tintColor = UIColor.blackColor()
-    navBar?.titleTextAttributes = [ NSForegroundColorAttributeName : UIColor.whiteColor()]
   }
   
   private func setupLogoutButtonAppearance(button: UIButton) {

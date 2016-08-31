@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BBLEmergencyContactsViewController: UIViewController {
+class BBLEmergencyContactsViewController: BBLViewController {
   
   // MARK: Lifecycle
   
@@ -23,7 +23,6 @@ class BBLEmergencyContactsViewController: UIViewController {
   private func setupNavigationItem(navItem: UINavigationItem) {
     
     BBLsetupHamburgerMenuForNavItem(navItem)
-    BBLsetupBlueNavigationBar(navigationController?.navigationBar)
   }
   
 }
