@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BBLMySensorsViewController: UIViewController {
+class BBLMySensorsViewController: BBLViewController {
   
   // MARK: Constants
   
@@ -95,7 +95,6 @@ class BBLMySensorsViewController: UIViewController {
   private func setupNavigationItem(navItem: UINavigationItem) {
     
     BBLsetupHamburgerMenuForNavItem(navItem)
-    BBLsetupBlueNavigationBar(navigationController?.navigationBar)
   }
   
   private func updateTableView() {

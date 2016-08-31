@@ -16,7 +16,7 @@ class BBLAddSensorViewController: BBLEditSensorViewController {
     deleteButton.hidden = true
     navigationItem.rightBarButtonItems?.removeAll()
     navigationItem.hidesBackButton = true
-    title = "ADD SENSOR"
+    title = "Add Sensor"
     
   }
   
