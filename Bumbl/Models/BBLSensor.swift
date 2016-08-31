@@ -59,15 +59,15 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     get {
       switch (stateMachine.state) {
       case .Activated:
-        return "Activated"
+        return "Armed (child in seat)"
       case .Deactivated:
-        return "Deactivated"
+        return "Connected (no child)"
       case .Disconnected:
         return "Disconnected"
       case .WaitingToBeActivated:
-        return "Waiting To Be Activated"
+        return "Arming..."
       case .WaitingToBeDeactivated:
-        return "Waiting To Be Deactivated"
+        return "Disarming..."
       }
     }
   }
