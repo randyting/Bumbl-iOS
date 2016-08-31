@@ -9,11 +9,12 @@
 import UIKit
 
 class BBLViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        BBLsetupBlueNavigationBar(navigationController?.navigationBar)
-    }
-
-
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    BBLsetupBlueNavigationBar(navigationController?.navigationBar)
+    navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .Plain, target: nil, action: nil)
+  }
+  
+  
 }
