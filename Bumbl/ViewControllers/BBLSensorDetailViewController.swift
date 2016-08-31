@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class BBLSensorDetailViewController: UIViewController {
+class BBLSensorDetailViewController: BBLViewController {
   
   // MARK: Public Variables
   

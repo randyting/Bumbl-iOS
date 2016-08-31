@@ -81,6 +81,17 @@ class BBLTextField: UIView {
     super.awakeFromNib()
   }
   
+  // MARK: Validations
+  
+  internal func isValidEmailWithString(checkString: String, isStrict strict: Bool) -> Bool {
+    let stricterFilter = strict
+    let stricterFilterString = "[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}"
+    let laxString = ".+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*"
+    let emailRegex = stricterFilter ? stricterFilterString : laxString
+    let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+    return emailTest.evaluateWithObject(checkString)
+  }
+  
 }
 
 extension BBLTextField: UITextFieldDelegate {

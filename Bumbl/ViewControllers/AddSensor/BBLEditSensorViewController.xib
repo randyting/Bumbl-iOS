@@ -10,7 +10,9 @@
                 <outlet property="avatarTitleLabelTopConstraint" destination="x4S-eR-AGe" id="koc-zt-1sm"/>
                 <outlet property="babyNameTextField" destination="HPC-H4-kyI" id="ReM-5D-gVv"/>
                 <outlet property="bottomButton" destination="Hvi-7B-vfj" id="Yn4-8A-ZMN"/>
+                <outlet property="bottomTextFieldToBottomConstraint" destination="ner-X7-P00" id="b85-Zp-MPz"/>
                 <outlet property="deleteButton" destination="4uS-Uz-9Fo" id="6Ep-5q-yh0"/>
+                <outlet property="productSerialNumberLabelTopToAvatarCollectionViewConstraint" destination="7Dd-UF-aVv" id="QPw-3y-EfS"/>
                 <outlet property="productSerialNumberTextField" destination="c2R-1e-Mi9" id="sQp-K3-dQB"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -21,7 +23,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="c2R-1e-Mi9" customClass="BBLTextField" customModule="Bumbl" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="170" width="600" height="60"/>
+                    <rect key="frame" x="0.0" y="480" width="600" height="60"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="0im-uD-t3D"/>
                     </constraints>
@@ -29,12 +31,12 @@
                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                 </textField>
                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HPC-H4-kyI" customClass="BBLTextField" customModule="Bumbl" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="230" width="600" height="60"/>
+                    <rect key="frame" x="0.0" y="540" width="600" height="60"/>
                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Avatar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V2k-yX-WpL">
-                    <rect key="frame" x="18" y="35" width="564" height="21"/>
+                    <rect key="frame" x="18" y="35" width="564" height="331"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -51,7 +53,7 @@
                     </connections>
                 </button>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="sjO-iR-Ow8">
-                    <rect key="frame" x="18" y="66" width="564" height="60"/>
+                    <rect key="frame" x="18" y="376" width="564" height="60"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="60" id="Aw9-rZ-jhR"/>
                     </constraints>
@@ -91,6 +93,7 @@
                 <constraint firstItem="Hvi-7B-vfj" firstAttribute="top" secondItem="4uS-Uz-9Fo" secondAttribute="bottom" id="g3d-PJ-Yih"/>
                 <constraint firstAttribute="trailing" secondItem="V2k-yX-WpL" secondAttribute="trailing" constant="18" id="gDH-SG-OhC"/>
                 <constraint firstItem="HPC-H4-kyI" firstAttribute="width" secondItem="c2R-1e-Mi9" secondAttribute="width" id="lEd-Ze-vuE"/>
+                <constraint firstAttribute="bottom" secondItem="HPC-H4-kyI" secondAttribute="bottom" id="ner-X7-P00"/>
                 <constraint firstAttribute="trailing" secondItem="4uS-Uz-9Fo" secondAttribute="trailing" id="qSi-cF-fR6"/>
                 <constraint firstItem="sjO-iR-Ow8" firstAttribute="leading" secondItem="V2k-yX-WpL" secondAttribute="leading" id="rX1-41-Jhw"/>
                 <constraint firstAttribute="bottom" secondItem="Hvi-7B-vfj" secondAttribute="bottom" id="sM6-RL-ae9"/>

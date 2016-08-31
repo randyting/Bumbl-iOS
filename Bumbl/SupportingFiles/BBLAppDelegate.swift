@@ -73,6 +73,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   private func setupParse() {
     BBLParent.registerSubclass()
     BBLSensor.registerSubclass()
+    BBLContact.registerSubclass()
     Parse.setApplicationId("HHgxoEaLenjAwxhAqOGziC9SkHaIi4oeTibRFczc", clientKey: "fK00wH0VssppmFZywgP6pRQQUhvsqLpGG6HYFu5u")
   }
   
