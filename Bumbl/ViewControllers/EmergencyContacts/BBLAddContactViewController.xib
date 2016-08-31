@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BBLAddContactViewController" customModule="Bumbl" customModuleProvider="target">
+            <connections>
+                <outlet property="emailTextField" destination="Ft5-yP-oWu" id="waE-Vo-Ali"/>
+                <outlet property="firstNameTextField" destination="RQ6-FI-cQD" id="nzm-4i-L5J"/>
+                <outlet property="importContactButton" destination="Qkb-Ha-gSp" id="2Jm-wg-cpi"/>
+                <outlet property="lastNameTextField" destination="bQQ-4Q-MAH" id="OqZ-zy-vc9"/>
+                <outlet property="phoneNumberTextField" destination="P90-bx-E71" id="zUx-fC-B4b"/>
+                <outlet property="topStackViewToContainerTopConstraint" destination="ZsD-zR-gsj" id="J6b-Og-5Qi"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="bV3-uT-E7K">
+                    <rect key="frame" x="0.0" y="40" width="600" height="240"/>
+                    <subviews>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RQ6-FI-cQD" customClass="BBLTextField" customModule="Bumbl" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="5q8-tv-4X5"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bQQ-4Q-MAH" customClass="BBLTextField" customModule="Bumbl" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="60" width="600" height="60"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P90-bx-E71" customClass="BBLTextField" customModule="Bumbl" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="120" width="600" height="60"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ft5-yP-oWu" customClass="BBLTextField" customModule="Bumbl" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="180" width="600" height="60"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                        </textField>
+                    </subviews>
+                </stackView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Yfg-Lz-Qml">
+                    <rect key="frame" x="0.0" y="450" width="600" height="150"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qkb-Ha-gSp" customClass="BBLModalBottomButton" customModule="Bumbl" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="75"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="75" id="oSV-Ik-gMm"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="75" id="wXk-dI-Vac"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                            <state key="normal" title="Import Contact"/>
+                            <connections>
+                                <action selector="didTapImportContactButton:" destination="-1" eventType="touchUpInside" id="Zq5-m8-XJw"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMh-bK-yNJ" customClass="BBLModalBottomButton" customModule="Bumbl" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="75" width="600" height="75"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="75" id="5q3-rG-CQn"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                            <state key="normal" title="Done"/>
+                            <connections>
+                                <action selector="didTapDoneButton:" destination="-1" eventType="touchUpInside" id="ikO-2N-HyA"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="Yfg-Lz-Qml" secondAttribute="bottom" id="Gma-Ap-Qtk"/>
+                <constraint firstAttribute="trailing" secondItem="bV3-uT-E7K" secondAttribute="trailing" id="MdA-0K-rzp"/>
+                <constraint firstItem="bV3-uT-E7K" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="40" id="ZsD-zR-gsj"/>
+                <constraint firstItem="Yfg-Lz-Qml" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="anj-oO-CUW"/>
+                <constraint firstItem="bV3-uT-E7K" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dg5-rg-XOy"/>
+                <constraint firstAttribute="trailing" secondItem="Yfg-Lz-Qml" secondAttribute="trailing" id="r0N-AK-tj9"/>
+            </constraints>
+        </view>
+    </objects>
+</document>
