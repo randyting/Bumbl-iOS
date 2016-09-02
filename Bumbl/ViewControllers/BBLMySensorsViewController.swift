@@ -238,11 +238,15 @@ extension BBLMySensorsViewController: BBLParentDelegate {
 
 extension BBLMySensorsViewController: BBLSensorDelegate {
   internal func sensor(sensor: BBLSensor, didUpdateSensorValue value: UInt) {
-    updateTableViewCellSensorValueForSensor(sensor)
+    if let sensors = loggedInParent.sensors where sensors.contains(sensor){
+      updateTableViewCellSensorValueForSensor(sensor)
+    }
   }
   
   internal func sensor(sensor: BBLSensor, didChangeState state: BBLSensorState) {
-    updateTableViewCellSensorValueForSensor(sensor)
+    if let sensors = loggedInParent.sensors where sensors.contains(sensor){
+      updateTableViewCellSensorValueForSensor(sensor)
+    }
   }
   
   internal func sensor(sensor: BBLSensor, didDidFailToDeleteSensorWithErrorMessage errorMessage: String) {

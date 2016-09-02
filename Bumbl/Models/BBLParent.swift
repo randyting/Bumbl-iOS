@@ -60,6 +60,7 @@ internal final class BBLParent: PFUser {
         self.delegate?.parent?(self, didFailRemoveSensor: sensor, withErrorMessage: error.localizedDescription)
       } else {
         self.delegate?.parent?(self, didRemoveSensor: sensor)
+        sensor.disconnect()
       }
     }
   }
