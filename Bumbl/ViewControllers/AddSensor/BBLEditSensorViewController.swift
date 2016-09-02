@@ -50,7 +50,6 @@ class BBLEditSensorViewController: BBLViewController {
   
   @IBAction func didTapDeleteButton(sender: BBLModalBottomButton) {
     BBLParent.loggedInParent()?.removeSensor(sensor)
-    sensor.disconnect()
   }
   
   @IBAction func didTapBottomButton(sender: BBLModalBottomButton) {
