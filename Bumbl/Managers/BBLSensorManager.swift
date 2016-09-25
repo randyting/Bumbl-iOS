@@ -23,6 +23,7 @@ class BBLSensorManager: NSObject {
   
   // MARK: Public Variables
   
+  internal var peripheralsToDiscoverServices = Set<CBPeripheral>()
   internal var connectedSensors = Set<BBLSensor>()
   internal var discoveredSensors = Set<BBLSensor>()
   internal weak var profileSensors:NSMutableSet!
@@ -32,25 +33,22 @@ class BBLSensorManager: NSObject {
     }
   }
   
+  internal var centralManager: CBCentralManager!
+  
   // MARK: Private Variables
   fileprivate let delegates: NSHashTable<AnyObject>  = NSHashTable.weakObjects()
-  fileprivate let centralManager:CBCentralManager!
   fileprivate var disconnectAllSensorsCompletionBlock: (()->())?
   
   // MARK: Initialization
   
-  internal init(withCentralManager centralManager: CBCentralManager!,
-    withProfileSensors profileSensors:NSMutableSet?) {
-      
-      self.centralManager = centralManager
-      if let profileSensors = profileSensors {
-        self.profileSensors = profileSensors
-      } else {
-        self.profileSensors = NSMutableSet()
-      }
-      super.init()
-      
-      centralManager.delegate = self
+  internal init(withProfileSensors profileSensors:NSMutableSet?) {
+    
+    if let profileSensors = profileSensors {
+      self.profileSensors = profileSensors
+    } else {
+      self.profileSensors = NSMutableSet()
+    }
+    super.init()
   }
   
   // MARK: Delegates
@@ -101,7 +99,7 @@ class BBLSensorManager: NSObject {
   internal func disconnectSensor(_ sensor: BBLSensor!) {
     
     guard let peripheral = sensor.peripheral else {
-        return
+      return
     }
     
     centralManager.cancelPeripheralConnection(peripheral)
@@ -156,9 +154,9 @@ extension BBLSensorManager: CBCentralManagerDelegate {
     
     if let disconnectAllSensorsCompletionBlock = disconnectAllSensorsCompletionBlock
       , connectedSensors.count == 0 {
-        disconnectAllSensorsCompletionBlock()
-        self.disconnectAllSensorsCompletionBlock = nil
-        return
+      disconnectAllSensorsCompletionBlock()
+      self.disconnectAllSensorsCompletionBlock = nil
+      return
     }
     
     for sensor in connectedSensors {
@@ -240,17 +238,47 @@ extension BBLSensorManager: CBCentralManagerDelegate {
         self.discoveredSensors.insert(discoveredSensor)
         self.callDelegates{$0.sensorManager?(self, didDiscoverSensor: discoveredSensor)}
       }
-    
+      
     }
     
   }
   
   internal func centralManager(_ central: CBCentralManager, willRestoreState dict: [String : Any]) {
-    //TODO
+    
+    let peripherals = dict[CBCentralManagerRestoredStatePeripheralsKey] as? [CBPeripheral]
+    
+    guard let savedPeripherals = peripherals else {
+      fatalError("Central Manager restored without peripherals")
+    }
+    
+    for peripheral in savedPeripherals {
+      
+      let uuid = peripheral.name
+      
+      if let profileSensors = profileSensors , profileSensors.count != 0 {
+        for sensor in profileSensors {
+          let thisSensor = sensor as! BBLSensor
+          if uuid == thisSensor.uuid {
+            thisSensor.sensorManager = self
+            thisSensor.peripheral = peripheral
+            thisSensor.onDidConnect()
+            connectedSensors.insert(thisSensor)
+            callDelegates{$0.sensorManager?(self, didConnectSensor: thisSensor)}
+          }
+        }
+      }
+      
+    }
+    
+    
   }
   
   internal func centralManagerDidUpdateState(_ central: CBCentralManager) {
     if central.state == .poweredOn {
+      for peripheral in peripheralsToDiscoverServices {
+        peripheral.discoverServices([BBLSensorInfo.kSensorServiceUUID])
+        peripheralsToDiscoverServices.remove(peripheral)
+      }
       scanForSensors()
     } else if central.state == .poweredOff {
       for sensor in connectedSensors {

@@ -82,6 +82,7 @@ class BBLConnectionViewController: UIViewController {
   
   fileprivate func setupSensorManager(_ sensorManger: BBLSensorManager) {
     sensorManager.registerDelegate(self)
+    sensorManager.scanForSensors()
   }
   
   fileprivate func updateTableView() {
