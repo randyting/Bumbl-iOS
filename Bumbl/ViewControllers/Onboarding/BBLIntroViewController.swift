@@ -15,7 +15,7 @@ internal class BBLIntroViewController: UIViewController {
   
   @IBOutlet weak var nextButton: UIButton!
   
-  @IBAction func didTapNextButton(sender: UIButton) {
+  @IBAction func didTapNextButton(_ sender: UIButton) {
     navigationController?.pushViewController(BBLRemoveBatteryTabViewController(), animated: true)
   }
   
@@ -28,9 +28,9 @@ internal class BBLIntroViewController: UIViewController {
   
   // MARK: Initial Setup
   
-  private func setupAppearance() {
+  fileprivate func setupAppearance() {
     nextButton.tintColor = UIColor.BBLNavyBlueColor();
-    view.backgroundColor = UIColor.whiteColor()
+    view.backgroundColor = UIColor.white
   }
   
 }

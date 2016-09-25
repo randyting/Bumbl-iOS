@@ -13,7 +13,7 @@ class BBLAddSensorViewController: BBLEditSensorViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    deleteButton.hidden = true
+    deleteButton.isHidden = true
     navigationItem.rightBarButtonItems?.removeAll()
     navigationItem.hidesBackButton = true
     title = "Add Sensor"

@@ -21,12 +21,10 @@ internal final class BBLSession: NSObject {
       self.startScanWithSensorManager(sensorManager)
   }
   
-  private func startScanWithSensorManager(sensorManager: BBLSensorManager) {
+  fileprivate func startScanWithSensorManager(_ sensorManager: BBLSensorManager) {
     sensorManager.registerDelegate(self)
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW,
-      Int64(0.5 * Double(NSEC_PER_SEC))),
-      dispatch_get_main_queue()) {
+    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(0.5 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
         () -> Void in
         // Must wait for sensorManager to be in powered on state before scanning
         sensorManager.scanForSensors()
@@ -37,9 +35,9 @@ internal final class BBLSession: NSObject {
 
 extension BBLSession: BBLSensorManagerDelegate {
   
-  func sensorManager(sensorManager: BBLSensorManager, didConnectSensor sensor: BBLSensor) {
+  func sensorManager(_ sensorManager: BBLSensorManager, didConnectSensor sensor: BBLSensor) {
     print("Did connect to sensor " + sensor.description)
-    if parent.profileSensors.containsObject(sensor){
+    if parent.profileSensors.contains(sensor){
       parent.addSensor(sensor)
     } else {
       sensor.incrementParentsCount()
@@ -48,15 +46,15 @@ extension BBLSession: BBLSensorManagerDelegate {
     
   }
   
-  func sensorManager(sensorManager: BBLSensorManager, didAttemptToScanWhileBluetoothRadioIsOff isBluetoothRadioOff: Bool) {
+  func sensorManager(_ sensorManager: BBLSensorManager, didAttemptToScanWhileBluetoothRadioIsOff isBluetoothRadioOff: Bool) {
     print("Did attempt to scan while BT radio is off.")
   }
   
-  func sensorManager(sensorManager: BBLSensorManager, didDisconnectSensor sensor: BBLSensor) {
+  func sensorManager(_ sensorManager: BBLSensorManager, didDisconnectSensor sensor: BBLSensor) {
     print("Did disconnect sensor " + sensor.description)
   }
   
-  func sensorManager(sensorManager: BBLSensorManager, didDiscoverSensor sensor: BBLSensor) {
+  func sensorManager(_ sensorManager: BBLSensorManager, didDiscoverSensor sensor: BBLSensor) {
     print("Did discover sensor " + sensor.description)
   }
 }

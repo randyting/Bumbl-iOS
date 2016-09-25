@@ -103,11 +103,11 @@ extension UIColor {
   }
   
   
-  private class func BBLColorfromHexString(hexString: String) -> UIColor {
+  fileprivate class func BBLColorfromHexString(_ hexString: String) -> UIColor {
     var rgbValue: UInt32 = 0
-    let scanner = NSScanner(string: hexString)
+    let scanner = Scanner(string: hexString)
     scanner.scanLocation = 1
-    scanner.scanHexInt(&rgbValue)
+    scanner.scanHexInt32(&rgbValue)
     return UIColor(
       red: CGFloat((rgbValue >> 16) & 0xff) / 255,
       green: CGFloat((rgbValue >> 08) & 0xff) / 255,

@@ -8,35 +8,57 @@
 
 import UIKit
 import CoreBluetooth
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 internal enum BBLSensorState {
-  case Disconnected, Deactivated, WaitingToBeActivated, Activated, WaitingToBeDeactivated
+  case disconnected, deactivated, waitingToBeActivated, activated, waitingToBeDeactivated
 }
 
 protocol BBLSensorDelegate: class {
-  func sensor(sensor: BBLSensor, didUpdateRSSI rssi: NSNumber)
-  func sensor(sensor: BBLSensor, didUpdateSensorValue value: UInt)
-  func sensor(sensor: BBLSensor, didDidFailToDeleteSensorWithErrorMessage errorMessage: String)
-  func sensor(sensor: BBLSensor, didChangeState state: BBLSensorState)
+  func sensor(_ sensor: BBLSensor, didUpdateRSSI rssi: NSNumber)
+  func sensor(_ sensor: BBLSensor, didUpdateSensorValue value: UInt)
+  func sensor(_ sensor: BBLSensor, didDidFailToDeleteSensorWithErrorMessage errorMessage: String)
+  func sensor(_ sensor: BBLSensor, didChangeState state: BBLSensorState)
 }
 
 internal final class BBLSensor: PFObject, PFSubclassing {
   
+  private static var __once: () = {
+    registerSubclass()
+  }()
+  
   // MARK: Constants
   
-  private struct BBLSensorConstants {
-    private static let defaultName = "Please Enter Baby Name"
+  fileprivate struct BBLSensorConstants {
+    fileprivate static let defaultName = "Please Enter Baby Name"
   }
   
   // MARK: PFObject Subclassing
   
   override class func initialize() {
     struct Static {
-      static var onceToken : dispatch_once_t = 0;
+      static var onceToken : Int = 0;
     }
-    dispatch_once(&Static.onceToken) {
-      self.registerSubclass()
-    }
+    _ = BBLSensor.__once
   }
   
   static func parseClassName() -> String {
@@ -45,10 +67,10 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   // MARK: Public Variables
   @NSManaged internal var name: String?
-  @NSManaged private(set) var uuid: String?
+  @NSManaged fileprivate(set) var uuid: String?
   @NSManaged internal var capSenseThreshold:UInt
   @NSManaged internal var delayInSeconds:Int
-  @NSManaged private(set) var connectedParent:BBLParent?
+  @NSManaged fileprivate(set) var connectedParent:BBLParent?
   @NSManaged internal var avatar: Int
   internal weak var delegate: BBLSensorDelegate?
   internal var rssi: NSNumber?
@@ -58,21 +80,21 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   var stateAsString: String! {
     get {
       switch (stateMachine.state) {
-      case .Activated:
+      case .activated:
         return "Armed (child in seat)"
-      case .Deactivated:
+      case .deactivated:
         return "Connected (no child)"
-      case .Disconnected:
+      case .disconnected:
         return "Disconnected"
-      case .WaitingToBeActivated:
+      case .waitingToBeActivated:
         return "Arming..."
-      case .WaitingToBeDeactivated:
+      case .waitingToBeDeactivated:
         return "Disarming..."
       }
     }
   }
   
-  private var hasBaby:Bool {
+  fileprivate var hasBaby:Bool {
     get {
       if let _ = capSenseValue {
         return capSenseValue > capSenseThreshold
@@ -87,11 +109,11 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   // MARK: Private Variables
   
-  @NSManaged private var parentsCount: Int
-  private var countdownTimer:NSTimer!
-  private(set) var capSenseValue:UInt?
-  private var rebaselineCharacteristic: CBCharacteristic?
-  private var backgroundUpdateTask: UIBackgroundTaskIdentifier = 0
+  @NSManaged fileprivate var parentsCount: Int
+  fileprivate var countdownTimer:Timer!
+  fileprivate(set) var capSenseValue:UInt?
+  fileprivate var rebaselineCharacteristic: CBCharacteristic?
+  fileprivate var backgroundUpdateTask: UIBackgroundTaskIdentifier = 0
   
   // MARK: Initialization
   
@@ -111,13 +133,13 @@ internal final class BBLSensor: PFObject, PFSubclassing {
     self.name = BBLSensorConstants.defaultName
     self.delayInSeconds = delayInSeconds
     peripheral?.delegate = self
-    self.stateMachine = BBLStateMachine(initialState: .Disconnected, delegate: self)
+    self.stateMachine = BBLStateMachine(initialState: .disconnected, delegate: self)
   }
   
   // MARK: Class Methods
   
   // Class initializer for instantiating an existing peripheral loaded from the server or persistent storage.
-  class func  sensorWith(peripheral: CBPeripheral?,
+  class func  sensorWith(_ peripheral: CBPeripheral?,
     withSensorManager sensorManager: BBLSensorManager!,
   withfromJSONDictionary dictionary: [String:AnyObject]) -> BBLSensor {
     
@@ -135,7 +157,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   }
   
   // Class initializer for instantating a sensor from connection.
-  class func  sensorWith(peripheral: CBPeripheral!,
+  class func  sensorWith(_ peripheral: CBPeripheral!,
                          withSensorManager sensorManager: BBLSensorManager!) -> BBLSensor {
     
     return BBLSensor.init(withPeripheral: peripheral,
@@ -155,7 +177,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   internal func decrementParentsCount() {
     parentsCount -= 1
     if parentsCount == 0 {
-      deleteInBackgroundWithBlock({ (success: Bool, error: NSError?) -> Void in
+      deleteInBackground(block: { (success: Bool, error: Error?) -> Void in
         if let error = error {
           self.delegate?.sensor(self, didDidFailToDeleteSensorWithErrorMessage: error.localizedDescription)
         }
@@ -173,31 +195,31 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   internal func disconnect() {
     if let _ = self.peripheral {
-      if (sensorManager.state == .PoweredOff) {
-        stateMachine.state = .Disconnected
+      if (sensorManager.state == .poweredOff) {
+        stateMachine.state = .disconnected
       }
       sensorManager.disconnectSensor(self)
     }
   }
   
   internal func onDidConnect() {
-    stateMachine.state = .Deactivated
+    stateMachine.state = .deactivated
   }
   
   internal func onDidDisconnect() {
-    stateMachine.state = .Disconnected
+    stateMachine.state = .disconnected
   }
   
-  private func alertUserWithMessage(message: String, andTitle title:String) {
+  fileprivate func alertUserWithMessage(_ message: String, andTitle title:String) {
     let notification = UILocalNotification()
     notification.alertAction = nil
     notification.alertTitle = title
     notification.alertBody = name! + message
-    notification.fireDate = NSDate(timeIntervalSinceNow: 0)
-    notification.timeZone = NSTimeZone.defaultTimeZone()
-    notification.repeatInterval = NSCalendarUnit.Second
+    notification.fireDate = Date(timeIntervalSinceNow: 0)
+    notification.timeZone = TimeZone.current
+    notification.repeatInterval = NSCalendar.Unit.second
     notification.soundName = "default" //required for vibration?
-    UIApplication.sharedApplication().presentLocalNotificationNow(notification)
+    UIApplication.shared.presentLocalNotificationNow(notification)
   }
   
   internal func updateToDisconnectedState() {
@@ -208,7 +230,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   internal func rebaseline() {
     if let rebaselineCharacteristic = rebaselineCharacteristic {
-      peripheral?.writeValue(BBLSensorInfo.kRebaselineValue!, forCharacteristic: rebaselineCharacteristic, type: CBCharacteristicWriteType.WithResponse)
+      peripheral?.writeValue(BBLSensorInfo.kRebaselineValue!, for: rebaselineCharacteristic, type: CBCharacteristicWriteType.withResponse)
     }
   }
   
@@ -218,30 +240,30 @@ internal final class BBLSensor: PFObject, PFSubclassing {
 
 extension BBLSensor: CBPeripheralDelegate {
   
-  internal func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+  internal func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
     
-    let uuid = characteristic.UUID
+    let uuid = characteristic.uuid
     
     if uuid == BBLSensorInfo.kCapSenseValueCharacteristicUUID {
       var value: UInt = 0
-      characteristic.value?.BBLswapUInt16Data()?.getBytes(&value, length: 2)
+      (characteristic.value?.BBLswapUInt16Data() as NSData?)?.getBytes(&value, length: 2)
       capSenseValue = value
       
       delegate?.sensor(self, didUpdateSensorValue: capSenseValue!)
       
       switch (stateMachine.state as BBLSensorState) {
-      case .Deactivated:
-        if hasBaby { stateMachine.state = .WaitingToBeActivated }
-      case .WaitingToBeActivated:
+      case .deactivated:
+        if hasBaby { stateMachine.state = .waitingToBeActivated }
+      case .waitingToBeActivated:
         if !hasBaby {
-          stateMachine.state = .Deactivated
+          stateMachine.state = .deactivated
           stopCountdownTimer(countdownTimer)
         }
-      case .Activated:
-        if !hasBaby { stateMachine.state = .WaitingToBeDeactivated }
-      case .WaitingToBeDeactivated:
+      case .activated:
+        if !hasBaby { stateMachine.state = .waitingToBeDeactivated }
+      case .waitingToBeDeactivated:
         if hasBaby {
-          stateMachine.state = .Activated
+          stateMachine.state = .activated
           stopCountdownTimer(countdownTimer)
         }
       default:
@@ -251,19 +273,19 @@ extension BBLSensor: CBPeripheralDelegate {
     }
   }
   
-  internal func peripheral(peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: NSError?) {
+  internal func peripheral(_ peripheral: CBPeripheral, didReadRSSI RSSI: NSNumber, error: Error?) {
     rssi = RSSI
   }
   
-  internal func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
-    peripheral.discoverCharacteristics([BBLSensorInfo.kCapSenseValueCharacteristicUUID, BBLSensorInfo.kCapSenseValueCharacteristicUUID], forService: (peripheral.services?.first)!)
+  internal func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+    peripheral.discoverCharacteristics([BBLSensorInfo.kCapSenseValueCharacteristicUUID, BBLSensorInfo.kCapSenseValueCharacteristicUUID], for: (peripheral.services?.first)!)
   }
   
-  internal func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
+  internal func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
     if let characteristics = service.characteristics {
       for characteristic in characteristics {
-        if characteristic.UUID == BBLSensorInfo.kCapSenseValueCharacteristicUUID {
-          peripheral.setNotifyValue(true, forCharacteristic: characteristic)
+        if characteristic.uuid == BBLSensorInfo.kCapSenseValueCharacteristicUUID {
+          peripheral.setNotifyValue(true, for: characteristic)
           rebaselineCharacteristic = characteristic
         }
       }
@@ -271,7 +293,7 @@ extension BBLSensor: CBPeripheralDelegate {
     
   }
   
-  internal func peripheral(peripheral: CBPeripheral, didWriteValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+  internal func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
     if let error = error {
       print(error.localizedDescription + " Failed to write to characteristic: " + characteristic.description)
     }
@@ -284,56 +306,56 @@ extension BBLSensor: CBPeripheralDelegate {
 extension BBLSensor:BBLStateMachineDelegateProtocol{
   typealias StateType = BBLSensorState
   
-  internal func shouldTransitionFrom(from:StateType, to:StateType)->Bool{
+  internal func shouldTransitionFrom(_ from:StateType, to:StateType)->Bool{
     switch (from, to){
-    case (.Disconnected, .Deactivated),
-         (.Deactivated, .Disconnected),
-         (.Deactivated, .WaitingToBeActivated),
-         (.WaitingToBeActivated, .Deactivated),
-         (.WaitingToBeActivated, .Activated),
-         (.Activated, .WaitingToBeDeactivated),
-         (.WaitingToBeDeactivated, .Activated),
-         (.WaitingToBeDeactivated, .Deactivated):
+    case (.disconnected, .deactivated),
+         (.deactivated, .disconnected),
+         (.deactivated, .waitingToBeActivated),
+         (.waitingToBeActivated, .deactivated),
+         (.waitingToBeActivated, .activated),
+         (.activated, .waitingToBeDeactivated),
+         (.waitingToBeDeactivated, .activated),
+         (.waitingToBeDeactivated, .deactivated):
       return true
-    case (_, .Disconnected):
+    case (_, .disconnected):
       return true
     default:
       return false
     }
   }
   
-  internal func didTransitionFrom(from:StateType, to:StateType){
+  internal func didTransitionFrom(_ from:StateType, to:StateType){
     switch (from, to){
       
-    case (.Disconnected, .Deactivated):
+    case (.disconnected, .deactivated):
       connectedParent = BBLParent.loggedInParent()
       peripheral!.discoverServices([BBLSensorInfo.kSensorServiceUUID])
       peripheral!.delegate = self
       // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
       peripheral?.readRSSI()
       
-    case (.Deactivated, .WaitingToBeActivated):
+    case (.deactivated, .waitingToBeActivated):
       startCountdownForTimeInSeconds(delayInSeconds)
       
-    case (.Activated, .WaitingToBeDeactivated):
+    case (.activated, .waitingToBeDeactivated):
       startCountdownForTimeInSeconds(delayInSeconds)
       
-    case (.WaitingToBeActivated, .Activated):
+    case (.waitingToBeActivated, .activated):
       alertUserWithMessage(BBLSensorInfo.Alerts.sensorActivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorActivatedAlertTitle)
       BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self)
       
-    case (.WaitingToBeDeactivated, .Deactivated):
+    case (.waitingToBeDeactivated, .deactivated):
       alertUserWithMessage(BBLSensorInfo.Alerts.sensorDeactivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorDeactivatedAlertTitle)
       
-    case (.Activated, .Disconnected):
+    case (.activated, .disconnected):
       afterDisconnection()
       alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
       
-    case (.WaitingToBeDeactivated, .Disconnected):
+    case (.waitingToBeDeactivated, .disconnected):
       afterDisconnection()
       alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
       
-    case (_, .Disconnected):
+    case (_, .disconnected):
       afterDisconnection()
       
     default:
@@ -344,10 +366,10 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
     
   }
   
-  private func afterDisconnection(){
+  fileprivate func afterDisconnection(){
     stopCountdownTimer(countdownTimer)
     connectedParent = nil
-    saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+    saveInBackground { (success: Bool, error: Error?) -> Void in
       if let error = error {
         print(error.localizedDescription)
       }
@@ -358,16 +380,16 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
 // MARK: Timer
 
 extension BBLSensor {
-  private func startCountdownForTimeInSeconds(seconds: Int) {
-    countdownTimer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(seconds), target: self, selector: #selector(BBLSensor.countdownEnded(_:)), userInfo: nil, repeats: false)
+  fileprivate func startCountdownForTimeInSeconds(_ seconds: Int) {
+    countdownTimer = Timer.scheduledTimer(timeInterval: TimeInterval(seconds), target: self, selector: #selector(BBLSensor.countdownEnded(_:)), userInfo: nil, repeats: false)
   }
   
-  internal func countdownEnded(timer: NSTimer) {
+  internal func countdownEnded(_ timer: Timer) {
     switch stateMachine.state {
-    case .WaitingToBeActivated:
-      stateMachine.state = .Activated
-    case .WaitingToBeDeactivated:
-      stateMachine.state = .Deactivated
+    case .waitingToBeActivated:
+      stateMachine.state = .activated
+    case .waitingToBeDeactivated:
+      stateMachine.state = .deactivated
     default:
       print("Sensor countdown ended from a state that is not WaitingToBeActivated or WaitingToBeDeactivated.")
     }
@@ -375,7 +397,7 @@ extension BBLSensor {
     stopCountdownTimer(timer)
   }
   
-  private func stopCountdownTimer(timer: NSTimer?) {
+  fileprivate func stopCountdownTimer(_ timer: Timer?) {
     if let timer = timer {
       timer.invalidate()
     }

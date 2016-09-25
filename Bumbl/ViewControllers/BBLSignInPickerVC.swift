@@ -11,24 +11,24 @@ import UIKit
 class BBLSignInPickerVC: UIViewController {
   
   // MARK: Public Variables
-  internal var userDefaults: NSUserDefaults?
+  internal var userDefaults: UserDefaults?
   
   // MARK: Interface Builder
   
   @IBOutlet weak var registerButton: UIButton!
   @IBOutlet weak var loginButton: UIButton!
   
-  @IBAction func didTapLoginButton(sender: AnyObject) {
+  @IBAction func didTapLoginButton(_ sender: AnyObject) {
     
     let loginVC = BBLLoginViewController()
-    loginVC.delegate = UIApplication.sharedApplication().delegate as! BBLAppDelegate
+    loginVC.delegate = UIApplication.shared.delegate as! BBLAppDelegate
     loginVC.presentationDelegate = self
     
     navigationController?.pushViewController(loginVC, animated: true)
     
   }
   
-  @IBAction func didTapRegisterButton(sender: UIButton) {
+  @IBAction func didTapRegisterButton(_ sender: UIButton) {
   }
   
   // MARK: Lifecycle
@@ -40,39 +40,39 @@ class BBLSignInPickerVC: UIViewController {
     
   }
   
-  override func viewWillAppear(animated: Bool) {
-    navigationController?.navigationBarHidden = true
+  override func viewWillAppear(_ animated: Bool) {
+    navigationController?.isNavigationBarHidden = true
   }
   
   // MARK: Initial Setup
   
-  private func setupAppearance() {
+  fileprivate func setupAppearance() {
     
-    view.backgroundColor = UIColor.whiteColor()
+    view.backgroundColor = UIColor.white
     
     setupAppearanceForButton(loginButton)
     setupAppearanceForButton(registerButton)
     
   }
   
-  private func setupAppearanceForButton(button: UIButton) {
+  fileprivate func setupAppearanceForButton(_ button: UIButton) {
     
     button.tintColor = UIColor.BBLNavyBlueColor()
-    button.backgroundColor = UIColor.whiteColor()
+    button.backgroundColor = UIColor.white
     button.addTopBorder(withColor: UIColor.BBLNavyBlueColor(), withThickness: 0.5)
     
   }
   
-  private func markOnboardingCompleteInDefaults(defaults: NSUserDefaults?) {
-    defaults?.setBool(true, forKey: BBLAppState.kDefaultsOnboardingCompleteKey)
+  fileprivate func markOnboardingCompleteInDefaults(_ defaults: UserDefaults?) {
+    defaults?.set(true, forKey: BBLAppState.kDefaultsOnboardingCompleteKey)
   }
   
 }
 
 extension BBLSignInPickerVC:BBLLoginViewControllerPresentationDelegate {
   
-  internal func logInViewControllerDidCancelLogIn(logInController: BBLLoginViewController) {
-    dismissViewControllerAnimated(true, completion: nil)
+  internal func logInViewControllerDidCancelLogIn(_ logInController: BBLLoginViewController) {
+    dismiss(animated: true, completion: nil)
   }
   
 }

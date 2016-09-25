@@ -11,9 +11,9 @@
 import Foundation
 
 class BBLStateMachine<P:BBLStateMachineDelegateProtocol>{
-  private unowned let delegate:P
+  fileprivate unowned let delegate:P
   
-  private var _state:P.StateType{
+  fileprivate var _state:P.StateType{
     didSet{
       delegate.didTransitionFrom(oldValue, to:_state)
     }
@@ -39,6 +39,6 @@ class BBLStateMachine<P:BBLStateMachineDelegateProtocol>{
 
 protocol BBLStateMachineDelegateProtocol: class{
   associatedtype StateType
-  func shouldTransitionFrom(from:StateType, to:StateType)->Bool
-  func didTransitionFrom(from:StateType, to:StateType)
+  func shouldTransitionFrom(_ from:StateType, to:StateType)->Bool
+  func didTransitionFrom(_ from:StateType, to:StateType)
 }

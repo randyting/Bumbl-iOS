@@ -66,7 +66,7 @@ class BBLTextField: UIView {
   required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)!
     
-    NSBundle.mainBundle().loadNibNamed("BBLTextField", owner: self, options: nil)
+    Bundle.main.loadNibNamed("BBLTextField", owner: self, options: nil)
     addSubview(view)
     view.frame = bounds
     
@@ -83,20 +83,20 @@ class BBLTextField: UIView {
   
   // MARK: Validations
   
-  internal func isValidEmailWithString(checkString: String, isStrict strict: Bool) -> Bool {
+  internal func isValidEmailWithString(_ checkString: String, isStrict strict: Bool) -> Bool {
     let stricterFilter = strict
     let stricterFilterString = "[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}"
     let laxString = ".+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*"
     let emailRegex = stricterFilter ? stricterFilterString : laxString
     let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-    return emailTest.evaluateWithObject(checkString)
+    return emailTest.evaluate(with: checkString)
   }
   
 }
 
 extension BBLTextField: UITextFieldDelegate {
   
-  func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+  func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
     return isTextField
   }
   

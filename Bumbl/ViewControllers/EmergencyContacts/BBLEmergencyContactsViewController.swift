@@ -12,12 +12,12 @@ class BBLEmergencyContactsViewController: BBLViewController {
   
   // MARK: Constants
   
-  private struct BBLMyContactsViewControllerConstants {
+  fileprivate struct BBLMyContactsViewControllerConstants {
     
-    private static let kMyContactsTVCReuseIdentifier = "com.randy.myContactsTVCReuseIdentifier"
-    private static let kMyContactsTVCNibName = "BBLMyContactsTableViewCell"
+    fileprivate static let kMyContactsTVCReuseIdentifier = "com.randy.myContactsTVCReuseIdentifier"
+    fileprivate static let kMyContactsTVCNibName = "BBLMyContactsTableViewCell"
     
-    private static let kTableViewBackgroundImageName = "BBLMySensorsTableViewBackground"
+    fileprivate static let kTableViewBackgroundImageName = "BBLMySensorsTableViewBackground"
     
   }
   
@@ -39,29 +39,29 @@ class BBLEmergencyContactsViewController: BBLViewController {
   
   // MARK: Setup
   
-  private func setupNavigationItem(navItem: UINavigationItem) {
-    navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(BBLEmergencyContactsViewController.didTapAddContactButton(_:)))
+  fileprivate func setupNavigationItem(_ navItem: UINavigationItem) {
+    navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(BBLEmergencyContactsViewController.didTapAddContactButton(_:)))
     
   }
   
-  internal func didTapAddContactButton(sender: UIBarButtonItem) {
+  internal func didTapAddContactButton(_ sender: UIBarButtonItem) {
     let addContactVC = BBLAddContactViewController()
     addContactVC.delegate = self
     navigationController?.pushViewController(addContactVC, animated: true)
   }
   
-  private func setupTableView(tableView: UITableView) {
+  fileprivate func setupTableView(_ tableView: UITableView) {
     
     tableView.delegate = self
     tableView.dataSource = self
 //    tableView.registerNib(UINib(nibName: BBLMyContactsViewControllerConstants.kMyContactsTVCNibName,
 //      bundle: NSBundle.mainBundle()),
 //                          forCellReuseIdentifier: BBLMyContactsViewControllerConstants.kMyContactsTVCReuseIdentifier)
-    tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: BBLMyContactsViewControllerConstants.kMyContactsTVCReuseIdentifier)
+    tableView.register(UITableViewCell.self, forCellReuseIdentifier: BBLMyContactsViewControllerConstants.kMyContactsTVCReuseIdentifier)
     tableView.rowHeight = UITableViewAutomaticDimension
     tableView.estimatedRowHeight = 100
     
-    let backgroundView = NSBundle.mainBundle().loadNibNamed("BBLMySensorsBackgroundView", owner: self, options: nil).first as! BBLMySensorsBackgroundView
+    let backgroundView = Bundle.main.loadNibNamed("BBLMySensorsBackgroundView", owner: self, options: nil)?.first as! BBLMySensorsBackgroundView
     tableView.backgroundView = backgroundView
     tableView.tableFooterView = UIView(frame: CGRect.zero)
     updateTableView()
@@ -69,9 +69,9 @@ class BBLEmergencyContactsViewController: BBLViewController {
   
   // MARK: Update
   
-  private func updateTableView() {
+  fileprivate func updateTableView() {
     
-    BBLContact.contactsForParent(BBLParent.loggedInParent()!) { (contacts: [BBLContact]?, error: NSError?) in
+    BBLContact.contactsForParent(BBLParent.loggedInParent()!) { (contacts: [BBLContact]?, error: Error?) in
       if let error = error {
         print(error.localizedDescription)
       } else {
@@ -93,15 +93,15 @@ extension BBLEmergencyContactsViewController: UITableViewDelegate {
 
 extension BBLEmergencyContactsViewController: UITableViewDataSource {
   
-  internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return myContacts.count
   }
   
-  internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+  internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-    let cell = tableView.dequeueReusableCellWithIdentifier(BBLMyContactsViewControllerConstants.kMyContactsTVCReuseIdentifier, forIndexPath: indexPath)
+    let cell = tableView.dequeueReusableCell(withIdentifier: BBLMyContactsViewControllerConstants.kMyContactsTVCReuseIdentifier, for: indexPath)
     
-    let contact = myContacts[indexPath.row]
+    let contact = myContacts[(indexPath as NSIndexPath).row]
     
     cell.textLabel!.text = contact.firstName + " " + contact.lastName
     
@@ -117,8 +117,8 @@ extension BBLEmergencyContactsViewController: UITableViewDataSource {
 
 extension BBLEmergencyContactsViewController: BBLAddContactViewControllerDelegate {
   
-  internal func BBLAddContactVC(addContactViewController: BBLAddContactViewController, didTapDoneButton doneButton: BBLModalBottomButton) {
+  internal func BBLAddContactVC(_ addContactViewController: BBLAddContactViewController, didTapDoneButton doneButton: BBLModalBottomButton) {
     updateTableView()
-    navigationController?.popViewControllerAnimated(true)
+    navigationController?.popViewController(animated: true)
   }
 }

@@ -15,21 +15,21 @@ internal struct BBLAvatarsInfo {
   
   enum BBLAvatarType: Int {
     
-    case Rabbit, Pig, Cat, Chick, Dog, Monkey, Count
+    case rabbit, pig, cat, chick, dog, monkey, count
     
     internal func color() -> UIColor {
       switch self {
-      case .Rabbit:
+      case .rabbit:
         return UIColor.BBLAvatarBlueColor()
-      case .Pig:
+      case .pig:
         return UIColor.BBLAvatarGreenColor()
-      case .Cat:
+      case .cat:
         return UIColor.BBLAvatarYellowColor()
-      case .Chick:
+      case .chick:
         return UIColor.BBLAvatarPurpleColor()
-      case .Dog:
+      case .dog:
         return UIColor.BBLAvatarPinkColor()
-      case .Monkey:
+      case .monkey:
         return UIColor.BBLAvatarOrangeColor()
       default:
         fatalError("Unexpected BBLAvatarType index.")
@@ -38,17 +38,17 @@ internal struct BBLAvatarsInfo {
     
     internal func stringName() -> String {
       switch self {
-      case .Rabbit:
+      case .rabbit:
         return "Rabbit"
-      case .Pig:
+      case .pig:
         return "Pig"
-      case .Cat:
+      case .cat:
         return "Cat"
-      case .Chick:
+      case .chick:
         return "Chick"
-      case .Dog:
+      case .dog:
         return "Dog"
-      case .Monkey:
+      case .monkey:
         return "Monkey"
       default:
         fatalError("Unexpected BBLAvatarType index.")
@@ -58,24 +58,24 @@ internal struct BBLAvatarsInfo {
     
     internal func image() -> UIImage {
       switch self {
-      case .Rabbit:
+      case .rabbit:
         return UIImage(named: "BBLRabbitAvatar")!
-      case .Pig:
+      case .pig:
         return UIImage(named: "BBLPigAvatar")!
-      case .Cat:
+      case .cat:
         return UIImage(named: "BBLCatAvatar")!
-      case .Chick:
+      case .chick:
         return UIImage(named: "BBLChickAvatar")!
-      case .Dog:
+      case .dog:
         return UIImage(named: "BBLDogAvatar")!
-      case .Monkey:
+      case .monkey:
         return UIImage(named: "BBLMonkeyAvatar")!
       default:
         fatalError("Unexpected BBLAvatarType index.")
       }
     }
     
-    internal func isEqual(rhs: BBLAvatarType) -> Bool {
+    internal func isEqual(_ rhs: BBLAvatarType) -> Bool {
       if self.rawValue == rhs.rawValue {
         return true
       } else {
@@ -100,7 +100,7 @@ internal struct BBLNavigationBarInfo {
 internal struct BBLViewControllerInfo {
   struct BBLDebugMySensorsViewController {
     static let title = "Debug My Sensors"
-    private static let kHomeTabBarIconName = "BBLHomeTabBarIcon"
+    fileprivate static let kHomeTabBarIconName = "BBLHomeTabBarIcon"
     static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLDebugMySensorsViewController.kHomeTabBarIconName)
   }
   
@@ -111,13 +111,13 @@ internal struct BBLViewControllerInfo {
   
   struct BBLMySensorsViewController {
     static let title = "Dashboard"
-    private static let kHomeTabBarIconName = "BBLHomeTabBarIcon"
+    fileprivate static let kHomeTabBarIconName = "BBLHomeTabBarIcon"
     static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLMySensorsViewController.kHomeTabBarIconName)
   }
   
   struct BBLEmergencyContactsViewController {
     static let title = "Contacts"
-    private static let kEmergencyContactsTabBarIconName = "BBLEmergencyContactsTabBarIcon"
+    fileprivate static let kEmergencyContactsTabBarIconName = "BBLEmergencyContactsTabBarIcon"
     static let tabBarIcon:UIImage? = UIImage(named: BBLViewControllerInfo.BBLEmergencyContactsViewController.kEmergencyContactsTabBarIconName)
   }
   
@@ -141,7 +141,7 @@ internal struct BBLSensorInfo {
   static let kCapSenseValueCharacteristicUUID = CBUUID.init(string: "0003CAA1-0000-1000-8000-00805F9B0131")
   
   /// Value to write to rebaseline characteristic to rebaseline
-  static let kRebaselineValue = "rebaseline".dataUsingEncoding(NSUTF8StringEncoding)
+  static let kRebaselineValue = "rebaseline".data(using: String.Encoding.utf8)
   
   /// Cap sense threshold for determining if baby is on sensor or not.
   static let kDefaultCapSenseThreshold: UInt = 50
