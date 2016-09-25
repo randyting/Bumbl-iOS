@@ -9,7 +9,7 @@
 import UIKit
 
 protocol BBLAddContactViewControllerDelegate: class {
-  func BBLAddContactVC(addContactViewController: BBLAddContactViewController, didTapDoneButton doneButton: BBLModalBottomButton)
+  func BBLAddContactVC(_ addContactViewController: BBLAddContactViewController, didTapDoneButton doneButton: BBLModalBottomButton)
 }
 
 class BBLAddContactViewController: BBLViewController {
@@ -22,19 +22,19 @@ class BBLAddContactViewController: BBLViewController {
   
   struct BBLAddContactViewControllerConstants {
     
-    private static let kTitle = "Add Contact"
+    fileprivate static let kTitle = "Add Contact"
     
-    private static let kFirstNameTextFieldTitle = "First"
-    private static let kFirstNameTextFieldPlaceholder = "First Name"
+    fileprivate static let kFirstNameTextFieldTitle = "First"
+    fileprivate static let kFirstNameTextFieldPlaceholder = "First Name"
     
-    private static let kLastNameTextFieldTitle = "Last"
-    private static let kLastNameTextFieldPlaceholder = "Last Name"
+    fileprivate static let kLastNameTextFieldTitle = "Last"
+    fileprivate static let kLastNameTextFieldPlaceholder = "Last Name"
     
-    private static let kPhoneNumberTextFieldTitle = "Phone"
-    private static let kPhoneNumberTextFieldPlaceholder = "(XXX) XXX-XXXXX"
+    fileprivate static let kPhoneNumberTextFieldTitle = "Phone"
+    fileprivate static let kPhoneNumberTextFieldPlaceholder = "(XXX) XXX-XXXXX"
     
-    private static let kEmailTextFieldTitle = "Email"
-    private static let kEmailTextFieldPlaceholder = "contact@bumblebaby.com"
+    fileprivate static let kEmailTextFieldTitle = "Email"
+    fileprivate static let kEmailTextFieldPlaceholder = "contact@bumblebaby.com"
     
   }
   
@@ -49,18 +49,18 @@ class BBLAddContactViewController: BBLViewController {
   
   @IBOutlet weak var importContactButton: BBLModalBottomButton!
   
-  @IBAction func didTapImportContactButton(sender: AnyObject) {
+  @IBAction func didTapImportContactButton(_ sender: AnyObject) {
     // TODO: Implement Contacts Kit
   }
   
-  @IBAction func didTapDoneButton(sender: BBLModalBottomButton) {
+  @IBAction func didTapDoneButton(_ sender: BBLModalBottomButton) {
     
     let newContact = BBLContact(withFirstName: firstNameTextField.text,
                                 withLastName: lastNameTextField.text,
                                 withPhoneNumber: phoneNumberTextField.text,
                                 withEmail: emailTextField.text,
                                 withParent: BBLParent.loggedInParent()!)
-    newContact.saveInBackgroundWithBlock { (success: Bool, error: NSError?) in
+    newContact.saveInBackground { (success: Bool, error: Error?) in
       if let error = error {
         self.showSaveFailedAlertWithError(error)
       } else {
@@ -74,32 +74,32 @@ class BBLAddContactViewController: BBLViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     title = BBLAddContactViewControllerConstants.kTitle
-    tabBarController?.tabBar.hidden = true
+    tabBarController?.tabBar.isHidden = true
     
     setupTopPositionConstraint(topStackViewToContainerTopConstraint)
     setupAppearanceForImportContactButton(importContactButton)
     setupTextFields()
   }
   
-  override func willMoveToParentViewController(parent: UIViewController?) {
-    tabBarController?.tabBar.hidden = false
+  override func willMove(toParentViewController parent: UIViewController?) {
+    tabBarController?.tabBar.isHidden = false
   }
   
   // MARK: Setup
   
-  private func setupTopPositionConstraint(constraint: NSLayoutConstraint) {
+  fileprivate func setupTopPositionConstraint(_ constraint: NSLayoutConstraint) {
     let originalConstant = constraint.constant
     if let navigationController = navigationController {
       constraint.constant = navigationController.navigationBar.bounds.height + 35 + originalConstant
     }
   }
   
-  private func setupAppearanceForImportContactButton(button: UIButton) {
-    button.tintColor = UIColor.whiteColor()
+  fileprivate func setupAppearanceForImportContactButton(_ button: UIButton) {
+    button.tintColor = UIColor.white
     button.backgroundColor = UIColor.BBLBlueColor()
   }
   
-  private func setupTextFields() {
+  fileprivate func setupTextFields() {
     firstNameTextField.title = BBLAddContactViewControllerConstants.kFirstNameTextFieldTitle
     firstNameTextField.placeholder = BBLAddContactViewControllerConstants.kFirstNameTextFieldPlaceholder
     firstNameTextField.isTextField = true
@@ -119,13 +119,13 @@ class BBLAddContactViewController: BBLViewController {
   
   // MARK: Save Error Alert
   
-  private func showSaveFailedAlertWithError(error: NSError?) {
+  fileprivate func showSaveFailedAlertWithError(_ error: Error?) {
     
-    let alertController = UIAlertController(title: "Save Contact Error", message: error?.localizedDescription, preferredStyle: .Alert)
+    let alertController = UIAlertController(title: "Save Contact Error", message: error?.localizedDescription, preferredStyle: .alert)
     
-    let dismissAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+    let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
     alertController.addAction(dismissAction)
     
-    presentViewController(alertController, animated: true, completion: nil)
+    present(alertController, animated: true, completion: nil)
   }
 }

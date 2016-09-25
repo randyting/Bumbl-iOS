@@ -10,14 +10,14 @@ import UIKit
 
 internal protocol BBLLoginViewControllerDelegate: class {
   
-  func logInViewController(logInController: BBLLoginViewController, didFailToLogInWithError error: NSError?)
-  func logInViewController(logInController: BBLLoginViewController, didLogInUser user: PFUser)
-  func logInViewController(logInController: BBLLoginViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool
+  func logInViewController(_ logInController: BBLLoginViewController, didFailToLogInWithError error: Error?)
+  func logInViewController(_ logInController: BBLLoginViewController, didLogInUser user: PFUser)
+  func logInViewController(_ logInController: BBLLoginViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool
 }
 
 internal protocol BBLLoginViewControllerPresentationDelegate: class {
   
-  func logInViewControllerDidCancelLogIn(logInController: BBLLoginViewController)
+  func logInViewControllerDidCancelLogIn(_ logInController: BBLLoginViewController)
   
 }
 
@@ -25,15 +25,15 @@ class BBLLoginViewController: UIViewController {
   
   // MARK: Constants
   
-  private struct BBLLoginViewControllerConstants {
+  fileprivate struct BBLLoginViewControllerConstants {
   
-    private static let kTitle = "Account Login"
+    fileprivate static let kTitle = "Account Login"
     
-    private static let kEmailTextFieldTitle = "Email"
-    private static let kEmailTextFieldPlaceholder = "user@bumblbaby.com"
+    fileprivate static let kEmailTextFieldTitle = "Email"
+    fileprivate static let kEmailTextFieldPlaceholder = "user@bumblbaby.com"
     
-    private static let kPasswordTextFieldTitle = "Password"
-    private static let kPasswordTextFieldPlaceholder = "password"
+    fileprivate static let kPasswordTextFieldTitle = "Password"
+    fileprivate static let kPasswordTextFieldPlaceholder = "password"
   
   }
   
@@ -51,7 +51,7 @@ class BBLLoginViewController: UIViewController {
   @IBOutlet weak var loginButton: UIButton!
   @IBOutlet weak var loginWithFacebookButton: UIButton!
   
-  @IBAction func didTapLoginButton(sender: UIButton) {
+  @IBAction func didTapLoginButton(_ sender: UIButton) {
     
     // TODO: Guard against bad input
     
@@ -64,7 +64,7 @@ class BBLLoginViewController: UIViewController {
       return
     }
     
-    PFUser.logInWithUsernameInBackground(username, password: password) { (user: PFUser?, error: NSError?) -> Void in
+    PFUser.logInWithUsername(inBackground: username, password: password) { (user: PFUser?, error: Error?) -> Void in
       
       if let error = error {
         self.showLoginFailedAlertWithError(error)
@@ -76,7 +76,7 @@ class BBLLoginViewController: UIViewController {
     
   }
   
-  @IBAction func didTapLoginWithFacebookButton(sender: UIButton) {
+  @IBAction func didTapLoginWithFacebookButton(_ sender: UIButton) {
   }
   
   // MARK: Lifecycle
@@ -89,7 +89,7 @@ class BBLLoginViewController: UIViewController {
     setupGestureRecognizersForView(view)
   }
   
-  override func willMoveToParentViewController(parent: UIViewController?) {
+  override func willMove(toParentViewController parent: UIViewController?) {
     guard let _ = parent else {
       presentationDelegate?.logInViewControllerDidCancelLogIn(self)
       return
@@ -99,16 +99,16 @@ class BBLLoginViewController: UIViewController {
   }
   
   deinit {
-    NSNotificationCenter.defaultCenter().removeObserver(self)
+    NotificationCenter.default.removeObserver(self)
   }
   
   
   // MARK: Initial Setup
   
-  private func setupAppearance() {
+  fileprivate func setupAppearance() {
     
-    view.backgroundColor = UIColor.whiteColor()
-    navigationController?.navigationBarHidden = false
+    view.backgroundColor = UIColor.white
+    navigationController?.isNavigationBarHidden = false
     title = BBLLoginViewControllerConstants.kTitle
     
     setupAppearanceForFederatedLoginButton(loginWithFacebookButton)
@@ -116,7 +116,7 @@ class BBLLoginViewController: UIViewController {
     
   }
   
-  private func setupTextFields() {
+  fileprivate func setupTextFields() {
     emailTextField.title = BBLLoginViewControllerConstants.kEmailTextFieldTitle
     emailTextField.placeholder = BBLLoginViewControllerConstants.kEmailTextFieldPlaceholder
     
@@ -124,51 +124,51 @@ class BBLLoginViewController: UIViewController {
     passwordTextField.placeholder = BBLLoginViewControllerConstants.kPasswordTextFieldPlaceholder
   }
   
-  private func setupAppearanceForFederatedLoginButton(button: UIButton) {
+  fileprivate func setupAppearanceForFederatedLoginButton(_ button: UIButton) {
     
-    button.tintColor = UIColor.whiteColor()
+    button.tintColor = UIColor.white
     button.backgroundColor = UIColor.BBLBlueColor()
     
   }
   
-  private func setupNotificationsForVC(viewController: UIViewController) {
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BBLLoginViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BBLLoginViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+  fileprivate func setupNotificationsForVC(_ viewController: UIViewController) {
+    NotificationCenter.default.addObserver(self, selector: #selector(BBLLoginViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+    NotificationCenter.default.addObserver(self, selector: #selector(BBLLoginViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
   }
   
-  private func setupGestureRecognizersForView(view: UIView) {
+  fileprivate func setupGestureRecognizersForView(_ view: UIView) {
     let tapGR = UITapGestureRecognizer.init(target: self, action: #selector(BBLLoginViewController.didTapView(_:)))
     view.addGestureRecognizer(tapGR)
   }
   
   // MARK: Keyboard Actions
-  internal func keyboardWillShow(notification:NSNotification!) {
-    (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+  internal func keyboardWillShow(_ notification:Notification!) {
+//    (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
     // TODO: Change size of scrollview.
   }
   
-  internal func keyboardWillHide(notification:NSNotification!) {
+  internal func keyboardWillHide(_ notification:Notification!) {
     // TODO: Change size of scrollview.
   }
   
-  internal func didTapView(tapGR: UITapGestureRecognizer!) {
+  internal func didTapView(_ tapGR: UITapGestureRecognizer!) {
     dismissKeyboard()
   }
   
-  private func dismissKeyboard() {
+  fileprivate func dismissKeyboard() {
     view.endEditing(true)
   }
   
   // MARK: Login Error Alert
   
-  private func showLoginFailedAlertWithError(error: NSError?) {
+  fileprivate func showLoginFailedAlertWithError(_ error: Error?) {
     
-    let alertController = UIAlertController(title: "Login Error", message: error?.localizedDescription, preferredStyle: .Alert)
+    let alertController = UIAlertController(title: "Login Error", message: error?.localizedDescription, preferredStyle: .alert)
     
-    let dismissAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+    let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
     alertController.addAction(dismissAction)
     
-    presentViewController(alertController, animated: true, completion: nil)
+    present(alertController, animated: true, completion: nil)
   }
 
 

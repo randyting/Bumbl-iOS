@@ -12,7 +12,7 @@ class BBLModalBottomButton: UIButton {
 
   override func awakeFromNib() {
     self.tintColor = UIColor.BBLNavyBlueColor()
-    self.backgroundColor = UIColor.whiteColor()
+    self.backgroundColor = UIColor.white
     self.addTopBorder(withColor: UIColor.BBLDarkGrayColor(), withThickness: 0.5)
   }
 }

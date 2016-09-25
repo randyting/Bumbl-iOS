@@ -94,23 +94,23 @@
 		2523244D1D0FCA80009D20B0 /* BBLSensorDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensorDetailViewController.swift; path = ViewControllers/BBLSensorDetailViewController.swift; sourceTree = "<group>"; };
 		2523244E1D0FCA80009D20B0 /* BBLSensorDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLSensorDetailViewController.xib; path = ViewControllers/BBLSensorDetailViewController.xib; sourceTree = "<group>"; };
 		252324511D0FCE40009D20B0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		252324551D10B7E9009D20B0 /* BBLEditSensorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLEditSensorViewController.swift; path = ViewControllers/AddSensor/BBLEditSensorViewController.swift; sourceTree = "<group>"; };
+		252324551D10B7E9009D20B0 /* BBLEditSensorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BBLEditSensorViewController.swift; path = ViewControllers/AddSensor/BBLEditSensorViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		252324561D10B7E9009D20B0 /* BBLEditSensorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLEditSensorViewController.xib; path = ViewControllers/AddSensor/BBLEditSensorViewController.xib; sourceTree = "<group>"; };
 		2523245B1D10BB2E009D20B0 /* BBLModalBottomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLModalBottomButton.swift; path = Views/BBLModalBottomButton.swift; sourceTree = "<group>"; };
 		2524D5E21D76A4E90072D3E7 /* BBLViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLViewController.swift; path = ViewControllers/BBLViewController.swift; sourceTree = "<group>"; };
-		2524D5E41D76A96F0072D3E7 /* BBLContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLContact.swift; path = Models/BBLContact.swift; sourceTree = "<group>"; };
-		2524D5E61D76AC9B0072D3E7 /* BBLAddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLAddContactViewController.swift; path = ViewControllers/EmergencyContacts/BBLAddContactViewController.swift; sourceTree = "<group>"; };
+		2524D5E41D76A96F0072D3E7 /* BBLContact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BBLContact.swift; path = Models/BBLContact.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		2524D5E61D76AC9B0072D3E7 /* BBLAddContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BBLAddContactViewController.swift; path = ViewControllers/EmergencyContacts/BBLAddContactViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2524D5E71D76AC9B0072D3E7 /* BBLAddContactViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLAddContactViewController.xib; path = ViewControllers/EmergencyContacts/BBLAddContactViewController.xib; sourceTree = "<group>"; };
-		2533A5171C51E71B000F9562 /* BBLLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLLoginViewController.swift; path = ViewControllers/BBLLoginViewController.swift; sourceTree = "<group>"; };
+		2533A5171C51E71B000F9562 /* BBLLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BBLLoginViewController.swift; path = ViewControllers/BBLLoginViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		2533A5191C51EC7B000F9562 /* BBLDebugConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLDebugConnectionViewController.swift; path = ViewControllers/Debug/BBLDebugConnectionViewController.swift; sourceTree = "<group>"; };
 		2533A51A1C51EC7B000F9562 /* BBLDebugConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLDebugConnectionViewController.xib; path = ViewControllers/Debug/BBLDebugConnectionViewController.xib; sourceTree = "<group>"; };
 		2533A51D1C520897000F9562 /* BBLSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSession.swift; path = Models/BBLSession.swift; sourceTree = "<group>"; };
-		2533A5231C53EFAA000F9562 /* BBLParseAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLParseAPIClient.swift; path = Clients/BBLParseAPIClient.swift; sourceTree = "<group>"; };
+		2533A5231C53EFAA000F9562 /* BBLParseAPIClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BBLParseAPIClient.swift; path = Clients/BBLParseAPIClient.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		253A10631D1120B700EBC02E /* BBLConnectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLConnectionViewController.swift; path = ViewControllers/AddSensor/BBLConnectionViewController.swift; sourceTree = "<group>"; };
 		253A10641D1120B700EBC02E /* BBLConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLConnectionViewController.xib; path = ViewControllers/AddSensor/BBLConnectionViewController.xib; sourceTree = "<group>"; };
 		253A10671D1127E400EBC02E /* BBLAddSensorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLAddSensorViewController.swift; path = ViewControllers/AddSensor/BBLAddSensorViewController.swift; sourceTree = "<group>"; };
 		253A10691D112AEC00EBC02E /* BBLAddSensorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLAddSensorViewController.xib; path = ViewControllers/AddSensor/BBLAddSensorViewController.xib; sourceTree = "<group>"; };
-		257672141D112FA800B63ACE /* BBLEmergencyContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLEmergencyContactsViewController.swift; path = ViewControllers/EmergencyContacts/BBLEmergencyContactsViewController.swift; sourceTree = "<group>"; };
+		257672141D112FA800B63ACE /* BBLEmergencyContactsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BBLEmergencyContactsViewController.swift; path = ViewControllers/EmergencyContacts/BBLEmergencyContactsViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		257672151D112FA800B63ACE /* BBLEmergencyContactsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLEmergencyContactsViewController.xib; path = ViewControllers/EmergencyContacts/BBLEmergencyContactsViewController.xib; sourceTree = "<group>"; };
 		2579339D1C6697F1000F3CA6 /* BBLStateMachine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLStateMachine.swift; path = HelperClasses/BBLStateMachine.swift; sourceTree = "<group>"; };
 		257EF4851D56C50200CF9F63 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "SupportingFiles/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -119,11 +119,11 @@
 		2593FA441D69412100F754C9 /* BBLTextField.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLTextField.xib; path = Views/BBLTextField.xib; sourceTree = "<group>"; };
 		2593FA461D699AD500F754C9 /* BBLConnectionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLConnectionTableViewCell.swift; path = Views/BBLConnectionTableViewCell.swift; sourceTree = "<group>"; };
 		2593FA471D699AD500F754C9 /* BBLConnectionTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLConnectionTableViewCell.xib; path = Views/BBLConnectionTableViewCell.xib; sourceTree = "<group>"; };
-		259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensorManager.swift; path = Managers/BBLSensorManager.swift; sourceTree = "<group>"; };
+		259A39FE1C4B963B00706E6A /* BBLSensorManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BBLSensorManager.swift; path = Managers/BBLSensorManager.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		259A3A001C4CBC3C00706E6A /* BBLConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLConstants.swift; path = SupportingFiles/BBLConstants.swift; sourceTree = "<group>"; };
 		25AF02E61CF1228400718172 /* UIView+Bumbl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIView+Bumbl.swift"; path = "Extensions/UIView+Bumbl.swift"; sourceTree = "<group>"; };
 		25AF02E81CF1297E00718172 /* UITextField+Bumbl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UITextField+Bumbl.swift"; path = "Extensions/UITextField+Bumbl.swift"; sourceTree = "<group>"; };
-		25AF02EE1CF18A9000718172 /* BBLMySensorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLMySensorsViewController.swift; path = ViewControllers/BBLMySensorsViewController.swift; sourceTree = "<group>"; };
+		25AF02EE1CF18A9000718172 /* BBLMySensorsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BBLMySensorsViewController.swift; path = ViewControllers/BBLMySensorsViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		25AF02EF1CF18A9000718172 /* BBLMySensorsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLMySensorsViewController.xib; path = ViewControllers/BBLMySensorsViewController.xib; sourceTree = "<group>"; };
 		25AF02F21CF18C4900718172 /* BBLMySensorsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLMySensorsTableViewCell.swift; path = Views/BBLMySensorsTableViewCell.swift; sourceTree = "<group>"; };
 		25AF02F31CF18C4900718172 /* BBLMySensorsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLMySensorsTableViewCell.xib; path = Views/BBLMySensorsTableViewCell.xib; sourceTree = "<group>"; };
@@ -133,15 +133,15 @@
 		25AF03001CF2E04900718172 /* BBLMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLMenuViewController.xib; path = ViewControllers/Menu/BBLMenuViewController.xib; sourceTree = "<group>"; };
 		25B973531C44F6EB00C5E099 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = Resources/Assets.xcassets; sourceTree = "<group>"; };
 		25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SupportingFiles/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		25B973591C44F94D00C5E099 /* BBLSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensor.swift; path = Models/BBLSensor.swift; sourceTree = "<group>"; };
+		25B973591C44F94D00C5E099 /* BBLSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BBLSensor.swift; path = Models/BBLSensor.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		25B9735B1C44F9FA00C5E099 /* Bumbl-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Bumbl-Bridging-Header.h"; path = "SupportingFiles/Bumbl-Bridging-Header.h"; sourceTree = "<group>"; };
 		25D08B1C1C41EAC900319C11 /* Bumbl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bumbl.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		25D08B1F1C41EAC900319C11 /* BBLAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BBLAppDelegate.swift; path = SupportingFiles/BBLAppDelegate.swift; sourceTree = "<group>"; };
+		25D08B1F1C41EAC900319C11 /* BBLAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BBLAppDelegate.swift; path = SupportingFiles/BBLAppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		25D08B2B1C41EAC900319C11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = SupportingFiles/Info.plist; sourceTree = "<group>"; };
 		25D08B301C41EAC900319C11 /* BumblTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BumblTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D08B341C41EAC900319C11 /* BumblTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BumblTests.swift; sourceTree = "<group>"; };
 		25D08B361C41EAC900319C11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		25F3E2871C4F735800E2F852 /* BBLParent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLParent.swift; path = Models/BBLParent.swift; sourceTree = "<group>"; };
+		25F3E2871C4F735800E2F852 /* BBLParent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BBLParent.swift; path = Models/BBLParent.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		25F419D91D57283200B1ECE4 /* NSData+Bumbl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "NSData+Bumbl.swift"; path = "Extensions/NSData+Bumbl.swift"; sourceTree = "<group>"; };
 		4A4948014F544BA25DCE7AC3 /* libPods-BumblTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BumblTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55A224F72DB20AFE3D113327 /* Pods-BumblTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BumblTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-BumblTests/Pods-BumblTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -459,12 +459,13 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Randy Ting";
 				TargetAttributes = {
 					25D08B1B1C41EAC900319C11 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = FGTTBWXGA6;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -473,6 +474,7 @@
 					};
 					25D08B2F1C41EAC900319C11 = {
 						CreatedOnToolsVersion = 7.2;
+						LastSwiftMigration = 0800;
 						TestTargetID = 25D08B1B1C41EAC900319C11;
 					};
 				};
@@ -715,8 +717,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -738,7 +742,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -759,8 +763,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -776,9 +782,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -791,14 +798,16 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = FGTTBWXGA6;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Bumbl/SupportingFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.randyting.Bumbl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bumbl/SupportingFiles/Bumbl-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -809,13 +818,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = FGTTBWXGA6;
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/Bumbl/SupportingFiles/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.randyting.Bumbl;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Bumbl/SupportingFiles/Bumbl-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -824,10 +835,29 @@
 			baseConfigurationReference = C91B9745714EB1080A56FBD2 /* Pods-BumblTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Bolts\"",
+					"\"${PODS_ROOT}/Headers/Public/Crashlytics\"",
+					"\"${PODS_ROOT}/Headers/Public/Digits\"",
+					"\"${PODS_ROOT}/Headers/Public/Fabric\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAnalytics\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseDatabase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseInstanceID\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleInterchangeUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleSymbolUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/Parse\"",
+					"\"${PODS_ROOT}/Headers/Public/ParseUI\"",
+					"\"${PODS_ROOT}/Headers/Public/TwitterCore\"",
+				);
 				INFOPLIST_FILE = BumblTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.randyting.BumblTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bumbl.app/Bumbl";
 			};
 			name = Debug;
@@ -837,10 +867,29 @@
 			baseConfigurationReference = 55A224F72DB20AFE3D113327 /* Pods-BumblTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Bolts\"",
+					"\"${PODS_ROOT}/Headers/Public/Crashlytics\"",
+					"\"${PODS_ROOT}/Headers/Public/Digits\"",
+					"\"${PODS_ROOT}/Headers/Public/Fabric\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseAnalytics\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseDatabase\"",
+					"\"${PODS_ROOT}/Headers/Public/FirebaseInstanceID\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleInterchangeUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleSymbolUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/GoogleUtilities\"",
+					"\"${PODS_ROOT}/Headers/Public/Parse\"",
+					"\"${PODS_ROOT}/Headers/Public/ParseUI\"",
+					"\"${PODS_ROOT}/Headers/Public/TwitterCore\"",
+				);
 				INFOPLIST_FILE = BumblTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.randyting.BumblTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Bumbl.app/Bumbl";
 			};
 			name = Release;

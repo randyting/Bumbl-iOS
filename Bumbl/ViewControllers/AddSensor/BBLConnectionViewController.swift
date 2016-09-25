@@ -9,34 +9,34 @@
 import UIKit
 
 protocol BBLConnectionViewControllerDelegate: class {
-  func connectionViewController(connectionVC: BBLConnectionViewController, didTapBackButton backButton: UIButton)
-  func connectionViewController(connectionVC: BBLConnectionViewController, didFinishAddingSensor success: Bool)
+  func connectionViewController(_ connectionVC: BBLConnectionViewController, didTapBackButton backButton: UIButton)
+  func connectionViewController(_ connectionVC: BBLConnectionViewController, didFinishAddingSensor success: Bool)
 }
 
 class BBLConnectionViewController: UIViewController {
   
   // MARK: Constants
-  private struct BBLConnectionViewControllerConstants {
-    private static let kTitle = "Device Found"
+  fileprivate struct BBLConnectionViewControllerConstants {
+    fileprivate static let kTitle = "Device Found"
     
-    private static let kConnectionViewTVCReuseIdentifier = "com.randy.connectionViewTVCReuseIdentifier"
-    private static let kConnectionTVCNibName = "BBLConnectionTableViewCell"
+    fileprivate static let kConnectionViewTVCReuseIdentifier = "com.randy.connectionViewTVCReuseIdentifier"
+    fileprivate static let kConnectionTVCNibName = "BBLConnectionTableViewCell"
     
-    private struct FailedConnectionAlert{
-      private static let title = "Connection Failed"
-      private static let message = "Connection to this sensor failed.  Please check to make sure it is still advertising and in range."
+    fileprivate struct FailedConnectionAlert{
+      fileprivate static let title = "Connection Failed"
+      fileprivate static let message = "Connection to this sensor failed.  Please check to make sure it is still advertising and in range."
     }
     
-    private static let noDiscoveredSensorsMessage = "No sensors discovered.  Please make sure you are near a sensor that is turned on and not connected to a phone."
+    fileprivate static let noDiscoveredSensorsMessage = "No sensors discovered.  Please make sure you are near a sensor that is turned on and not connected to a phone."
   }
   
   // MARK: Interface Builder
-  @IBOutlet private weak var connectionTableView: UITableView!
+  @IBOutlet fileprivate weak var connectionTableView: UITableView!
   @IBOutlet weak var loadingView: UIView!
   @IBOutlet weak var beeLogoAlignCenterConstraint: NSLayoutConstraint!
   @IBOutlet weak var loadingMessageLabel: UILabel!
   @IBOutlet weak var tableViewTopToSuperviewConstraint: NSLayoutConstraint!
-  @IBAction func didTapBackButton(sender: BBLModalBottomButton) {
+  @IBAction func didTapBackButton(_ sender: BBLModalBottomButton) {
     delegate?.connectionViewController(self, didTapBackButton: sender)
   }
   
@@ -45,7 +45,7 @@ class BBLConnectionViewController: UIViewController {
   internal weak var delegate: BBLConnectionViewControllerDelegate?
   
   // MARK: Private Variables
-  private var discoveredSensors: [BBLSensor]!
+  fileprivate var discoveredSensors: [BBLSensor]!
   
   // MARK: Lifecycle
   override func viewDidLoad() {
@@ -65,52 +65,52 @@ class BBLConnectionViewController: UIViewController {
   }
   
   // MARK: Setup
-  private func setupTableView(tableView: UITableView) {
+  fileprivate func setupTableView(_ tableView: UITableView) {
     tableView.delegate = self
     tableView.dataSource = self
-    tableView.registerNib(UINib(nibName: BBLConnectionViewControllerConstants.kConnectionTVCNibName,
-                                  bundle: NSBundle.mainBundle()),
+    tableView.register(UINib(nibName: BBLConnectionViewControllerConstants.kConnectionTVCNibName,
+                                  bundle: Bundle.main),
               forCellReuseIdentifier: BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier)
     tableView.tableFooterView = UIView.init(frame: CGRect.zero)
-    tableView.separatorStyle = .None
-    tableView.backgroundColor = UIColor.clearColor()
+    tableView.separatorStyle = .none
+    tableView.backgroundColor = UIColor.clear
     
-    let backgroundView = NSBundle.mainBundle().loadNibNamed("BBLMySensorsBackgroundView", owner: self, options: nil).first as! BBLMySensorsBackgroundView
+    let backgroundView = Bundle.main.loadNibNamed("BBLMySensorsBackgroundView", owner: self, options: nil)?.first as! BBLMySensorsBackgroundView
     tableView.backgroundView = backgroundView
     updateTableView()
   }
   
-  private func setupSensorManager(sensorManger: BBLSensorManager) {
+  fileprivate func setupSensorManager(_ sensorManger: BBLSensorManager) {
     sensorManager.registerDelegate(self)
   }
   
-  private func updateTableView() {
+  fileprivate func updateTableView() {
     discoveredSensors = Array(sensorManager.discoveredSensors)
     if discoveredSensors.count == 0 ||
       discoveredSensors == nil{
-      loadingView.hidden = false
+      loadingView.isHidden = false
     } else {
-      loadingView.hidden = true
+      loadingView.isHidden = true
     }
     connectionTableView.reloadData()
   }
   
-  private func setupAnimationForBeeLogoConstraint(constraint: NSLayoutConstraint) {
-    UIView.animateWithDuration(1.0, delay: 0.0, options: [.Repeat, .Autoreverse, .CurveEaseInOut], animations: {
+  fileprivate func setupAnimationForBeeLogoConstraint(_ constraint: NSLayoutConstraint) {
+    UIView.animate(withDuration: 1.0, delay: 0.0, options: [.repeat, .autoreverse], animations: {
       constraint.constant = constraint.constant - 50.0
       self.loadingView.layoutIfNeeded()
       }, completion: nil)
   }
   
-  private func setupTopPositionConstraint(constraint: NSLayoutConstraint) {
+  fileprivate func setupTopPositionConstraint(_ constraint: NSLayoutConstraint) {
     if let navigationController = navigationController {
       constraint.constant = navigationController.navigationBar.bounds.height + 20
     }
   }
   
-  private func setupAppearanceForLoadingMessage(label: UILabel) {
+  fileprivate func setupAppearanceForLoadingMessage(_ label: UILabel) {
     label.textColor = UIColor.BBLDarkBlueColor()
-    NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: #selector(BBLConnectionViewController.updateLoadingMessage), userInfo: nil, repeats: true)
+    Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(BBLConnectionViewController.updateLoadingMessage), userInfo: nil, repeats: true)
   }
   
   internal func updateLoadingMessage() {
@@ -130,32 +130,32 @@ class BBLConnectionViewController: UIViewController {
 // MARK: UITableViewDelegate
 extension BBLConnectionViewController: UITableViewDelegate {
   
-  internal func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    discoveredSensors[indexPath.row].connect()
+  internal func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    discoveredSensors[(indexPath as NSIndexPath).row].connect()
   }
 }
 
 // MARK: UITableViewDatasource
 extension BBLConnectionViewController: UITableViewDataSource {
   
-  internal func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+  internal func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     guard let discoveredSensors = discoveredSensors else {
       return 0
     }
     return discoveredSensors.count
   }
   
-  internal func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier(BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier, forIndexPath: indexPath) as! BBLConnectionTableViewCell
+  internal func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCell(withIdentifier: BBLConnectionViewControllerConstants.kConnectionViewTVCReuseIdentifier, for: indexPath) as! BBLConnectionTableViewCell
     
-    cell.textField.text = discoveredSensors[indexPath.row].uuid!
-    cell.textField.textField.userInteractionEnabled = false
+    cell.textField.text = discoveredSensors[(indexPath as NSIndexPath).row].uuid!
+    cell.textField.textField.isUserInteractionEnabled = false
     
     return cell
   }
   
-  func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+  @objc(tableView:heightForRowAtIndexPath:) func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     return 60
   }
   
@@ -163,7 +163,7 @@ extension BBLConnectionViewController: UITableViewDataSource {
 
 // MARK: BBLSensorManagerDelegate
 extension BBLConnectionViewController:BBLSensorManagerDelegate {
-  internal func sensorManager(sensorManager: BBLSensorManager, didConnectSensor sensor: BBLSensor) {
+  internal func sensorManager(_ sensorManager: BBLSensorManager, didConnectSensor sensor: BBLSensor) {
     updateTableView()
     
     let addSensorVC = BBLAddSensorViewController()
@@ -174,27 +174,27 @@ extension BBLConnectionViewController:BBLSensorManagerDelegate {
     
   }
   
-  internal func sensorManager(sensorManager: BBLSensorManager, didDisconnectSensor sensor: BBLSensor) {
+  internal func sensorManager(_ sensorManager: BBLSensorManager, didDisconnectSensor sensor: BBLSensor) {
     updateTableView()
   }
   
-  internal func sensorManager(sensorManager: BBLSensorManager, didDiscoverSensor sensor: BBLSensor) {
+  internal func sensorManager(_ sensorManager: BBLSensorManager, didDiscoverSensor sensor: BBLSensor) {
     updateTableView()
   }
   
-  internal func sensorManager(sensorManager: BBLSensorManager, didFailToConnectToSensor sensor: BBLSensor) {
+  internal func sensorManager(_ sensorManager: BBLSensorManager, didFailToConnectToSensor sensor: BBLSensor) {
     updateTableView()
     showConnectionFailedAlert()
   }
   
-  private func showConnectionFailedAlert() {
+  fileprivate func showConnectionFailedAlert() {
     
-    let alertController = UIAlertController(title: BBLConnectionViewControllerConstants.FailedConnectionAlert.title, message: BBLConnectionViewControllerConstants.FailedConnectionAlert.message, preferredStyle: .Alert)
+    let alertController = UIAlertController(title: BBLConnectionViewControllerConstants.FailedConnectionAlert.title, message: BBLConnectionViewControllerConstants.FailedConnectionAlert.message, preferredStyle: .alert)
     
-    let dismissAction = UIAlertAction(title: "Dismiss", style: .Default, handler: nil)
+    let dismissAction = UIAlertAction(title: "Dismiss", style: .default, handler: nil)
     alertController.addAction(dismissAction)
     
-    presentViewController(alertController, animated: true, completion: nil)
+    present(alertController, animated: true, completion: nil)
   }
 }
 
@@ -202,11 +202,11 @@ extension BBLConnectionViewController:BBLSensorManagerDelegate {
 
 extension BBLConnectionViewController: BBLEditSensorViewControllerDelegate {
   
-  func BBLEditSensorVC(vc: BBLEditSensorViewController, didTapCancelButton bottomButton: UIBarButtonItem) {
+  func BBLEditSensorVC(_ vc: BBLEditSensorViewController, didTapCancelButton bottomButton: UIBarButtonItem) {
     delegate?.connectionViewController(self, didFinishAddingSensor: false)
   }
   
-  func BBLEditSensorVC(vc: BBLEditSensorViewController, didTapBottomButton bottomButton: BBLModalBottomButton) {
+  func BBLEditSensorVC(_ vc: BBLEditSensorViewController, didTapBottomButton bottomButton: BBLModalBottomButton) {
     delegate?.connectionViewController(self, didFinishAddingSensor: true)
   }
 }

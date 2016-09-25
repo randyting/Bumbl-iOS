@@ -10,7 +10,7 @@ import UIKit
 
 @objc
 protocol BBLMenuViewControllerDelegate: class {
-  optional func BBLmenuViewController(menuViewController: BBLMenuViewController, didDismiss: Bool)
+  @objc optional func BBLmenuViewController(_ menuViewController: BBLMenuViewController, didDismiss: Bool)
 }
 
 class BBLMenuViewController: BBLViewController {
@@ -24,8 +24,8 @@ class BBLMenuViewController: BBLViewController {
   @IBOutlet weak var logoutButton: UIButton!
   @IBOutlet weak var versionAndBuildNumberLabel: UILabel!
   
-  @IBAction func didTapLogoutButton(sender: UIButton) {
-    NSNotificationCenter.defaultCenter().postNotificationName(BBLNotifications.kParentDidLogoutNotification, object: self)
+  @IBAction func didTapLogoutButton(_ sender: UIButton) {
+    NotificationCenter.default.post(name: Notification.Name(rawValue: BBLNotifications.kParentDidLogoutNotification), object: self)
   }
   
   // MARK: Lifecycle
@@ -39,26 +39,26 @@ class BBLMenuViewController: BBLViewController {
   
   // MARK: Initial Setup
   
-  private func setupNavigationItem(navItem: UINavigationItem) {
+  fileprivate func setupNavigationItem(_ navItem: UINavigationItem) {
     navItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: BBLNavigationBarInfo.kDismissButtonIconName),
-                                                 style: .Plain,
+                                                 style: .plain,
                                                  target: self,
                                                  action: #selector(BBLMenuViewController.didTapDismissButton(_:)))
   }
   
-  @objc internal func didTapDismissButton(sender: UIBarButtonItem) {
+  @objc internal func didTapDismissButton(_ sender: UIBarButtonItem) {
     delegate?.BBLmenuViewController?(self, didDismiss: true)
   }
   
-  private func setupLogoutButtonAppearance(button: UIButton) {
-    button.tintColor = UIColor.whiteColor()
+  fileprivate func setupLogoutButtonAppearance(_ button: UIButton) {
+    button.tintColor = UIColor.white
     button.backgroundColor = UIColor.BBLBlueColor()
     button.makeHorizontalOval(withBorderThickness: 0.0, withBorderColor: nil)
   }
   
-  private func setupVersionAndBuildNumberLabel(label: UILabel) {
-    if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String,
-      let buildNumber = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as? String {
+  fileprivate func setupVersionAndBuildNumberLabel(_ label: UILabel) {
+    if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String,
+      let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
       
       label.text = "Version Number " + version + " Build Number " + buildNumber
     }

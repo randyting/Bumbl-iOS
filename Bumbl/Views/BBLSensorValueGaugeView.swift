@@ -44,7 +44,7 @@ class BBLSensorValueGaugeView: UIView {
   required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)!
     
-    NSBundle.mainBundle().loadNibNamed("BBLSensorValueGaugeView", owner: self, options: nil)
+    Bundle.main.loadNibNamed("BBLSensorValueGaugeView", owner: self, options: nil)
     addSubview(view)
     view.frame = bounds
     
@@ -61,24 +61,24 @@ class BBLSensorValueGaugeView: UIView {
   
   // MARK: Initial Setup
   
-  private func setupAppearanceForStackView(stackView: UIStackView) {
+  fileprivate func setupAppearanceForStackView(_ stackView: UIStackView) {
     stackViewBarsWidthConstraint.constant = bounds.width/50
     stackView.spacing = bounds.width/300
     for view in stackView.arrangedSubviews {
-      view.backgroundColor = UIColor.whiteColor()
+      view.backgroundColor = UIColor.white
     }
     updateGaugeFillNormalized(gaugeFillNormalized)
   }
   
   // MARK: Accessors
   
-  internal func setGaugeBackgroundColor(color: UIColor) {
+  internal func setGaugeBackgroundColor(_ color: UIColor) {
     view.backgroundColor = color
   }
   
   // MARK: Private Methods
   
-  private func updateGaugeFillNormalized(filledValueNormalized: Double) {
+  fileprivate func updateGaugeFillNormalized(_ filledValueNormalized: Double) {
     
     if filledValueNormalized.isNaN {
       return
@@ -86,11 +86,11 @@ class BBLSensorValueGaugeView: UIView {
     
     let numberOfSubviewsToFill = filledValueNormalized * Double(stackView.arrangedSubviews.count)
     
-    for (index, view) in stackView.arrangedSubviews.enumerate() {
+    for (index, view) in stackView.arrangedSubviews.enumerated() {
       if index < Int(numberOfSubviewsToFill) {
         view.backgroundColor = UIColor.BBLDarkBlueColor()
       } else {
-        view.backgroundColor = UIColor.whiteColor()
+        view.backgroundColor = UIColor.white
       }
 
     }

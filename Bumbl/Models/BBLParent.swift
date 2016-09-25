@@ -9,10 +9,10 @@
 import UIKit
 
 @objc protocol BBLParentDelegate: class {
-  optional func parent(parent: BBLParent, didAddSensor sensor: BBLSensor)
-  optional func parent(parent: BBLParent, didFailAddSensor sensor: BBLSensor, withErrorMessage errorMessage: String)
-  optional func parent(parent: BBLParent, didRemoveSensor sensor: BBLSensor)
-  optional func parent(parent: BBLParent, didFailRemoveSensor sensor: BBLSensor, withErrorMessage errorMessage: String)
+  @objc optional func parent(_ parent: BBLParent, didAddSensor sensor: BBLSensor)
+  @objc optional func parent(_ parent: BBLParent, didFailAddSensor sensor: BBLSensor, withErrorMessage errorMessage: String)
+  @objc optional func parent(_ parent: BBLParent, didRemoveSensor sensor: BBLSensor)
+  @objc optional func parent(_ parent: BBLParent, didFailRemoveSensor sensor: BBLSensor, withErrorMessage errorMessage: String)
 }
 
 internal final class BBLParent: PFUser {
@@ -20,7 +20,7 @@ internal final class BBLParent: PFUser {
 // MARK: Public Variables
   
   @NSManaged internal var sensors:[BBLSensor]?
-  private(set) var profileSensors:NSMutableSet!
+  fileprivate(set) var profileSensors:NSMutableSet!
   internal weak var delegate: BBLParentDelegate?
 
 // MARK: Synchronization
@@ -29,17 +29,17 @@ internal final class BBLParent: PFUser {
     profileSensors = NSMutableSet()
     if let sensors = sensors {
       for sensor in sensors {
-        profileSensors.addObject(sensor)
+        profileSensors.add(sensor)
       }
     }
   }
   
 // MARK: Sensor Management
   
-  internal func addSensor(sensor: BBLSensor) {
-    profileSensors!.addObject(sensor)
+  internal func addSensor(_ sensor: BBLSensor) {
+    profileSensors!.add(sensor)
     sensors = profileSensors!.allObjects as? [BBLSensor]
-    saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+    saveInBackground { (success: Bool, error: Error?) -> Void in
       if let error = error {
         self.delegate?.parent?(self, didFailAddSensor: sensor, withErrorMessage: error.localizedDescription)
       } else {
@@ -48,14 +48,14 @@ internal final class BBLParent: PFUser {
     }
   }
   
-  internal func removeSensor(sensor: BBLSensor) {
-    guard profileSensors!.containsObject(sensor) else {
+  internal func removeSensor(_ sensor: BBLSensor) {
+    guard profileSensors!.contains(sensor) else {
       return
     }
     sensor.decrementParentsCount()
-    profileSensors!.removeObject(sensor)
+    profileSensors!.remove(sensor)
     sensors = profileSensors!.allObjects as? [BBLSensor]
-    saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+    saveInBackground { (success: Bool, error: Error?) -> Void in
       if let error = error {
         self.delegate?.parent?(self, didFailRemoveSensor: sensor, withErrorMessage: error.localizedDescription)
       } else {
@@ -67,6 +67,6 @@ internal final class BBLParent: PFUser {
   
 // MARK: Class Methods
   class func loggedInParent() -> BBLParent? {
-    return PFUser.currentUser() as? BBLParent
+    return PFUser.current() as? BBLParent
   }
 }

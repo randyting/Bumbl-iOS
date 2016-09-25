@@ -17,8 +17,8 @@ class BBLActivityLogger: NSObject {
   
   // MARK: Private Variables
   
-  private var rootDatabase: FIRDatabase
-  private var rootRef: FIRDatabaseReference
+  fileprivate var rootDatabase: FIRDatabase
+  fileprivate var rootRef: FIRDatabaseReference
   
   // MARK: Initialization
   
@@ -30,7 +30,7 @@ class BBLActivityLogger: NSObject {
   
   // MARK: Sensor Value Logging
   
-  internal func logSensorValue(value: UInt, forSensor sensor: BBLSensor) {
+  internal func logSensorValue(_ value: UInt, forSensor sensor: BBLSensor) {
     
     guard let uuid = sensor.uuid else {
       fatalError("Cannot log sensor value because sensor UUID does not exist")
