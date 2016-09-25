@@ -335,10 +335,14 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
       
     case (.disconnected, .deactivated):
       connectedParent = BBLParent.loggedInParent()
-      peripheral!.discoverServices([BBLSensorInfo.kSensorServiceUUID])
+      
+      if sensorManager.state != .poweredOn {
+        sensorManager.peripheralsToDiscoverServices.insert(peripheral!)
+      } else {
+        peripheral!.discoverServices([BBLSensorInfo.kSensorServiceUUID])
+      }
       peripheral!.delegate = self
       // TODO: Start timer to poll for RSSI on connection.  Stop timer on disconnect.
-      peripheral?.readRSSI()
       
     case (.deactivated, .waitingToBeActivated):
       startCountdownForTimeInSeconds(delayInSeconds)

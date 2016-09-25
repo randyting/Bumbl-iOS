@@ -192,9 +192,14 @@ extension BBLAppDelegate: BBLLoginViewControllerDelegate {
       
       parent.syncSensors()
       
+      let sensorManager = BBLSensorManager(withProfileSensors: parent.profileSensors)
+      
+      let centralManager = CBCentralManager(delegate: sensorManager, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey:  BBLBluetoothInfo.kRestorationIdentifier])
+      
+      sensorManager.centralManager = centralManager
+      
       self.currentSession = BBLSession(withParent: parent,
-                                       withSensorManager: BBLSensorManager(withCentralManager: CBCentralManager(),
-                                                                           withProfileSensors: parent.profileSensors))
+                                       withSensorManager: sensorManager)
       self.window?.rootViewController = self.rootViewControllerFromSession(self.currentSession!)
     }
   }

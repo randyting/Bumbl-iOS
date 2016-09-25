@@ -9,6 +9,13 @@
 import Foundation
 import CoreBluetooth
 
+// MARK: Bluetooth
+internal struct BBLBluetoothInfo {
+  
+    static let kRestorationIdentifier = "com.bumblbaby.cbCentralRestorationIdentifier"
+}
+
+
 // MARK: Avatars
 
 internal struct BBLAvatarsInfo {
