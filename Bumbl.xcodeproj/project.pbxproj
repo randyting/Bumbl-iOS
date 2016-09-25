@@ -14,6 +14,7 @@
 		250659071C8BBB140003DC57 /* BBLSignInPickerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250659051C8BBB140003DC57 /* BBLSignInPickerVC.swift */; };
 		250659081C8BBB140003DC57 /* BBLSignInPickerVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 250659061C8BBB140003DC57 /* BBLSignInPickerVC.xib */; };
 		2506590A1C8C29120003DC57 /* BBLLoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 250659091C8C29120003DC57 /* BBLLoginViewController.xib */; };
+		251EAB3C1D97E06F003A602C /* UIWindow+Bumbl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251EAB3B1D97E06F003A602C /* UIWindow+Bumbl.swift */; };
 		251EE2DF1C540AA200D295C3 /* UIViewController+Bumbl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251EE2DE1C540AA200D295C3 /* UIViewController+Bumbl.swift */; };
 		251EE2E11C54565C00D295C3 /* UIColor+Bumbl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251EE2E01C54565C00D295C3 /* UIColor+Bumbl.swift */; };
 		252324461D0F7F12009D20B0 /* BBLSensorValueGaugeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 252324451D0F7F12009D20B0 /* BBLSensorValueGaugeView.swift */; };
@@ -87,6 +88,7 @@
 		250659051C8BBB140003DC57 /* BBLSignInPickerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSignInPickerVC.swift; path = ViewControllers/BBLSignInPickerVC.swift; sourceTree = "<group>"; };
 		250659061C8BBB140003DC57 /* BBLSignInPickerVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLSignInPickerVC.xib; path = ViewControllers/BBLSignInPickerVC.xib; sourceTree = "<group>"; };
 		250659091C8C29120003DC57 /* BBLLoginViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = BBLLoginViewController.xib; path = ViewControllers/BBLLoginViewController.xib; sourceTree = "<group>"; };
+		251EAB3B1D97E06F003A602C /* UIWindow+Bumbl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIWindow+Bumbl.swift"; path = "Extensions/UIWindow+Bumbl.swift"; sourceTree = "<group>"; };
 		251EE2DE1C540AA200D295C3 /* UIViewController+Bumbl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIViewController+Bumbl.swift"; path = "Extensions/UIViewController+Bumbl.swift"; sourceTree = "<group>"; };
 		251EE2E01C54565C00D295C3 /* UIColor+Bumbl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIColor+Bumbl.swift"; path = "Extensions/UIColor+Bumbl.swift"; sourceTree = "<group>"; };
 		252324451D0F7F12009D20B0 /* BBLSensorValueGaugeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BBLSensorValueGaugeView.swift; path = Views/BBLSensorValueGaugeView.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				25AF02E61CF1228400718172 /* UIView+Bumbl.swift */,
 				25AF02E81CF1297E00718172 /* UITextField+Bumbl.swift */,
 				25F419D91D57283200B1ECE4 /* NSData+Bumbl.swift */,
+				251EAB3B1D97E06F003A602C /* UIWindow+Bumbl.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -669,6 +672,7 @@
 				2533A5241C53EFAA000F9562 /* BBLParseAPIClient.swift in Sources */,
 				251EE2DF1C540AA200D295C3 /* UIViewController+Bumbl.swift in Sources */,
 				253A10651D1120B700EBC02E /* BBLConnectionViewController.swift in Sources */,
+				251EAB3C1D97E06F003A602C /* UIWindow+Bumbl.swift in Sources */,
 				25B9735A1C44F94D00C5E099 /* BBLSensor.swift in Sources */,
 				2593FA431D69411100F754C9 /* BBLTextField.swift in Sources */,
 				25AF02E91CF1297E00718172 /* UITextField+Bumbl.swift in Sources */,

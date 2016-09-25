@@ -84,12 +84,12 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   }
   
   fileprivate func setupSignInPickerVC(_ signInPickerVC: BBLSignInPickerVC, inWindow: UIWindow) {
-    window?.rootViewController = UINavigationController(rootViewController: signInPickerVC)
+     window?.setRootViewController(newRootViewController:UINavigationController(rootViewController: signInPickerVC))
   }
   
   fileprivate func setupSplashScreenFromStoryboard(_ storyboard: UIStoryboard, inWindow: UIWindow) {
     let splashScreenVC = storyboard.instantiateViewController(withIdentifier: "launchScreen")
-    window?.rootViewController = splashScreenVC
+     window?.setRootViewController(newRootViewController:splashScreenVC)
   }
   
   fileprivate func onboardingCompleteFromDefaults(_ defaults: UserDefaults) -> Bool {
@@ -99,7 +99,8 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   fileprivate func setupOnboardingFlowInWindow(_ window: UIWindow) {
     let rootVC = UINavigationController(rootViewController: BBLIntroViewController())
     rootVC.isNavigationBarHidden = true
-    window.rootViewController = rootVC
+//    window.rootViewController = rootVC
+    window.setRootViewController(newRootViewController: rootVC)
   }
   
   fileprivate func setupViewsForWindow(_ window: UIWindow) {
@@ -200,7 +201,7 @@ extension BBLAppDelegate: BBLLoginViewControllerDelegate {
       
       self.currentSession = BBLSession(withParent: parent,
                                        withSensorManager: sensorManager)
-      self.window?.rootViewController = self.rootViewControllerFromSession(self.currentSession!)
+      self.window?.setRootViewController(newRootViewController: self.rootViewControllerFromSession(self.currentSession!))
     }
   }
   
