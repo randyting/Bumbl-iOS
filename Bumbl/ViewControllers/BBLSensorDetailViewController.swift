@@ -29,7 +29,7 @@ class BBLSensorDetailViewController: BBLViewController {
   
   @IBOutlet weak var topLevelStackViewBottomToSuperviewBottomConstraint: NSLayoutConstraint!
   
-  @IBAction func didTapTareButton(sender: UIButton) {
+  @IBAction func didTapTareButton(_ sender: UIButton) {
     sensor.rebaseline()
   }
   
@@ -57,12 +57,12 @@ class BBLSensorDetailViewController: BBLViewController {
   
   // MARK: Setup
   
-  private func setupViewController() {
+  fileprivate func setupViewController() {
     title = sensor.name
     topLevelStackViewBottomToSuperviewBottomConstraint.constant = tabBarController!.tabBar.frame.height
   }
   
-  private func setupMapView(mapView: MKMapView) {
+  fileprivate func setupMapView(_ mapView: MKMapView) {
     // TODO: Grab location from sensor.
     
     CLGeocoder().reverseGeocodeLocation(CLLocation(latitude: 37.3318, longitude: -122.0312), completionHandler: {(placemarks, error) -> Void in
@@ -72,7 +72,7 @@ class BBLSensorDetailViewController: BBLViewController {
         return
       }
       
-      if let placemarks = placemarks where placemarks.count > 0 {
+      if let placemarks = placemarks , placemarks.count > 0 {
         let pm = MKPlacemark(placemark: placemarks[0])
         
         var region = mapView.region
@@ -90,31 +90,31 @@ class BBLSensorDetailViewController: BBLViewController {
     
   }
   
-  private func setupAppearanceForSensorValueGaugeView(sensorValueGaugeView: BBLSensorValueGaugeView) {
+  fileprivate func setupAppearanceForSensorValueGaugeView(_ sensorValueGaugeView: BBLSensorValueGaugeView) {
     sensorValueGaugeView.setGaugeBackgroundColor(UIColor.BBLYellowColor())
     sensorValueGaugeView.gaugeFillNormalized = 0.2
   }
   
-  private func setupAppearanceForInformationLabel(label: UILabel) {
-    label.backgroundColor = UIColor.clearColor()
-    label.textColor = UIColor.whiteColor()
+  fileprivate func setupAppearanceForInformationLabel(_ label: UILabel) {
+    label.backgroundColor = UIColor.clear
+    label.textColor = UIColor.white
   }
   
-  private func setupAppearanceForTitleLabel(titleLabel: UILabel) {
+  fileprivate func setupAppearanceForTitleLabel(_ titleLabel: UILabel) {
     titleLabel.textColor = UIColor.BBLGrayTextColor()
   }
   
-  private func setupAppearanceForTextLabel(textLabel: UILabel) {
+  fileprivate func setupAppearanceForTextLabel(_ textLabel: UILabel) {
     textLabel.textColor = UIColor.BBLDarkBlueColor()
   }
   
-  private func setupNavigationItem(navItem: UINavigationItem) {
-    navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Edit, target: self, action: #selector(BBLSensorDetailViewController.didTapEditButton))
+  fileprivate func setupNavigationItem(_ navItem: UINavigationItem) {
+    navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(BBLSensorDetailViewController.didTapEditButton))
   }
   
   // Navigation
   
-  internal func didTapEditButton(sender: UIBarButtonItem) {
+  internal func didTapEditButton(_ sender: UIBarButtonItem) {
     let editSensorVC = BBLEditSensorViewController()
     editSensorVC.delegate = self
     editSensorVC.sensor = sensor
@@ -124,7 +124,7 @@ class BBLSensorDetailViewController: BBLViewController {
   
   // MARK: Update
   
-  private func updateAllInformation() {
+  fileprivate func updateAllInformation() {
     batteryPercentLabel.text = "50%"
     
     statusLabel.text = sensor.stateAsString
@@ -139,9 +139,9 @@ class BBLSensorDetailViewController: BBLViewController {
 
 extension BBLSensorDetailViewController: BBLEditSensorViewControllerDelegate {
   
-  func BBLEditSensorVC(vc: BBLEditSensorViewController, didTapBottomButton bottomButton: BBLModalBottomButton) {
-    navigationController?.popViewControllerAnimated(true)
-    tabBarController?.tabBar.hidden = false
+  func BBLEditSensorVC(_ vc: BBLEditSensorViewController, didTapBottomButton bottomButton: BBLModalBottomButton) {
+    _ = navigationController?.popViewController(animated: true)
+    tabBarController?.tabBar.isHidden = false
     updateAllInformation()
   }
   

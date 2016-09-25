@@ -11,15 +11,18 @@
 internal final class BBLContact: PFObject, PFSubclassing {
 
   
+  private static var __once: () = {
+    registerSubclass()
+    }()
+
+  
   // MARK: PFObject Subclassing
   
   override class func initialize() {
     struct Static {
-      static var onceToken : dispatch_once_t = 0;
+      static var onceToken : Int = 0;
     }
-    dispatch_once(&Static.onceToken) {
-      self.registerSubclass()
-    }
+    _ = BBLContact.__once
   }
   
   static func parseClassName() -> String {
@@ -50,10 +53,10 @@ internal final class BBLContact: PFObject, PFSubclassing {
   
   // MARK: Class Methods
   
-  class func contactsForParent(parent: BBLParent, withCompletion completion: ([BBLContact]?, NSError?)-> ()){
+  class func contactsForParent(_ parent: BBLParent, withCompletion completion: @escaping ([BBLContact]?, Error?)-> ()){
     let query = PFQuery(className: "Contact")
     query.whereKey("parent", equalTo: parent)
-    query.findObjectsInBackgroundWithBlock { (contacts: [PFObject]?, error: NSError?) in
+    query.findObjectsInBackground { (contacts: [PFObject]?, error: Error?) in
       if let error = error {
         completion(nil, error)
       } else {

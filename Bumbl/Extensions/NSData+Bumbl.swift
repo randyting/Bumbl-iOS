@@ -8,14 +8,14 @@
 
 import Foundation
 
-extension NSData {
+extension Data {
   
-  public func BBLswapUInt16Data() -> NSData? {
+  public func BBLswapUInt16Data() -> Data? {
     
     // Copy data into UInt16 array:
-    let count = self.length / sizeof(UInt16)
-    var array = [UInt16](count: count, repeatedValue: 0)
-    self.getBytes(&array, length: count * sizeof(UInt16))
+    let count = self.count / MemoryLayout<UInt16>.size
+    var array = [UInt16](repeating: 0, count: count)
+    (self as NSData).getBytes(&array, length: count * MemoryLayout<UInt16>.size)
     
     // Swap each integer:
     for i in 0 ..< count {
@@ -23,7 +23,9 @@ extension NSData {
     }
     
     // Create NSData from array:
-    return NSData(bytes: &array, length: count * sizeof(UInt16))
+    
+    return Data(bytes: UnsafePointer<UInt8>(OpaquePointer(array)), count: count * MemoryLayout<UInt16>.size)
+//    return Data(bytes: UnsafePointer<UInt8>(&array), count: count * sizeof(UInt16))
   }
   
 }

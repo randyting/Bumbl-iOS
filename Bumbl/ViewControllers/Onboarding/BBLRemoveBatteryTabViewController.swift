@@ -14,10 +14,10 @@ class BBLRemoveBatteryTabViewController: UIViewController {
   
   @IBOutlet weak var nextButton: UIButton!
   
-  @IBAction func didTapNextButton(sender: AnyObject) {
+  @IBAction func didTapNextButton(_ sender: AnyObject) {
     
     let signInPickerVC = BBLSignInPickerVC()
-    signInPickerVC.userDefaults = NSUserDefaults.standardUserDefaults()
+    signInPickerVC.userDefaults = UserDefaults.standard
     navigationController?.pushViewController(signInPickerVC, animated: true)
     
   }
@@ -31,7 +31,7 @@ class BBLRemoveBatteryTabViewController: UIViewController {
   
   // MARK: Initial Setup
   
-  private func setupAppearance() {
+  fileprivate func setupAppearance() {
     nextButton.tintColor = UIColor.BBLNavyBlueColor()
   }
   

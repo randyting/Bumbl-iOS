@@ -9,11 +9,11 @@
 import UIKit
 
 @objc protocol BBLMySensorsTableViewCellDelegate: class {
-  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: UInt, andName name: String?)
-  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: UInt)
-  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool)
-  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didChangeDelayValue value: Int)
-  optional func tableViewCell(tableViewCell: BBLMySensorsTableViewCell, didTapRebaselineButton: Bool)
+  @objc optional func tableViewCell(_ tableViewCell: BBLMySensorsTableViewCell, didSaveThreshold threshold: UInt, andName name: String?)
+  @objc optional func tableViewCell(_ tableViewCell: BBLMySensorsTableViewCell, didChangeThreshold threshold: UInt)
+  @objc optional func tableViewCell(_ tableViewCell: BBLMySensorsTableViewCell, didTapRemoveFromProfileButton: Bool)
+  @objc optional func tableViewCell(_ tableViewCell: BBLMySensorsTableViewCell, didChangeDelayValue value: Int)
+  @objc optional func tableViewCell(_ tableViewCell: BBLMySensorsTableViewCell, didTapRebaselineButton: Bool)
 }
 
 class BBLMySensorsTableViewCell: UITableViewCell {
@@ -21,13 +21,13 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   
   // MARK: Constants
   
-  private struct BBLMySensorsTableViewCellConstants {
-    private static let defaultMaxCapsenseValue: UInt = 100
-    private static let defaultCapsenseValue = 0
+  fileprivate struct BBLMySensorsTableViewCellConstants {
+    fileprivate static let defaultMaxCapsenseValue: UInt = 100
+    fileprivate static let defaultCapsenseValue = 0
     
-    private static let kNoConnectedParentName = "Nobody"
+    fileprivate static let kNoConnectedParentName = "Nobody"
     
-    private static let kblinkTimeInterval = 0.5
+    fileprivate static let kblinkTimeInterval = 0.5
   }
   
   // MARK: Public Variables
@@ -48,9 +48,9 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   
   // MARK: Private Variables
   
-  private var maxCapsenseValue: UInt! = 0
-  private var blinkTimer: NSTimer!
-  private var shouldBlinkActivatedIndicatorDot = false
+  fileprivate var maxCapsenseValue: UInt! = 0
+  fileprivate var blinkTimer: Timer!
+  fileprivate var shouldBlinkActivatedIndicatorDot = false
   
   
   // MARK: Interface Builder
@@ -97,36 +97,36 @@ class BBLMySensorsTableViewCell: UITableViewCell {
   
   // MARK: Initial Setup
   
-  private func setupAppearanceForTitleLabel(titleLabel: UILabel) {
+  fileprivate func setupAppearanceForTitleLabel(_ titleLabel: UILabel) {
     titleLabel.textColor = UIColor.BBLGrayTextColor()
   }
   
-  private func setupAppearanceForTextLabel(textLabel: UILabel) {
+  fileprivate func setupAppearanceForTextLabel(_ textLabel: UILabel) {
     textLabel.textColor = UIColor.BBLDarkBlueColor()
   }
   
-  private func setupAppearanceForSensorValueGaugeView(sensorValueGaugeView: BBLSensorValueGaugeView) {
+  fileprivate func setupAppearanceForSensorValueGaugeView(_ sensorValueGaugeView: BBLSensorValueGaugeView) {
     sensorValueGaugeView.setGaugeBackgroundColor(UIColor.BBLYellowColor())
     sensorValueGaugeView.gaugeFillNormalized = 0.2
   }
   
-  private func setupAppearanceForActivatedIndicatorDot(dot: UIView) {
+  fileprivate func setupAppearanceForActivatedIndicatorDot(_ dot: UIView) {
     dot.clipsToBounds = true
     dot.layer.cornerRadius = dot.frame.height/2
   }
   
-  private func resetValues() {
+  fileprivate func resetValues() {
     maxCapsenseValue = BBLMySensorsTableViewCellConstants.defaultMaxCapsenseValue
   }
   
-  private func setupTimer() {
-    blinkTimer = NSTimer.scheduledTimerWithTimeInterval(BBLMySensorsTableViewCellConstants.kblinkTimeInterval, target: self, selector: #selector(BBLMySensorsTableViewCell.toggleActivatedIndicatorDotColor), userInfo: nil, repeats: true)
+  fileprivate func setupTimer() {
+    blinkTimer = Timer.scheduledTimer(timeInterval: BBLMySensorsTableViewCellConstants.kblinkTimeInterval, target: self, selector: #selector(BBLMySensorsTableViewCell.toggleActivatedIndicatorDotColor), userInfo: nil, repeats: true)
   }
   
   
   // MARK: Update
   
-  internal func updateValuesWithSensor(sensor: BBLSensor) {
+  internal func updateValuesWithSensor(_ sensor: BBLSensor) {
     babyNameLabel.text = sensor.name
     
     if let connectedParentName = sensor.connectedParent?.username {
@@ -141,11 +141,11 @@ class BBLMySensorsTableViewCell: UITableViewCell {
     
     shouldBlinkActivatedIndicatorDot = false
     switch sensor.stateMachine.state {
-    case .Activated:
+    case .activated:
       activatedIndicatorDot.backgroundColor = UIColor.BBLActivatedDotGreenColor()
-    case .WaitingToBeDeactivated, .WaitingToBeActivated:
+    case .waitingToBeDeactivated, .waitingToBeActivated:
       shouldBlinkActivatedIndicatorDot = true
-    case .Disconnected:
+    case .disconnected:
       activatedIndicatorDot.backgroundColor = UIColor.BBLActivatedDotGrayColor()
     default:
       activatedIndicatorDot.backgroundColor = UIColor.BBLActivatedDotRedColor()

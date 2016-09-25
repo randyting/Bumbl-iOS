@@ -13,9 +13,9 @@ extension UITextField {
   public func insetText(byWidth width: Int){
     
     let spacerView = UIView(frame:CGRect(x:0, y:0, width:width, height:10))
-    self.leftViewMode = UITextFieldViewMode.Always
+    self.leftViewMode = UITextFieldViewMode.always
     self.leftView = spacerView
-    self.rightViewMode = UITextFieldViewMode.Always
+    self.rightViewMode = UITextFieldViewMode.always
     self.rightView = spacerView
     
   }

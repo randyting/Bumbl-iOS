@@ -16,12 +16,12 @@ class BBLConnectionTableViewCell: UITableViewCell {
     super.awakeFromNib()
     textField.isTextField = false
     textField.title = "Device No."
-    textField.backgroundColor = UIColor.clearColor()
-    textField.view.backgroundColor = UIColor.clearColor()
-    textField.textField.backgroundColor = UIColor.clearColor()
-    textField.titleLabel.backgroundColor = UIColor.clearColor()
-    backgroundColor = UIColor.clearColor()
-    contentView.backgroundColor = UIColor.clearColor()
+    textField.backgroundColor = UIColor.clear
+    textField.view.backgroundColor = UIColor.clear
+    textField.textField.backgroundColor = UIColor.clear
+    textField.titleLabel.backgroundColor = UIColor.clear
+    backgroundColor = UIColor.clear
+    contentView.backgroundColor = UIColor.clear
   }
   
 }

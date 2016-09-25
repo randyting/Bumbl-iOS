@@ -10,10 +10,10 @@ import UIKit
 
 internal final class BBLParseAPIClient: NSObject {
   
-  class func queryForBabySensorsConnectedToParent(parent: BBLParent, withCompletion completion: ([BBLSensor]?) -> Void) {
+  class func queryForBabySensorsConnectedToParent(_ parent: BBLParent, withCompletion completion: @escaping ([BBLSensor]?) -> Void) {
     let query = PFQuery(className: "BabySensor")
     query.whereKey("connectedParent", equalTo: parent)
-    query.findObjectsInBackgroundWithBlock {(sensors:[PFObject]?, error:NSError?) -> Void in
+    query.findObjectsInBackground {(sensors:[PFObject]?, error:Error?) -> Void in
       
       if let error = error {
         print(error.localizedDescription)
@@ -24,10 +24,10 @@ internal final class BBLParseAPIClient: NSObject {
     }
   }
   
-  class func queryForExistingBabySensorsWithUUID(uuid: String, withCompletion completion:([BBLSensor]?) -> Void) {
+  class func queryForExistingBabySensorsWithUUID(_ uuid: String, withCompletion completion:@escaping ([BBLSensor]?) -> Void) {
     let query = PFQuery(className: "BabySensor")
     query.whereKey("uuid", equalTo: uuid)
-    query.findObjectsInBackgroundWithBlock {(sensors:[PFObject]?, error:NSError?) -> Void in
+    query.findObjectsInBackground {(sensors:[PFObject]?, error:Error?) -> Void in
       
       if let error = error {
         print(error.localizedDescription)
