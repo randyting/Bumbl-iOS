@@ -143,7 +143,7 @@ class BBLLoginViewController: UIViewController {
   
   // MARK: Keyboard Actions
   internal func keyboardWillShow(_ notification:Notification!) {
-    (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+//    (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
     // TODO: Change size of scrollview.
   }
   

@@ -119,6 +119,6 @@ extension BBLEmergencyContactsViewController: BBLAddContactViewControllerDelegat
   
   internal func BBLAddContactVC(_ addContactViewController: BBLAddContactViewController, didTapDoneButton doneButton: BBLModalBottomButton) {
     updateTableView()
-    navigationController?.popViewController(animated: true)
+    _ = navigationController?.popViewController(animated: true)
   }
 }
