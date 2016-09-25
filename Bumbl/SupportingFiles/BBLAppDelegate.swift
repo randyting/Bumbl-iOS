@@ -9,7 +9,6 @@
 import UIKit
 import Fabric
 import Crashlytics
-import DigitsKit
 import CoreBluetooth
 
 
@@ -58,7 +57,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   
   fileprivate func setupFabric() {
     Fabric.sharedSDK().debug = true
-    Fabric.with([Crashlytics.self, Digits.self])
+    Fabric.with([Crashlytics.self])
   }
   
   fileprivate func setupLocalNotificationsForApplication(_ application: UIApplication) {
