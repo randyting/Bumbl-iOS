@@ -47,6 +47,8 @@
 	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>The Bumbl app needs to have access to your bluetooth radio in order to connect to the Bumbl sensors.  This will ensure that your child is always safe.  Please give the Bumbl app permission to use your bluetooth radio.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>
