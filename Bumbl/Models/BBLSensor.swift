@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreBluetooth
+import UserNotifications
+
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   switch (lhs, rhs) {
   case let (l?, r?):
@@ -211,15 +213,19 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   }
   
   fileprivate func alertUserWithMessage(_ message: String, andTitle title:String) {
-    let notification = UILocalNotification()
-    notification.alertAction = nil
-    notification.alertTitle = title
-    notification.alertBody = name! + message
-    notification.fireDate = Date(timeIntervalSinceNow: 0)
-    notification.timeZone = TimeZone.current
-    notification.repeatInterval = NSCalendar.Unit.second
-    notification.soundName = "default" //required for vibration?
-    UIApplication.shared.presentLocalNotificationNow(notification)
+
+    let content = UNMutableNotificationContent()
+    content.title = title
+    content.body = name! + message
+    content.sound = UNNotificationSound.default()
+    let trigger = UNTimeIntervalNotificationTrigger.init(timeInterval: 0.1, repeats: false)
+    let request = UNNotificationRequest(identifier: "hello", content: content, trigger: trigger)
+    UNUserNotificationCenter.current().add(request){(error) in
+      if (error != nil){
+        //TODO: Handle any errors with adding request
+      }
+    }
+    
   }
   
   internal func updateToDisconnectedState() {

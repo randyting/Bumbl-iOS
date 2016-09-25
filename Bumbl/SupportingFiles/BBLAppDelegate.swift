@@ -9,8 +9,8 @@
 import UIKit
 import Fabric
 import Crashlytics
-import DigitsKit
 import CoreBluetooth
+import UserNotifications
 
 
 @UIApplicationMain
@@ -19,7 +19,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var currentSession: BBLSession?
   
-// MARK: Lifecycle
+  // MARK: Lifecycle
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     
@@ -54,16 +54,22 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     NotificationCenter.default.removeObserver(self)
   }
   
-// MARK: Setup
+  // MARK: Setup
   
   fileprivate func setupFabric() {
     Fabric.sharedSDK().debug = true
-    Fabric.with([Crashlytics.self, Digits.self])
+    Fabric.with([Crashlytics.self])
   }
   
   fileprivate func setupLocalNotificationsForApplication(_ application: UIApplication) {
-    let notificationTypes: UIUserNotificationType = [.badge, .sound, .alert]
-    application.registerUserNotificationSettings(UIUserNotificationSettings(types: notificationTypes, categories: nil))
+    
+    let center = UNUserNotificationCenter.current()
+    center.requestAuthorization(options: [.alert, .sound, .badge]) { (granted, error) in
+      // TODO: Enable or disable features based on authorization.
+    }
+    center.delegate = self
+    
+    
   }
   
   fileprivate func setupNotificationsForObject(_ object: NSObject) {
@@ -85,7 +91,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     let splashScreenVC = storyboard.instantiateViewController(withIdentifier: "launchScreen")
     window?.rootViewController = splashScreenVC
   }
-
+  
   fileprivate func onboardingCompleteFromDefaults(_ defaults: UserDefaults) -> Bool {
     return defaults.bool(forKey: BBLAppState.kDefaultsOnboardingCompleteKey)
   }
@@ -110,7 +116,7 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     window.makeKeyAndVisible()
   }
   
-// MARK: Logout
+  // MARK: Logout
   
   internal func parentDidLogout() {
     disconnectAllSensorsAndStopScanningForSession(currentSession)
@@ -137,81 +143,93 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     }
     
   }
+  
+}
 
+// MARK: UNUserNotificationCenterDelegate
+
+extension BBLAppDelegate: UNUserNotificationCenterDelegate {
+  
+  @objc(userNotificationCenter:willPresentNotification:withCompletionHandler:) internal func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    completionHandler([.alert, .badge,.sound])
+  }
+  
 }
 
 // MARK: PFLogInViewControllerDelegate
 // MARK: Login
+
+extension BBLAppDelegate: BBLLoginViewControllerDelegate {
   
-  extension BBLAppDelegate: BBLLoginViewControllerDelegate {
+  internal func logInViewController(_ logInController: BBLLoginViewController, didFailToLogInWithError error: Error?) {
+    //
+  }
+  
+  internal func logInViewController(_ logInController: BBLLoginViewController, didLogInUser user: PFUser) {
+    loginWithParent(BBLParent.loggedInParent())
+    setCrashlyticsParent(BBLParent.loggedInParent()!)
+  }
+  
+  internal func logInViewController(_ logInController: BBLLoginViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
+    return true
+  }
+  
+  fileprivate func setCrashlyticsParent(_ parent: BBLParent) {
+    Crashlytics.sharedInstance().setUserIdentifier(parent.objectId)
+    Crashlytics.sharedInstance().setUserName(parent.username)
+    Crashlytics.sharedInstance().setUserEmail(parent.email)
+  }
+  
+  fileprivate func loginWithParent(_ parent: BBLParent!) {
     
-    internal func logInViewController(_ logInController: BBLLoginViewController, didFailToLogInWithError error: Error?) {
-      //
-    }
-    
-    internal func logInViewController(_ logInController: BBLLoginViewController, didLogInUser user: PFUser) {
-      loginWithParent(BBLParent.loggedInParent())
-      setCrashlyticsParent(BBLParent.loggedInParent()!)
-    }
-    
-    internal func logInViewController(_ logInController: BBLLoginViewController, shouldBeginLogInWithUsername username: String, password: String) -> Bool {
-      return true
-    }
-    
-    fileprivate func setCrashlyticsParent(_ parent: BBLParent) {
-      Crashlytics.sharedInstance().setUserIdentifier(parent.objectId)
-      Crashlytics.sharedInstance().setUserName(parent.username)
-      Crashlytics.sharedInstance().setUserEmail(parent.email)
-    }
-    
-    fileprivate func loginWithParent(_ parent: BBLParent!) {
-      
-      BBLSensor.fetchAll(inBackground: parent.sensors) { (result: [Any]?, error: Error?) -> Void in
-        if let sensors = result as? [BBLSensor] {
-          for sensor in sensors {
-            try! sensor.connectedParent?.fetchIfNeeded()
-            sensor.stateMachine = BBLStateMachine(initialState: .disconnected, delegate: sensor)
-          }
+    BBLSensor.fetchAll(inBackground: parent.sensors) { (result: [Any]?, error: Error?) -> Void in
+      if let sensors = result as? [BBLSensor] {
+        for sensor in sensors {
+          try! sensor.connectedParent?.fetchIfNeeded()
+          sensor.stateMachine = BBLStateMachine(initialState: .disconnected, delegate: sensor)
         }
-        
-        parent.syncSensors()
-        
-        self.currentSession = BBLSession(withParent: parent,
-                                         withSensorManager: BBLSensorManager(withCentralManager: CBCentralManager(),
-                                                                              withProfileSensors: parent.profileSensors))
-        self.window?.rootViewController = self.rootViewControllerFromSession(self.currentSession!)
-      }
-    }
-    
-    fileprivate func rootViewControllerFromSession(_ session: BBLSession!) -> UITabBarController {
-      let mainTabBarController = UITabBarController()
-      setupAppearanceForTabBar(mainTabBarController.tabBar)
-      
-      let sensorsViewController = BBLMySensorsViewController()
-      sensorsViewController.loggedInParent = session.parent
-      sensorsViewController.sensorManager = session.sensorManager
-      
-      let emergencyContactsVC = BBLEmergencyContactsViewController()
-      
-      let tabBarViewControllers = [sensorsViewController,
-        emergencyContactsVC]
-      var navigationControllers = [UINavigationController]()
-      
-      for vc in tabBarViewControllers {
-        navigationControllers.append(UINavigationController(rootViewController: vc))
       }
       
-      sensorsViewController.BBLsetupIcon(BBLViewControllerInfo.BBLMySensorsViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLMySensorsViewController.title)
-      emergencyContactsVC.BBLsetupIcon(BBLViewControllerInfo.BBLEmergencyContactsViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLEmergencyContactsViewController.title)
+      parent.syncSensors()
       
-      mainTabBarController.viewControllers = navigationControllers
-      return mainTabBarController
+      self.currentSession = BBLSession(withParent: parent,
+                                       withSensorManager: BBLSensorManager(withCentralManager: CBCentralManager(),
+                                                                           withProfileSensors: parent.profileSensors))
+      self.window?.rootViewController = self.rootViewControllerFromSession(self.currentSession!)
+    }
+  }
+  
+  fileprivate func rootViewControllerFromSession(_ session: BBLSession!) -> UITabBarController {
+    let mainTabBarController = UITabBarController()
+    setupAppearanceForTabBar(mainTabBarController.tabBar)
+    
+    let sensorsViewController = BBLMySensorsViewController()
+    sensorsViewController.loggedInParent = session.parent
+    sensorsViewController.sensorManager = session.sensorManager
+    
+    let emergencyContactsVC = BBLEmergencyContactsViewController()
+    
+    let tabBarViewControllers = [sensorsViewController,
+                                 emergencyContactsVC]
+    var navigationControllers = [UINavigationController]()
+    
+    for vc in tabBarViewControllers {
+      navigationControllers.append(UINavigationController(rootViewController: vc))
     }
     
-    fileprivate func setupAppearanceForTabBar(_ tabBar: UITabBar) {
-      tabBar.barTintColor = UIColor.white
-      tabBar.addTopBorder(withColor: UIColor.BBLDarkGrayColor(), withThickness: 0.5)
-      tabBar.tintColor = UIColor.BBLTabBarSelectedIconColor()
-    }
+    sensorsViewController.BBLsetupIcon(BBLViewControllerInfo.BBLMySensorsViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLMySensorsViewController.title)
+    emergencyContactsVC.BBLsetupIcon(BBLViewControllerInfo.BBLEmergencyContactsViewController.tabBarIcon, andTitle: BBLViewControllerInfo.BBLEmergencyContactsViewController.title)
     
+    mainTabBarController.viewControllers = navigationControllers
+    return mainTabBarController
+  }
+  
+  fileprivate func setupAppearanceForTabBar(_ tabBar: UITabBar) {
+    tabBar.barTintColor = UIColor.white
+    tabBar.addTopBorder(withColor: UIColor.BBLDarkGrayColor(), withThickness: 0.5)
+    tabBar.tintColor = UIColor.BBLTabBarSelectedIconColor()
+  }
+  
 }
+
+
