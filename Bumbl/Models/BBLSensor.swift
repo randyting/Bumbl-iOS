@@ -352,21 +352,25 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
       
     case (.waitingToBeActivated, .activated):
       alertUserWithMessage(BBLSensorInfo.Alerts.sensorActivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorActivatedAlertTitle)
-      BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self)
+      BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self, forEvent: BBLActivityLogger.Event.Activated)
       
     case (.waitingToBeDeactivated, .deactivated):
       alertUserWithMessage(BBLSensorInfo.Alerts.sensorDeactivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorDeactivatedAlertTitle)
+      BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self, forEvent: BBLActivityLogger.Event.Deactivated)
       
     case (.activated, .disconnected):
       afterDisconnection()
       alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
+      BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self, forEvent: BBLActivityLogger.Event.Disconnected)
       
     case (.waitingToBeDeactivated, .disconnected):
       afterDisconnection()
       alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
+      BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self, forEvent: BBLActivityLogger.Event.Disconnected)
       
     case (_, .disconnected):
       afterDisconnection()
+      BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self, forEvent: BBLActivityLogger.Event.Disconnected)
       
     default:
       break

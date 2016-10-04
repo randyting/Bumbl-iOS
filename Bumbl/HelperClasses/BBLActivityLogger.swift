@@ -11,6 +11,13 @@ import Firebase
 
 class BBLActivityLogger: NSObject {
   
+  internal enum Event: String {
+    case Activated = "Activated"
+    case Deactivated = "Deactivated"
+    case Connected = "Connected"
+    case Disconnected = "Disconnected"
+  }
+  
   // MARK: Singleton
   
   internal static let sharedInstance = BBLActivityLogger()
@@ -30,7 +37,7 @@ class BBLActivityLogger: NSObject {
   
   // MARK: Sensor Value Logging
   
-  internal func logSensorValue(_ value: UInt, forSensor sensor: BBLSensor) {
+  internal func logSensorValue(_ value: UInt, forSensor sensor: BBLSensor, forEvent event: Event) {
     
     guard let uuid = sensor.uuid else {
       fatalError("Cannot log sensor value because sensor UUID does not exist")
@@ -44,6 +51,9 @@ class BBLActivityLogger: NSObject {
     let timestampRef = logRef.child("timestamp")
     let timestamp = FIRServerValue.timestamp()
     timestampRef.setValue(timestamp)
+    
+    let eventRef = logRef.child("event")
+    eventRef.setValue(event.rawValue)
   }
   
 
