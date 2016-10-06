@@ -121,11 +121,11 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   // Designated initializer
   internal convenience init(withPeripheral peripheral: CBPeripheral?,
-                      withSensorManager sensorManager: BBLSensorManager!,
-                                        withUUID uuid: String!,
-              withCapSenseThreshold capSenseThreshold: UInt,
-                    withDelayInSeconds delayInSeconds: Int,
-                                withDelegate delegate: BBLSensorDelegate?) {
+                            withSensorManager sensorManager: BBLSensorManager!,
+                            withUUID uuid: String!,
+                            withCapSenseThreshold capSenseThreshold: UInt,
+                            withDelayInSeconds delayInSeconds: Int,
+                            withDelegate delegate: BBLSensorDelegate?) {
     self.init()
     self.peripheral = peripheral
     self.sensorManager = sensorManager
@@ -142,19 +142,19 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   // Class initializer for instantiating an existing peripheral loaded from the server or persistent storage.
   class func  sensorWith(_ peripheral: CBPeripheral?,
-    withSensorManager sensorManager: BBLSensorManager!,
-  withfromJSONDictionary dictionary: [String:AnyObject]) -> BBLSensor {
+                         withSensorManager sensorManager: BBLSensorManager!,
+                         withfromJSONDictionary dictionary: [String:AnyObject]) -> BBLSensor {
     
     //TODO: Parse JSON and initialize values
     let uuidFromJSON = "someUniqueIdentifier"
     let capSenseThreshFromJSON: UInt = 30
     let delayInSecondsFromJSON = 3
     return BBLSensor.init(withPeripheral: peripheral,
-                       withSensorManager: sensorManager,
-                                withUUID: uuidFromJSON,
-                   withCapSenseThreshold: capSenseThreshFromJSON,
-                      withDelayInSeconds: delayInSecondsFromJSON,
-                            withDelegate: nil)
+                          withSensorManager: sensorManager,
+                          withUUID: uuidFromJSON,
+                          withCapSenseThreshold: capSenseThreshFromJSON,
+                          withDelayInSeconds: delayInSecondsFromJSON,
+                          withDelegate: nil)
     
   }
   
@@ -163,11 +163,11 @@ internal final class BBLSensor: PFObject, PFSubclassing {
                          withSensorManager sensorManager: BBLSensorManager!) -> BBLSensor {
     
     return BBLSensor.init(withPeripheral: peripheral,
-                       withSensorManager: sensorManager,
-                                withUUID: peripheral.name,
-                   withCapSenseThreshold: BBLSensorInfo.kDefaultCapSenseThreshold,
-                      withDelayInSeconds: BBLSensorInfo.kDefaultDelayInSeconds,
-                            withDelegate: nil)
+                          withSensorManager: sensorManager,
+                          withUUID: peripheral.name,
+                          withCapSenseThreshold: BBLSensorInfo.kDefaultCapSenseThreshold,
+                          withDelayInSeconds: BBLSensorInfo.kDefaultDelayInSeconds,
+                          withDelegate: nil)
   }
   
   // MARK: Parents Count
@@ -213,7 +213,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   }
   
   fileprivate func alertUserWithMessage(_ message: String, andTitle title:String) {
-
+    
     let content = UNMutableNotificationContent()
     content.title = title
     content.body = name! + message
@@ -352,25 +352,35 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
       
     case (.waitingToBeActivated, .activated):
       alertUserWithMessage(BBLSensorInfo.Alerts.sensorActivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorActivatedAlertTitle)
-      BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self, forEvent: BBLActivityLogger.Event.Activated)
+      if let capSenseValue = capSenseValue {
+        BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue, forSensor: self, forEvent: BBLActivityLogger.Event.Activated)
+      }
       
     case (.waitingToBeDeactivated, .deactivated):
       alertUserWithMessage(BBLSensorInfo.Alerts.sensorDeactivatedAlertMessage, andTitle: BBLSensorInfo.Alerts.sensorDeactivatedAlertTitle)
-      BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self, forEvent: BBLActivityLogger.Event.Deactivated)
+      if let capSenseValue = capSenseValue {
+        BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue, forSensor: self, forEvent: BBLActivityLogger.Event.Deactivated)
+      }
       
     case (.activated, .disconnected):
       afterDisconnection()
       alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
-      BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self, forEvent: BBLActivityLogger.Event.Disconnected)
+      if let capSenseValue = capSenseValue {
+        BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue, forSensor: self, forEvent: BBLActivityLogger.Event.Disconnected)
+      }
       
     case (.waitingToBeDeactivated, .disconnected):
       afterDisconnection()
       alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
-      BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self, forEvent: BBLActivityLogger.Event.Disconnected)
+      if let capSenseValue = capSenseValue {
+        BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue, forSensor: self, forEvent: BBLActivityLogger.Event.Disconnected)
+      }
       
     case (_, .disconnected):
       afterDisconnection()
-      BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue!, forSensor: self, forEvent: BBLActivityLogger.Event.Disconnected)
+      if let capSenseValue = capSenseValue {
+        BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue, forSensor: self, forEvent: BBLActivityLogger.Event.Disconnected)
+      }
       
     default:
       break
