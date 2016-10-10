@@ -231,7 +231,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   
   fileprivate func startCountdownAlert() {
     
-    countdownAlert = BBLCountdownAlert(withStartTimeInSeconds: 10, withBabyName: name!, withDelegate: self)
+    countdownAlert = BBLCountdownAlert(withStartTimeInSeconds: 60, withBabyName: name!, withDelegate: self)
     
   }
   
