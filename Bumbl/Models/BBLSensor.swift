@@ -116,6 +116,7 @@ internal final class BBLSensor: PFObject, PFSubclassing {
   fileprivate(set) var capSenseValue:UInt?
   fileprivate var rebaselineCharacteristic: CBCharacteristic?
   fileprivate var backgroundUpdateTask: UIBackgroundTaskIdentifier = 0
+  fileprivate var countdownAlert: BBLCountdownAlert?
   
   // MARK: Initialization
   
@@ -225,6 +226,12 @@ internal final class BBLSensor: PFObject, PFSubclassing {
         //TODO: Handle any errors with adding request
       }
     }
+    
+  }
+  
+  fileprivate func startCountdownAlert() {
+    
+    countdownAlert = BBLCountdownAlert(withStartTimeInSeconds: 10, withDelegate: self)
     
   }
   
@@ -365,6 +372,7 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
     case (.activated, .disconnected):
       afterDisconnection()
       alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
+      startCountdownAlert()
       if let capSenseValue = capSenseValue {
         BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue, forSensor: self, forEvent: BBLActivityLogger.Event.Disconnected)
       }
@@ -372,6 +380,7 @@ extension BBLSensor:BBLStateMachineDelegateProtocol{
     case (.waitingToBeDeactivated, .disconnected):
       afterDisconnection()
       alertUserWithMessage(BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertMessage, andTitle: BBLSensorInfo.Alerts.babyInSeatAndOutOfRangeAlertTitle)
+      startCountdownAlert()
       if let capSenseValue = capSenseValue {
         BBLActivityLogger.sharedInstance.logSensorValue(capSenseValue, forSensor: self, forEvent: BBLActivityLogger.Event.Disconnected)
       }
@@ -426,4 +435,15 @@ extension BBLSensor {
       timer.invalidate()
     }
   }
+}
+
+// MARK: BBLCountdownAlert Delegate
+
+extension BBLSensor: BBLCountdownAlertDelegate {
+  
+  internal func countdownAlert(_ alert: BBLCountdownAlert, didEnd end: Bool) {
+    
+    print("Countdown done!")
+  }
+  
 }
