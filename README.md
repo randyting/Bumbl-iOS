@@ -11,7 +11,7 @@ The Bumble Car Seat Monintor is an internet connected low energy proximity senso
    - [x] Cloud user login/logout.
    - [x] Cloud storage of sensor data.
    - [x] Cloud logging of sensor events and values.
-- [] Dashboard
+- [ ] Dashboard
    - [x] Displays user-customizable avatar.
    - [x] Displays connection and presence status of baby.
    - [ ] Displays temperature from monitor's temperature sensor.
