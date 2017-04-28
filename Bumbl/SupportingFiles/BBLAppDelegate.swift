@@ -16,6 +16,15 @@ import UserNotifications
 @UIApplicationMain
 internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
   
+  
+  // MARK: Constants
+  
+  fileprivate enum BBLAppDelegateConstants {
+    static let kParseInfoPlistPath = "ParseService-Info"
+  }
+  
+  // MARK: Public Properties
+  
   var window: UIWindow?
   var currentSession: BBLSession?
   
@@ -32,22 +41,6 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     setupViewsForWindow(window!)
     
     return true
-  }
-  
-  func applicationWillResignActive(_ application: UIApplication) {
-  }
-  
-  func applicationDidEnterBackground(_ application: UIApplication) {
-  }
-  
-  func applicationWillEnterForeground(_ application: UIApplication) {
-    
-  }
-  
-  func applicationDidBecomeActive(_ application: UIApplication) {
-  }
-  
-  func applicationWillTerminate(_ application: UIApplication) {
   }
   
   deinit {
@@ -76,11 +69,33 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     NotificationCenter.default.addObserver(object, selector: #selector(BBLAppDelegate.parentDidLogout), name: NSNotification.Name(rawValue: BBLNotifications.kParentDidLogoutNotification), object: nil)
   }
   
+  fileprivate func parseConfig(fromInfoPlistPath path: String) -> ParseClientConfiguration {
+    
+    guard let infoPlistPath = Bundle.main.path(forResource: path, ofType: "plist") else {
+      fatalError("Failed to fetch path for ParseService-Info.plist.")
+    }
+    
+    guard let parseConfigDict = NSDictionary(contentsOfFile: infoPlistPath) as? [String:Any] else {
+      fatalError("Failed to read ParseService-Info.plist.")
+    }
+    
+    
+    return ParseClientConfiguration { (ParseMutableClientConfiguration) in
+      
+      ParseMutableClientConfiguration.applicationId = (parseConfigDict["PARSE_APP_ID"] as! String)
+      ParseMutableClientConfiguration.clientKey = (parseConfigDict["PARSE_CLIENT_KEY"] as! String)
+      ParseMutableClientConfiguration.server = (parseConfigDict["PARSE_DATABASE_URL"] as! String)
+    }
+
+  }
+  
   fileprivate func setupParse() {
     BBLParent.registerSubclass()
     BBLSensor.registerSubclass()
     BBLContact.registerSubclass()
-    Parse.setApplicationId("HHgxoEaLenjAwxhAqOGziC9SkHaIi4oeTibRFczc", clientKey: "fK00wH0VssppmFZywgP6pRQQUhvsqLpGG6HYFu5u")
+
+    let parseConfiguration = parseConfig(fromInfoPlistPath: BBLAppDelegateConstants.kParseInfoPlistPath)
+    Parse.initialize(with: parseConfiguration)
   }
   
   fileprivate func setupSignInPickerVC(_ signInPickerVC: BBLSignInPickerVC, inWindow: UIWindow) {

@@ -63,6 +63,7 @@
 		25B973541C44F6EB00C5E099 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25B973531C44F6EB00C5E099 /* Assets.xcassets */; };
 		25B973561C44F7A000C5E099 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */; };
 		25B9735A1C44F94D00C5E099 /* BBLSensor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B973591C44F94D00C5E099 /* BBLSensor.swift */; };
+		25CD36DD1EB2C4C300273600 /* ParseService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25CD36DC1EB2C4C300273600 /* ParseService-Info.plist */; };
 		25D08B201C41EAC900319C11 /* BBLAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D08B1F1C41EAC900319C11 /* BBLAppDelegate.swift */; };
 		25D08B351C41EAC900319C11 /* BumblTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D08B341C41EAC900319C11 /* BumblTests.swift */; };
 		25F3E2881C4F735800E2F852 /* BBLParent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F3E2871C4F735800E2F852 /* BBLParent.swift */; };
@@ -139,6 +140,7 @@
 		25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = SupportingFiles/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		25B973591C44F94D00C5E099 /* BBLSensor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BBLSensor.swift; path = Models/BBLSensor.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		25B9735B1C44F9FA00C5E099 /* Bumbl-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Bumbl-Bridging-Header.h"; path = "SupportingFiles/Bumbl-Bridging-Header.h"; sourceTree = "<group>"; };
+		25CD36DC1EB2C4C300273600 /* ParseService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "ParseService-Info.plist"; path = "SupportingFiles/ParseService-Info.plist"; sourceTree = "<group>"; };
 		25D08B1C1C41EAC900319C11 /* Bumbl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bumbl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25D08B1F1C41EAC900319C11 /* BBLAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; lineEnding = 0; name = BBLAppDelegate.swift; path = SupportingFiles/BBLAppDelegate.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		25D08B2B1C41EAC900319C11 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = SupportingFiles/Info.plist; sourceTree = "<group>"; };
@@ -343,6 +345,7 @@
 				25B9735B1C44F9FA00C5E099 /* Bumbl-Bridging-Header.h */,
 				25D08B2B1C41EAC900319C11 /* Info.plist */,
 				257EF4851D56C50200CF9F63 /* GoogleService-Info.plist */,
+				25CD36DC1EB2C4C300273600 /* ParseService-Info.plist */,
 				25B973551C44F7A000C5E099 /* LaunchScreen.storyboard */,
 			);
 			name = SupportingFiles;
@@ -525,6 +528,7 @@
 				252324501D0FCA80009D20B0 /* BBLSensorDetailViewController.xib in Resources */,
 				2593FA451D69412100F754C9 /* BBLTextField.xib in Resources */,
 				252324481D0F7F27009D20B0 /* BBLSensorValueGaugeView.xib in Resources */,
+				25CD36DD1EB2C4C300273600 /* ParseService-Info.plist in Resources */,
 				25AF02F91CF1A0A700718172 /* BBLMySensorsBackgroundView.xib in Resources */,
 				2524D5E91D76AC9B0072D3E7 /* BBLAddContactViewController.xib in Resources */,
 				25AF02F51CF18C4900718172 /* BBLMySensorsTableViewCell.xib in Resources */,
@@ -555,7 +559,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		25F7F8671C4790F000C227FD /* ShellScript */ = {
@@ -598,7 +602,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		9943591BC91983D813AE34AC /* [CP] Copy Pods Resources */ = {
