@@ -95,12 +95,6 @@ internal final class BBLAppDelegate: UIResponder, UIApplicationDelegate {
     BBLContact.registerSubclass()
 
     let parseConfiguration = parseConfig(fromInfoPlistPath: BBLAppDelegateConstants.kParseInfoPlistPath)
-    
-    print("Parse App ID = " + parseConfiguration.applicationId!)
-    print("Parse Client Key = " + parseConfiguration.clientKey!)
-    print("Parse Server URL = " + parseConfiguration.server)
-    
-    
     Parse.initialize(with: parseConfiguration)
   }
   
